@@ -1,0 +1,5 @@
+{
+  "spaceId": "${CONTENTFUL_SPACE_ID}",
+  "managementToken": "${CONTENTFUL_MANAGEMENT_TOKEN}",
+  "environmentId": "master"
+}

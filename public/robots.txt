@@ -1,0 +1,19 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api
+Disallow: /admin
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Yandexbot
+User-agent: Yandexbot
+Allow: /
+
+# Host
+Host: https://mygeodesy.by
+
+# Sitemaps
+Sitemap: https://mygeodesy.by/sitemap.xml
