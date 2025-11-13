@@ -99,14 +99,17 @@ export function generatePageMetadata(
       images,
     },
 
-    // Robots directives
+    // Robots directives - TEMPORARILY DISABLED FOR DEVELOPMENT
     robots: {
-      index: true,
-      follow: true,
-      nocache: false,
+      index: false,
+      follow: false,
+      nocache: true,
+      noarchive: true,
+      nosnippet: true,
+      noimageindex: true,
       googleBot: {
-        index: true,
-        follow: true,
+        index: false,
+        follow: false,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
