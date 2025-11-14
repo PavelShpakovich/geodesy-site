@@ -5,6 +5,8 @@ import { Header } from '@/components/layout/HeaderServer';
 import { Footer } from '@/components/layout/Footer';
 import { SITE } from '@/lib/constants/text';
 import { SEO_CONFIG } from '@/lib/seo/metadata';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -77,6 +79,8 @@ export default function RootLayout({
           <main className='flex-1'>{children}</main>
           <Footer />
         </div>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
