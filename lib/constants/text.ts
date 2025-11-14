@@ -18,9 +18,9 @@ export const NAV = {
 export const CTA = {
   ORDER_SERVICE: 'Заказать услугу',
   ORDER: 'Заказать',
-  VIEW_SERVICES: 'Наши услуги',
+  VIEW_SERVICES: 'Мои услуги',
   VIEW_ALL_SERVICES: 'Все услуги',
-  CONTACT_US: 'Связаться с нами',
+  CONTACT_US: 'Связаться со мной',
 } as const;
 
 export const SECTIONS = {
@@ -115,7 +115,7 @@ export const FORM = {
     RATE_LIMIT_DETAIL: 'Превышен лимит запросов (максимум 3 в минуту)',
     SMTP_NOT_CONFIGURED: 'Ошибка отправки. Попробуйте позже или свяжитесь по телефону.',
     SMTP_ERROR: 'SMTP не настроен на сервере',
-    SERVER_ERROR: 'Произошла ошибка при отправке. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.',
+    SERVER_ERROR: 'Произошла ошибка при отправке. Пожалуйста, попробуйте позже или свяжитесь со мной по телефону.',
     INTERNAL_ERROR: 'Внутренняя ошибка сервера',
   },
   SUCCESS: {
