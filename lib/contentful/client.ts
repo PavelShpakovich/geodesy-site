@@ -6,8 +6,6 @@ import { createClient, ContentfulClientApi, CreateClientParams } from 'contentfu
 const getContentfulConfig = (): CreateClientParams => {
   const spaceId = process.env.CONTENTFUL_SPACE_ID;
   const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
-  const previewToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN;
-  const isPreview = process.env.CONTENTFUL_PREVIEW_MODE === 'true';
 
   if (!spaceId || !accessToken) {
     throw new Error(
@@ -18,8 +16,8 @@ const getContentfulConfig = (): CreateClientParams => {
 
   return {
     space: spaceId,
-    accessToken: isPreview && previewToken ? previewToken : accessToken,
-    host: isPreview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    accessToken: accessToken,
+    host: 'cdn.contentful.com',
   };
 };
 
@@ -29,24 +27,7 @@ const getContentfulConfig = (): CreateClientParams => {
  */
 let clientInstance: ContentfulClientApi<undefined> | null = null;
 
-export function getContentfulClient(preview?: boolean): ContentfulClientApi<undefined> {
-  // If preview is explicitly specified, create a new client
-  if (preview !== undefined) {
-    if (preview) {
-      return createClient({
-        space: process.env.CONTENTFUL_SPACE_ID!,
-        accessToken: process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN!,
-        host: 'preview.contentful.com',
-      });
-    }
-
-    return createClient({
-      space: process.env.CONTENTFUL_SPACE_ID!,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-      host: 'cdn.contentful.com',
-    });
-  }
-
+export function getContentfulClient(): ContentfulClientApi<undefined> {
   // Return cached instance
   if (!clientInstance) {
     clientInstance = createClient(getContentfulConfig());
@@ -65,13 +46,6 @@ export const contentfulClient = new Proxy({} as ContentfulClientApi<undefined>, 
     return (client as any)[prop];
   },
 });
-
-/**
- * Check if preview mode is enabled
- */
-export const isPreviewMode = (): boolean => {
-  return process.env.CONTENTFUL_PREVIEW_MODE === 'true';
-};
 
 /**
  * Helper to extract asset URL from Contentful asset

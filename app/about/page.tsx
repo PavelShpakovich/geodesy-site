@@ -7,18 +7,15 @@ import { StructuredData } from '@/components/seo/StructuredData';
 import { generateAboutMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
 import { generateBreadcrumbSchema, generateOrganizationSchema } from '@/lib/seo/structured-data';
 import type { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 import Link from 'next/link';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { isEnabled: preview } = await draftMode();
-  const seoData = await getSeoData('about', preview);
+  const seoData = await getSeoData('about');
   return generateAboutMetadata(seoData);
 }
 
 export default async function AboutPage() {
-  const { isEnabled: preview } = await draftMode();
-  const [companyInfo, advantages] = await Promise.all([getCompanyInfo(preview), getAdvantages(preview)]);
+  const [companyInfo, advantages] = await Promise.all([getCompanyInfo(), getAdvantages()]);
 
   if (!companyInfo) {
     return (

@@ -9,17 +9,14 @@ import { StructuredData } from '@/components/seo/StructuredData';
 import { generateContactsMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
 import { generateBreadcrumbSchema, generateLocalBusinessSchema } from '@/lib/seo/structured-data';
 import type { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { isEnabled: preview } = await draftMode();
-  const seoData = await getSeoData('contacts', preview);
+  const seoData = await getSeoData('contacts');
   return generateContactsMetadata(seoData);
 }
 
 export default async function ContactsPage() {
-  const { isEnabled: preview } = await draftMode();
-  const companyInfo = await getCompanyInfo(preview);
+  const companyInfo = await getCompanyInfo();
 
   if (!companyInfo) {
     return (

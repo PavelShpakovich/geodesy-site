@@ -67,12 +67,10 @@ export type SeoPage = Entry<SeoPageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', strin
 /**
  * Fetch company information (Single Type)
  * Uses Next.js cache with 1 week revalidation
- * Cache is invalidated via webhook when content changes
- * @param preview - Whether to use preview API (default: false)
  */
-const getCompanyInfoUncached = async (preview = false): Promise<CompanyInfo | null> => {
+const getCompanyInfoUncached = async (): Promise<CompanyInfo | null> => {
   try {
-    const client = getContentfulClient(preview);
+    const client = getContentfulClient();
 
     const response = await client.getEntries<CompanyInfoSkeleton>({
       content_type: 'companyInfo',
@@ -90,12 +88,8 @@ const getCompanyInfoUncached = async (preview = false): Promise<CompanyInfo | nu
   }
 };
 
-export const getCompanyInfo = async (preview = false): Promise<CompanyInfo | null> => {
-  if (preview) {
-    return getCompanyInfoUncached(preview);
-  }
-
-  return unstable_cache(async () => getCompanyInfoUncached(false), ['company-info'], {
+export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
+  return unstable_cache(async () => getCompanyInfoUncached(), ['company-info'], {
     revalidate: 604800,
     tags: ['contentful', 'company-info'],
   })();
@@ -104,12 +98,10 @@ export const getCompanyInfo = async (preview = false): Promise<CompanyInfo | nul
 /**
  * Fetch all services
  * Uses Next.js cache with 1 week revalidation
- * Cache is invalidated via webhook when content changes
- * @param preview - Whether to use preview API (default: false)
  */
-const getServicesUncached = async (preview = false): Promise<Service[]> => {
+const getServicesUncached = async (): Promise<Service[]> => {
   try {
-    const client = getContentfulClient(preview);
+    const client = getContentfulClient();
 
     const response = await client.getEntries<ServiceSkeleton>({
       content_type: 'service',
@@ -123,12 +115,8 @@ const getServicesUncached = async (preview = false): Promise<Service[]> => {
   }
 };
 
-export const getServices = async (preview = false): Promise<Service[]> => {
-  if (preview) {
-    return getServicesUncached(preview);
-  }
-
-  return unstable_cache(async () => getServicesUncached(false), ['services'], {
+export const getServices = async (): Promise<Service[]> => {
+  return unstable_cache(async () => getServicesUncached(), ['services'], {
     revalidate: 604800,
     tags: ['contentful', 'services'],
   })();
@@ -137,11 +125,10 @@ export const getServices = async (preview = false): Promise<Service[]> => {
 /**
  * Fetch a single service by slug
  * @param slug - Service slug
- * @param preview - Whether to use preview API (default: false)
  */
-export async function getServiceBySlug(slug: string, preview = false): Promise<Service | null> {
+export async function getServiceBySlug(slug: string): Promise<Service | null> {
   try {
-    const client = getContentfulClient(preview);
+    const client = getContentfulClient();
 
     // Fetch all services and filter by slug (Contentful's typed API limitation)
     const response = await client.getEntries<ServiceSkeleton>({
@@ -164,12 +151,10 @@ export async function getServiceBySlug(slug: string, preview = false): Promise<S
 /**
  * Fetch all advantages
  * Uses Next.js cache with 1 week revalidation
- * Cache is invalidated via webhook when content changes
- * @param preview - Whether to use preview API (default: false)
  */
-const getAdvantagesUncached = async (preview = false): Promise<Advantage[]> => {
+const getAdvantagesUncached = async (): Promise<Advantage[]> => {
   try {
-    const client = getContentfulClient(preview);
+    const client = getContentfulClient();
 
     const response = await client.getEntries<AdvantageSkeleton>({
       content_type: 'advantage',
@@ -183,12 +168,8 @@ const getAdvantagesUncached = async (preview = false): Promise<Advantage[]> => {
   }
 };
 
-export const getAdvantages = async (preview = false): Promise<Advantage[]> => {
-  if (preview) {
-    return getAdvantagesUncached(preview);
-  }
-
-  return unstable_cache(async () => getAdvantagesUncached(false), ['advantages'], {
+export const getAdvantages = async (): Promise<Advantage[]> => {
+  return unstable_cache(async () => getAdvantagesUncached(), ['advantages'], {
     revalidate: 604800,
     tags: ['contentful', 'advantages'],
   })();
@@ -197,13 +178,11 @@ export const getAdvantages = async (preview = false): Promise<Advantage[]> => {
 /**
  * Fetch SEO data for a specific page
  * Uses Next.js cache with 1 week revalidation
- * Cache is invalidated via webhook when content changes
  * @param slug - Page slug
- * @param preview - Whether to use preview API (default: false)
  */
-const getSeoDataUncached = async (slug: string, preview = false): Promise<SeoPage | null> => {
+const getSeoDataUncached = async (slug: string): Promise<SeoPage | null> => {
   try {
-    const client = getContentfulClient(preview);
+    const client = getContentfulClient();
 
     // Fetch all SEO pages and filter by slug
     const response = await client.getEntries<SeoPageSkeleton>({
@@ -223,12 +202,8 @@ const getSeoDataUncached = async (slug: string, preview = false): Promise<SeoPag
   }
 };
 
-export const getSeoData = async (slug: string, preview = false): Promise<SeoPage | null> => {
-  if (preview) {
-    return getSeoDataUncached(slug, preview);
-  }
-
-  return unstable_cache(async () => getSeoDataUncached(slug, false), ['seo-data', slug], {
+export const getSeoData = async (slug: string): Promise<SeoPage | null> => {
+  return unstable_cache(async () => getSeoDataUncached(slug), ['seo-data', slug], {
     revalidate: 604800,
     tags: ['contentful', 'seo', `seo-${slug}`],
   })();
@@ -237,9 +212,9 @@ export const getSeoData = async (slug: string, preview = false): Promise<SeoPage
 /**
  * Get all service slugs (for static generation)
  */
-export async function getAllServiceSlugs(preview = false): Promise<string[]> {
+export async function getAllServiceSlugs(): Promise<string[]> {
   try {
-    const client = getContentfulClient(preview);
+    const client = getContentfulClient();
 
     const response = await client.getEntries<ServiceSkeleton>({
       content_type: 'service',

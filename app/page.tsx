@@ -11,21 +11,14 @@ import {
   generateBreadcrumbSchema,
 } from '@/lib/seo/structured-data';
 import type { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { isEnabled: preview } = await draftMode();
-  const seoData = await getSeoData('home', preview);
+  const seoData = await getSeoData('home');
   return generateHomeMetadata(seoData);
 }
 
 export default async function Home() {
-  const { isEnabled: preview } = await draftMode();
-  const [companyInfo, advantages, services] = await Promise.all([
-    getCompanyInfo(preview),
-    getAdvantages(preview),
-    getServices(preview),
-  ]);
+  const [companyInfo, advantages, services] = await Promise.all([getCompanyInfo(), getAdvantages(), getServices()]);
 
   // Generate structured data for SEO
   const structuredData = companyInfo
