@@ -160,8 +160,23 @@ export default async function PrivacyPage() {
 
         <section>
           <h2 className='text-2xl font-semibold mb-4 mt-8'>9. {PRIVACY.SECTION_9.TITLE}</h2>
-          <p>{PRIVACY.SECTION_9.NO_COOKIES}</p>
-          <p className='mt-4'>{PRIVACY.SECTION_9.FUTURE}</p>
+          <p>{PRIVACY.SECTION_9.INTRO}</p>
+          <ul className='list-disc pl-6 space-y-2 mt-4'>
+            <li>
+              <strong>Vercel Analytics</strong> — {PRIVACY.SECTION_9.VERCEL_ANALYTICS}
+            </li>
+            <li>
+              <strong>Vercel Speed Insights</strong> — {PRIVACY.SECTION_9.VERCEL_SPEED}
+            </li>
+          </ul>
+          <p className='mt-4'>
+            <strong>Важно:</strong>
+          </p>
+          <ul className='list-disc pl-6 space-y-2'>
+            <li>{PRIVACY.SECTION_9.NO_GA}</li>
+            <li>{PRIVACY.SECTION_9.NO_COOKIES}</li>
+          </ul>
+          <p className='mt-4 text-sm text-muted-foreground'>{PRIVACY.SECTION_9.PRIVACY_LINKS}</p>
         </section>
 
         <section>

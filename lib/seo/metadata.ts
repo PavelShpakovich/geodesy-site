@@ -56,6 +56,13 @@ export function generatePageMetadata(
     generator: 'Next.js',
     referrer: 'origin-when-cross-origin',
 
+    // Geographic targeting for local SEO
+    other: {
+      'geo.region': 'BY-BR',
+      'geo.placename': 'Брест',
+      'geo.position': '52.134722;23.656944',
+    },
+
     // Verification (add real codes in production)
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
