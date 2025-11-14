@@ -1,10 +1,13 @@
 import { getCompanyInfo, getSeoData } from '@/lib/contentful/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Instagram } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { YandexMap } from '@/components/map/YandexMap';
-import { PAGES, NAV, COMPANY_INFO, MESSENGERS } from '@/lib/constants/text';
+import { PageHeader } from '@/components/sections/PageHeader';
+import { ContactInfo } from '@/components/sections/ContactInfo';
+import { SocialLinks } from '@/components/sections/SocialLinks';
+import { LegalInfo } from '@/components/sections/LegalInfo';
+import { PAGES, NAV } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { generateContactsMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
 import { generateBreadcrumbSchema, generateLocalBusinessSchema } from '@/lib/seo/structured-data';
@@ -41,187 +44,19 @@ export default async function ContactsPage() {
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6'>
-        <div className='mx-auto max-w-2xl text-center mb-12 sm:mb-16'>
-          <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-3 sm:mb-4'>
-            {PAGES.CONTACTS.TITLE}
-          </h1>
-          <p className='text-base sm:text-lg md:text-xl text-muted-foreground'>{PAGES.CONTACTS.SUBTITLE}</p>
-        </div>
+      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 flex flex-col gap-12 sm:gap-16'>
+        <PageHeader title={PAGES.CONTACTS.TITLE} subtitle={PAGES.CONTACTS.SUBTITLE} />
 
         <div className='grid gap-8 sm:gap-12 lg:grid-cols-2'>
-          <div>
-            <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6'>{PAGES.CONTACTS.INFO_TITLE}</h2>
-
-            <div className='space-y-4 sm:space-y-6'>
-              <Card className='hover:shadow-lg transition-shadow'>
-                <CardHeader className='pb-3'>
-                  <div className='flex items-center gap-3'>
-                    <Phone className='h-5 w-5 sm:h-6 sm:w-6 text-primary' />
-                    <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.PHONE}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <a
-                    href={`tel:${companyInfo.fields.phone}`}
-                    className='text-base sm:text-lg font-medium hover:text-primary transition-colors'
-                  >
-                    {companyInfo.fields.phone}
-                  </a>
-                </CardContent>
-              </Card>
-
-              <Card className='hover:shadow-lg transition-shadow'>
-                <CardHeader className='pb-3'>
-                  <div className='flex items-center gap-3'>
-                    <Mail className='h-5 w-5 sm:h-6 sm:w-6 text-primary' />
-                    <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.EMAIL}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <a
-                    href={`mailto:${companyInfo.fields.email}`}
-                    className='text-base sm:text-lg font-medium hover:text-primary transition-colors break-all'
-                  >
-                    {companyInfo.fields.email}
-                  </a>
-                </CardContent>
-              </Card>
-
-              <Card className='hover:shadow-lg transition-shadow'>
-                <CardHeader className='pb-3'>
-                  <div className='flex items-center gap-3'>
-                    <MapPin className='h-5 w-5 sm:h-6 sm:w-6 text-primary' />
-                    <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.ADDRESS}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className='text-base sm:text-lg'>{companyInfo.fields.address}</p>
-                </CardContent>
-              </Card>
-
-              <Card className='hover:shadow-lg transition-shadow'>
-                <CardHeader className='pb-3'>
-                  <div className='flex items-center gap-3'>
-                    <Clock className='h-5 w-5 sm:h-6 sm:w-6 text-primary' />
-                    <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.WORK_HOURS}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className='text-base sm:text-lg whitespace-pre-line'>{companyInfo.fields.workHours}</p>
-                </CardContent>
-              </Card>
-
-              {(companyInfo.fields.telegram ||
-                companyInfo.fields.viber ||
-                companyInfo.fields.whatsapp ||
-                companyInfo.fields.instagram) && (
-                <Card className='hover:shadow-lg transition-shadow'>
-                  <CardHeader className='pb-3'>
-                    <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.MESSENGERS}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className='flex flex-wrap gap-3'>
-                      {companyInfo.fields.telegram && (
-                        <Button variant='outline' size='sm' asChild className='flex-1 sm:flex-initial'>
-                          <a
-                            href={`https://t.me/${companyInfo.fields.telegram}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                          >
-                            <Send className='mr-2 h-4 w-4' />
-                            {MESSENGERS.TELEGRAM}
-                          </a>
-                        </Button>
-                      )}
-                      {companyInfo.fields.viber && (
-                        <Button variant='outline' size='sm' asChild className='flex-1 sm:flex-initial'>
-                          <a href={`viber://chat?number=${companyInfo.fields.viber}`}>
-                            <Phone className='mr-2 h-4 w-4' />
-                            {MESSENGERS.VIBER}
-                          </a>
-                        </Button>
-                      )}
-                      {companyInfo.fields.whatsapp && (
-                        <Button variant='outline' size='sm' asChild className='flex-1 sm:flex-initial'>
-                          <a
-                            href={`https://wa.me/${companyInfo.fields.whatsapp}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                          >
-                            <MessageCircle className='mr-2 h-4 w-4' />
-                            {MESSENGERS.WHATSAPP}
-                          </a>
-                        </Button>
-                      )}
-                      {companyInfo.fields.instagram && (
-                        <Button variant='outline' size='sm' asChild className='flex-1 sm:flex-initial'>
-                          <a
-                            href={
-                              companyInfo.fields.instagram.startsWith('http')
-                                ? companyInfo.fields.instagram
-                                : `https://instagram.com/${companyInfo.fields.instagram}`
-                            }
-                            target='_blank'
-                            rel='noopener noreferrer'
-                          >
-                            <Instagram className='mr-2 h-4 w-4' />
-                            {MESSENGERS.INSTAGRAM}
-                          </a>
-                        </Button>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+          <div className='flex flex-col gap-6 sm:gap-8'>
+            <div>
+              <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6'>{PAGES.CONTACTS.INFO_TITLE}</h2>
+              <ContactInfo companyInfo={companyInfo} layout='stacked' />
             </div>
 
-            {/* Реквизиты */}
-            {(companyInfo.fields.unp ||
-              companyInfo.fields.legalName ||
-              companyInfo.fields.bankName ||
-              companyInfo.fields.bankAccount ||
-              companyInfo.fields.bic) && (
-              <div className='mt-6 sm:mt-8'>
-                <h3 className='text-lg sm:text-xl font-bold mb-4'>{COMPANY_INFO.LEGAL_INFO}</h3>
-                <Card className='hover:shadow-lg transition-shadow'>
-                  <CardContent>
-                    <dl className='space-y-3 text-sm sm:text-base'>
-                      {companyInfo.fields.legalName && (
-                        <div>
-                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.LEGAL_NAME}:</dt>
-                          <dd className='mt-1'>{companyInfo.fields.legalName}</dd>
-                        </div>
-                      )}
-                      {companyInfo.fields.unp && (
-                        <div>
-                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.UNP}:</dt>
-                          <dd className='mt-1 font-mono'>{companyInfo.fields.unp}</dd>
-                        </div>
-                      )}
-                      {companyInfo.fields.bankName && (
-                        <div>
-                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BANK_NAME}:</dt>
-                          <dd className='mt-1'>{companyInfo.fields.bankName}</dd>
-                        </div>
-                      )}
-                      {companyInfo.fields.bankAccount && (
-                        <div>
-                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BANK_ACCOUNT}:</dt>
-                          <dd className='mt-1 font-mono'>{companyInfo.fields.bankAccount}</dd>
-                        </div>
-                      )}
-                      {companyInfo.fields.bic && (
-                        <div>
-                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BIC}:</dt>
-                          <dd className='mt-1 font-mono'>{companyInfo.fields.bic}</dd>
-                        </div>
-                      )}
-                    </dl>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
+            <SocialLinks companyInfo={companyInfo} variant='card' />
+
+            <LegalInfo companyInfo={companyInfo} />
           </div>
 
           <div>
@@ -230,8 +65,8 @@ export default async function ContactsPage() {
           </div>
         </div>
 
-        <div className='mt-12 sm:mt-16'>
-          <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6 text-center'>{PAGES.CONTACTS.MAP_TITLE}</h2>
+        <div className='flex flex-col gap-5 sm:gap-6'>
+          <h2 className='text-xl sm:text-2xl font-bold text-center'>{PAGES.CONTACTS.MAP_TITLE}</h2>
           {companyInfo.fields.latitude && companyInfo.fields.longitude ? (
             <YandexMap
               address={companyInfo.fields.address}
@@ -240,8 +75,8 @@ export default async function ContactsPage() {
             />
           ) : (
             <div className='bg-muted rounded-lg h-64 sm:h-80 md:h-96 flex items-center justify-center'>
-              <div className='text-center text-muted-foreground px-4'>
-                <MapPin className='h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4' />
+              <div className='text-center text-muted-foreground px-4 flex flex-col gap-3 sm:gap-4'>
+                <MapPin className='h-10 w-10 sm:h-12 sm:w-12 mx-auto' />
                 <p className='text-sm sm:text-base'>{PAGES.CONTACTS.MAP_PLACEHOLDER}</p>
               </div>
             </div>

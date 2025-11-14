@@ -26,12 +26,12 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
       ref={mobileMenuRef}
     >
       <div className='container flex h-16 items-center justify-between'>
-        <Link href='/' className='flex items-center transition-opacity hover:opacity-80'>
+        <Link href='/' className='flex items-center gap-2 transition-opacity hover:opacity-80'>
           <Logo showText={false} />
-          <span className='ml-2 text-lg md:text-xl font-bold'>{companyName}</span>
+          <span className='text-lg md:text-xl font-bold'>{companyName}</span>
         </Link>
 
-        <nav className='hidden md:flex items-center space-x-6'>
+        <nav className='hidden md:flex items-center gap-6'>
           <Link href='/' className='text-sm font-medium transition-colors hover:text-primary'>
             {NAV.HOME}
           </Link>
@@ -46,7 +46,7 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
           </Link>
         </nav>
 
-        <div className='hidden md:flex items-center space-x-4'>
+        <div className='hidden md:flex items-center gap-4'>
           {companyPhone && (
             <a
               href={`tel:${companyPhone}`}
@@ -72,7 +72,7 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
 
       {mobileMenuOpen && (
         <div className='md:hidden border-t bg-background/98 backdrop-blur-lg'>
-          <nav className='container py-4 flex flex-col space-y-3'>
+          <nav className='container py-4 flex flex-col gap-3'>
             <Link
               href='/'
               className='px-4 py-2 text-base font-medium transition-colors hover:bg-accent rounded-md'

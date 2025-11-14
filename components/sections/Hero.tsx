@@ -16,16 +16,17 @@ export function Hero({ companyInfo }: HeroProps) {
   return (
     <section className='relative overflow-hidden bg-linear-to-b from-background via-background to-muted/30 py-12 sm:py-16 md:py-24 lg:py-32'>
       <div className='container'>
-        <div className='mx-auto max-w-4xl text-center px-4 sm:px-6'>
-          <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent'>
-            {companyInfo.fields.name}
-          </h1>
+        <div className='mx-auto max-w-4xl text-center px-4 sm:px-6 flex flex-col gap-8 sm:gap-10'>
+          <div className='flex flex-col gap-4 sm:gap-6'>
+            <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent'>
+              {companyInfo.fields.name}
+            </h1>
+            <p className='text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto'>
+              {companyInfo.fields.description}
+            </p>
+          </div>
 
-          <p className='mt-4 sm:mt-6 text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto'>
-            {companyInfo.fields.description}
-          </p>
-
-          <div className='mt-8 sm:mt-10 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:justify-center px-4 sm:px-0'>
+          <div className='flex flex-col gap-3 sm:gap-4 sm:flex-row sm:justify-center px-4 sm:px-0'>
             <Button size='lg' asChild className='w-full sm:w-auto text-base'>
               <Link href='/contacts'>{CTA.ORDER_SERVICE}</Link>
             </Button>
@@ -34,7 +35,7 @@ export function Hero({ companyInfo }: HeroProps) {
             </Button>
           </div>
 
-          <div className='mt-8 sm:mt-12 flex flex-col items-center gap-3 sm:gap-4 md:gap-8 text-sm sm:text-base sm:flex-row sm:justify-center'>
+          <div className='flex flex-col items-center gap-3 sm:gap-4 md:gap-8 text-sm sm:text-base sm:flex-row sm:justify-center'>
             <a
               href={`tel:${companyInfo.fields.phone}`}
               className='flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group'

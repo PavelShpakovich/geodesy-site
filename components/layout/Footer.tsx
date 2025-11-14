@@ -15,15 +15,15 @@ export async function Footer() {
     <footer className='border-t bg-muted/30'>
       <div className='container py-8 md:py-12'>
         <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
-          <div className='space-y-3'>
-            <Link href='/' className='flex items-center gap-2 mb-2 w-fit'>
+          <div className='flex flex-col gap-3'>
+            <Link href='/' className='flex items-center gap-2 w-fit'>
               <Logo showText={false} className='opacity-80' />
               <h3 className='text-lg font-semibold'>{companyInfo.fields.name}</h3>
             </Link>
             <p className='text-sm text-muted-foreground max-w-xs'>{companyInfo.fields.description}</p>
           </div>
 
-          <div className='space-y-3'>
+          <div className='flex flex-col gap-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.NAVIGATION}</h4>
             <ul className='flex flex-wrap gap-x-4 gap-y-2 text-sm'>
               <li>
@@ -55,9 +55,9 @@ export async function Footer() {
             </ul>
           </div>
 
-          <div className='space-y-3'>
+          <div className='flex flex-col gap-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.CONTACTS}</h4>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <ul className='flex flex-col gap-2 text-sm text-muted-foreground'>
               <li>
                 <a
                   href={`tel:${companyInfo.fields.phone}`}
@@ -79,8 +79,8 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className='mt-8 border-t pt-6 md:pt-8'>
-          <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-muted-foreground mb-4'>
+        <div className='flex flex-col gap-4 mt-8 border-t pt-6 md:pt-8'>
+          <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-muted-foreground'>
             <p className='text-center sm:text-left'>{FOOTER.COPYRIGHT(currentYear, companyInfo.fields.name)}</p>
             <div className='flex gap-4'>
               <Link href='/privacy' className='hover:text-primary transition-colors'>
@@ -90,7 +90,7 @@ export async function Footer() {
           </div>
 
           {(companyInfo.fields.unp || companyInfo.fields.legalName) && (
-            <div className='pt-4 border-t text-xs text-muted-foreground space-y-1'>
+            <div className='pt-4 border-t text-xs text-muted-foreground flex flex-col gap-1'>
               {companyInfo.fields.legalName && <p>{companyInfo.fields.legalName}</p>}
               {companyInfo.fields.unp && (
                 <p>

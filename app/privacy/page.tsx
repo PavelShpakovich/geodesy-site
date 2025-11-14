@@ -125,33 +125,17 @@ export default async function PrivacyPage() {
           <p>{PRIVACY.SECTION_7.INTRO}</p>
           <ul className='list-disc pl-6 space-y-2'>
             <li>
-              <strong>Resend (почтовый сервис)</strong> — {PRIVACY.SECTION_7.RESEND.split('—')[1]}
+              <strong>Удаление данных</strong> — {PRIVACY.SECTION_7.DELETION.split('—')[1]}
             </li>
             <li>
-              <strong>Contentful (CMS)</strong> — {PRIVACY.SECTION_7.CONTENTFUL.split('—')[1]}
+              <strong>Не связываться</strong> — {PRIVACY.SECTION_7.NO_CONTACT.split('—')[1]}
+            </li>
+            <li>
+              <strong>Отзыв согласия</strong> — {PRIVACY.SECTION_7.WITHDRAW.split('—')[1]}
             </li>
           </ul>
           <p className='mt-4'>
-            Мы <strong>не передаем</strong> {PRIVACY.SECTION_7.NO_THIRD_PARTY.split('не передаем')[1]}
-          </p>
-        </section>
-
-        <section>
-          <h2 className='text-2xl font-semibold mb-4 mt-8'>8. {PRIVACY.SECTION_8.TITLE}</h2>
-          <p>{PRIVACY.SECTION_8.INTRO}</p>
-          <ul className='list-disc pl-6 space-y-2'>
-            <li>
-              <strong>Удаление данных</strong> — {PRIVACY.SECTION_8.DELETION.split('—')[1]}
-            </li>
-            <li>
-              <strong>Не связываться</strong> — {PRIVACY.SECTION_8.NO_CONTACT.split('—')[1]}
-            </li>
-            <li>
-              <strong>Отзыв согласия</strong> — {PRIVACY.SECTION_8.WITHDRAW.split('—')[1]}
-            </li>
-          </ul>
-          <p className='mt-4'>
-            {PRIVACY.SECTION_8.CONTACT}{' '}
+            {PRIVACY.SECTION_7.CONTACT}{' '}
             <a href={`mailto:${companyEmail}`} className='text-primary hover:underline'>
               {companyEmail}
             </a>
@@ -159,48 +143,48 @@ export default async function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className='text-2xl font-semibold mb-4 mt-8'>9. {PRIVACY.SECTION_9.TITLE}</h2>
-          <p>{PRIVACY.SECTION_9.INTRO}</p>
+          <h2 className='text-2xl font-semibold mb-4 mt-8'>8. {PRIVACY.SECTION_8.TITLE}</h2>
+          <p>{PRIVACY.SECTION_8.INTRO}</p>
           <ul className='list-disc pl-6 space-y-2 mt-4'>
             <li>
-              <strong>Vercel Analytics</strong> — {PRIVACY.SECTION_9.VERCEL_ANALYTICS}
+              <strong>Vercel Analytics</strong> — {PRIVACY.SECTION_8.VERCEL_ANALYTICS}
             </li>
             <li>
-              <strong>Vercel Speed Insights</strong> — {PRIVACY.SECTION_9.VERCEL_SPEED}
+              <strong>Vercel Speed Insights</strong> — {PRIVACY.SECTION_8.VERCEL_SPEED}
             </li>
           </ul>
           <p className='mt-4'>
             <strong>Важно:</strong>
           </p>
           <ul className='list-disc pl-6 space-y-2'>
-            <li>{PRIVACY.SECTION_9.NO_GA}</li>
-            <li>{PRIVACY.SECTION_9.NO_COOKIES}</li>
+            <li>{PRIVACY.SECTION_8.NO_GA}</li>
+            <li>{PRIVACY.SECTION_8.NO_COOKIES}</li>
           </ul>
-          <p className='mt-4 text-sm text-muted-foreground'>{PRIVACY.SECTION_9.PRIVACY_LINKS}</p>
+          <p className='mt-4 text-sm text-muted-foreground'>{PRIVACY.SECTION_8.PRIVACY_LINKS}</p>
+        </section>
+
+        <section>
+          <h2 className='text-2xl font-semibold mb-4 mt-8'>9. {PRIVACY.SECTION_9.TITLE}</h2>
+          <p>{PRIVACY.SECTION_9.TEXT}</p>
+          <p>{PRIVACY.SECTION_9.DATE}</p>
         </section>
 
         <section>
           <h2 className='text-2xl font-semibold mb-4 mt-8'>10. {PRIVACY.SECTION_10.TITLE}</h2>
-          <p>{PRIVACY.SECTION_10.TEXT}</p>
-          <p>{PRIVACY.SECTION_10.DATE}</p>
-        </section>
-
-        <section>
-          <h2 className='text-2xl font-semibold mb-4 mt-8'>11. {PRIVACY.SECTION_11.TITLE}</h2>
-          <p>{PRIVACY.SECTION_11.INTRO}</p>
+          <p>{PRIVACY.SECTION_10.INTRO}</p>
           <div className='bg-muted p-4 rounded-lg mt-4'>
             <p>
-              <strong>{PRIVACY.SECTION_11.COMPANY}:</strong> {companyName}
+              <strong>{PRIVACY.SECTION_10.COMPANY}:</strong> {companyName}
             </p>
             <p>
-              <strong>{PRIVACY.SECTION_11.EMAIL}:</strong>{' '}
+              <strong>{PRIVACY.SECTION_10.EMAIL}:</strong>{' '}
               <a href={`mailto:${companyEmail}`} className='text-primary hover:underline'>
                 {companyEmail}
               </a>
             </p>
             {companyInfo?.fields.phone && (
               <p>
-                <strong>{PRIVACY.SECTION_11.PHONE}:</strong>{' '}
+                <strong>{PRIVACY.SECTION_10.PHONE}:</strong>{' '}
                 <a href={`tel:${companyInfo.fields.phone}`} className='text-primary hover:underline'>
                   {companyInfo.fields.phone}
                 </a>

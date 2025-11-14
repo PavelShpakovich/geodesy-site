@@ -2,6 +2,7 @@ import { getServices, getSeoData, getCompanyInfo } from '@/lib/contentful/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
+import { PageHeader } from '@/components/sections/PageHeader';
 import { CTA, PAGES, NAV } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { generateServicesMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
@@ -40,14 +41,11 @@ export default async function ServicesPage() {
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6'>
-        <div className='mx-auto max-w-2xl text-center mb-10 sm:mb-12 lg:mb-16'>
-          <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl'>{PAGES.SERVICES.TITLE}</h1>
-          <p className='mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground'>{PAGES.SERVICES.SUBTITLE}</p>
-        </div>
+      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 flex flex-col gap-10 sm:gap-12 lg:gap-16'>
+        <PageHeader title={PAGES.SERVICES.TITLE} subtitle={PAGES.SERVICES.SUBTITLE} />
 
         {services.length > 0 && (
-          <div className='grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12 sm:mb-16'>
+          <div className='grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3'>
             {services.map((service) => (
               <Card
                 key={service.sys.id}
@@ -82,15 +80,17 @@ export default async function ServicesPage() {
           </div>
         )}
 
-        <div className='mt-12 sm:mt-16 bg-muted/50 rounded-lg p-6 sm:p-8 text-center'>
-          <h2 className='text-xl sm:text-2xl font-bold mb-3 sm:mb-4'>{PAGES.SERVICES.CTA_TITLE}</h2>
-          <p className='text-sm sm:text-base text-muted-foreground mb-5 sm:mb-6'>{PAGES.SERVICES.CTA_SUBTITLE}</p>
-          <Button size='lg' asChild className='w-full sm:w-auto'>
-            <Link href='/contacts'>
-              <Phone className='mr-2 h-4 w-4' />
-              {CTA.CONTACT_US}
-            </Link>
-          </Button>
+        <div className='bg-muted/50 rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
+          <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.SERVICES.CTA_TITLE}</h2>
+          <p className='text-sm sm:text-base text-muted-foreground'>{PAGES.SERVICES.CTA_SUBTITLE}</p>
+          <div>
+            <Button size='lg' asChild className='w-full sm:w-auto'>
+              <Link href='/contacts'>
+                <Phone className='mr-2 h-4 w-4' />
+                {CTA.CONTACT_US}
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </>
