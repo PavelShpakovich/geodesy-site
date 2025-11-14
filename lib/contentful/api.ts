@@ -23,6 +23,7 @@ interface CompanyInfoSkeleton extends EntrySkeletonType {
     telegram?: EntryFieldTypes.Text;
     viber?: EntryFieldTypes.Text;
     whatsapp?: EntryFieldTypes.Text;
+    instagram?: EntryFieldTypes.Text;
     latitude?: EntryFieldTypes.Number;
     longitude?: EntryFieldTypes.Number;
   };

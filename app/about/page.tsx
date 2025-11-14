@@ -1,7 +1,7 @@
 import { getCompanyInfo, getAdvantages, getSeoData } from '@/lib/contentful/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Instagram } from 'lucide-react';
 import { CTA, PAGES, NAV, COMPANY_INFO, MESSENGERS } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { generateAboutMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
@@ -124,7 +124,10 @@ export default async function AboutPage() {
           </div>
         )}
 
-        {(companyInfo.fields.telegram || companyInfo.fields.viber || companyInfo.fields.whatsapp) && (
+        {(companyInfo.fields.telegram ||
+          companyInfo.fields.viber ||
+          companyInfo.fields.whatsapp ||
+          companyInfo.fields.instagram) && (
           <div className='bg-muted/50 rounded-lg p-6 sm:p-8 mb-12 sm:mb-16'>
             <h3 className='text-lg sm:text-xl font-bold text-center mb-4 sm:mb-6'>{PAGES.ABOUT.MESSENGERS_TITLE}</h3>
             <div className='flex flex-wrap justify-center gap-3 sm:gap-4'>
@@ -149,6 +152,22 @@ export default async function AboutPage() {
                   <a href={`https://wa.me/${companyInfo.fields.whatsapp}`} target='_blank' rel='noopener noreferrer'>
                     <MessageCircle className='mr-2 h-4 w-4' />
                     {MESSENGERS.WHATSAPP}
+                  </a>
+                </Button>
+              )}
+              {companyInfo.fields.instagram && (
+                <Button variant='outline' asChild className='w-full sm:w-auto'>
+                  <a
+                    href={
+                      companyInfo.fields.instagram.startsWith('http')
+                        ? companyInfo.fields.instagram
+                        : `https://instagram.com/${companyInfo.fields.instagram}`
+                    }
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <Instagram className='mr-2 h-4 w-4' />
+                    {MESSENGERS.INSTAGRAM}
                   </a>
                 </Button>
               )}

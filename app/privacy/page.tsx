@@ -3,7 +3,7 @@ import { PRIVACY } from '@/lib/constants/text';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: PRIVACY.PAGE_TITLE + ' | Геодезические услуги',
+  title: PRIVACY.PAGE_TITLE + ' | ИП Пузин И.А.',
   description: PRIVACY.PAGE_DESCRIPTION,
   robots: {
     index: false,

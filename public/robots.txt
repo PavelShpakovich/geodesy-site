@@ -1,27 +1,21 @@
-# DEVELOPMENT MODE - Block all search engines temporarily
-# Remove this section when ready for production
+# PRODUCTION MODE - SEO Enabled
 
-# *
+# All search engines
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /api
+Disallow: /admin
 
-# # Uncomment below when ready for production:
-# # *
-# User-agent: *
-# Allow: /
-# Disallow: /api
-# Disallow: /admin
-# 
-# # Googlebot
-# User-agent: Googlebot
-# Allow: /
-# 
-# # Yandexbot
-# User-agent: Yandexbot
-# Allow: /
-# 
-# # Host
-# Host: https://mygeodesy.by
-# 
-# # Sitemaps
-# Sitemap: https://mygeodesy.by/sitemap.xml
+# Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Yandexbot
+User-agent: Yandexbot
+Allow: /
+
+# Host
+Host: https://mygeodesy.by
+
+# Sitemaps
+Sitemap: https://mygeodesy.by/sitemap.xml

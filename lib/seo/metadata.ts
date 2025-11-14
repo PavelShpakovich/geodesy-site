@@ -5,22 +5,23 @@ import type { SeoPage } from '../contentful/api';
  * SEO Configuration
  */
 export const SEO_CONFIG = {
-  SITE_NAME: 'Геодезические услуги',
+  SITE_NAME: 'ИП Пузин И.А.',
   SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://mygeodesy.by',
-  DEFAULT_TITLE: 'Геодезические услуги в Бресте | Профессиональная топосъемка',
+  DEFAULT_TITLE: 'Геодезические услуги в Бресте | ИП Пузин И.А.',
   DEFAULT_DESCRIPTION:
-    'Профессиональные геодезические работы в Бресте и Брестской области: топографическая съемка, вынос границ участка, исполнительная съемка. Опытные специалисты, современное оборудование.',
+    'Профессиональные геодезические работы в Бресте и Брестской области: топографическая съемка, вынос границ участка, исполнительная съемка. Индивидуальный подход, современное оборудование.',
   DEFAULT_KEYWORDS: [
     'геодезия Брест',
-    'топосъемка',
+    'геодезист Брест',
+    'топосъемка Брест',
     'топографическая съемка',
     'вынос границ участка',
     'исполнительная съемка',
     'геодезические работы Брест',
     'кадастровые работы',
     'межевание участка',
-    'геодезист Брест',
     'геодезия Брестская область',
+    'ИП Пузин',
   ],
   TWITTER_HANDLE: '@geodesy', // Replace with real handle if exists
   LOCALE: 'ru_BY',
@@ -106,17 +107,14 @@ export function generatePageMetadata(
       images,
     },
 
-    // Robots directives - TEMPORARILY DISABLED FOR DEVELOPMENT
+    // Robots directives - ENABLED FOR PRODUCTION
     robots: {
-      index: false,
-      follow: false,
-      nocache: true,
-      noarchive: true,
-      nosnippet: true,
-      noimageindex: true,
+      index: true,
+      follow: true,
+      nocache: false,
       googleBot: {
-        index: false,
-        follow: false,
+        index: true,
+        follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
