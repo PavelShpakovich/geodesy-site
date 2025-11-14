@@ -34,7 +34,9 @@ interface ServiceSkeleton extends EntrySkeletonType {
   fields: {
     title: EntryFieldTypes.Text;
     description: EntryFieldTypes.Text;
+    price: EntryFieldTypes.Text;
     slug: EntryFieldTypes.Text;
+    image?: EntryFieldTypes.AssetLink;
   };
 }
 
@@ -106,9 +108,10 @@ const getServicesUncached = async (): Promise<Service[]> => {
     const response = await client.getEntries<ServiceSkeleton>({
       content_type: 'service',
       order: ['sys.createdAt'],
+      include: 2, // Include linked assets
     });
 
-    return response.items;
+    return response.items as Service[];
   } catch (error) {
     console.error('Error fetching services:', error);
     return [];
@@ -133,6 +136,7 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
     // Fetch all services and filter by slug (Contentful's typed API limitation)
     const response = await client.getEntries<ServiceSkeleton>({
       content_type: 'service',
+      include: 2, // Include linked assets
     });
 
     const entry = response.items.find((item) => item.fields.slug === slug);
@@ -141,7 +145,7 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
       return null;
     }
 
-    return entry;
+    return entry as Service;
   } catch (error) {
     console.error(`Error fetching service with slug ${slug}:`, error);
     return null;

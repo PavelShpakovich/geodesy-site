@@ -34,7 +34,6 @@ export function Hero({ companyInfo }: HeroProps) {
             </Button>
           </div>
 
-          {/* Contact info */}
           <div className='mt-8 sm:mt-12 flex flex-col items-center gap-3 sm:gap-4 md:gap-8 text-sm sm:text-base sm:flex-row sm:justify-center'>
             <a
               href={`tel:${companyInfo.fields.phone}`}
@@ -57,7 +56,6 @@ export function Hero({ companyInfo }: HeroProps) {
         </div>
       </div>
 
-      {/* Decorative gradient orbs */}
       <div className='absolute top-0 right-0 -z-10 transform-gpu blur-3xl' aria-hidden='true'>
         <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/20 to-primary/5 opacity-30' />
       </div>

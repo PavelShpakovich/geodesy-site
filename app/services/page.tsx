@@ -8,6 +8,7 @@ import { generateServicesMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
 import { generateBreadcrumbSchema, generateServiceSchema } from '@/lib/seo/structured-data';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('services');
@@ -45,22 +46,37 @@ export default async function ServicesPage() {
           <p className='mt-3 sm:mt-4 text-base sm:text-lg text-muted-foreground'>{PAGES.SERVICES.SUBTITLE}</p>
         </div>
 
-        {/* Services Grid */}
         {services.length > 0 && (
           <div className='grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 mb-12 sm:mb-16'>
             {services.map((service) => (
               <Card
                 key={service.sys.id}
-                className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300 flex flex-col'
+                className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300 overflow-hidden p-0'
               >
-                <CardHeader className='pb-3'>
-                  <CardTitle className='text-xl sm:text-2xl'>{service.fields.title}</CardTitle>
-                </CardHeader>
-                <CardContent className='flex-1'>
-                  <CardDescription className='text-sm sm:text-base whitespace-pre-line leading-relaxed'>
-                    {service.fields.description}
-                  </CardDescription>
-                </CardContent>
+                {service.fields.image?.fields?.file?.url && (
+                  <div className='relative w-full h-48 overflow-hidden'>
+                    <Image
+                      src={`https:${service.fields.image.fields.file.url}`}
+                      alt={service.fields.image.fields.title || service.fields.title}
+                      fill
+                      className='object-cover'
+                      sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    />
+                  </div>
+                )}
+                <div className='flex flex-col gap-4 p-6'>
+                  <CardHeader>
+                    <CardTitle className='text-xl sm:text-2xl'>{service.fields.title}</CardTitle>
+                    {service.fields.price && (
+                      <div className='text-lg sm:text-xl font-semibold text-primary'>{service.fields.price}</div>
+                    )}
+                  </CardHeader>
+                  <CardContent className='flex-1'>
+                    <CardDescription className='text-sm sm:text-base whitespace-pre-line leading-relaxed'>
+                      {service.fields.description}
+                    </CardDescription>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>

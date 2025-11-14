@@ -36,7 +36,6 @@ export function ServicesPreview({ services, limit = 3 }: ServicesPreviewProps) {
           ))}
         </div>
 
-        {/* View All Services Button */}
         <div className='text-center'>
           <Button size='lg' asChild className='w-full sm:w-auto'>
             <Link href='/services'>

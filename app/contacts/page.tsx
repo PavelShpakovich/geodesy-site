@@ -42,7 +42,6 @@ export default async function ContactsPage() {
     <>
       <StructuredData data={structuredData} />
       <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6'>
-        {/* Header */}
         <div className='mx-auto max-w-2xl text-center mb-12 sm:mb-16'>
           <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-3 sm:mb-4'>
             {PAGES.CONTACTS.TITLE}
@@ -51,7 +50,6 @@ export default async function ContactsPage() {
         </div>
 
         <div className='grid gap-8 sm:gap-12 lg:grid-cols-2'>
-          {/* Contact Information */}
           <div>
             <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6'>{PAGES.CONTACTS.INFO_TITLE}</h2>
 
@@ -114,7 +112,6 @@ export default async function ContactsPage() {
                 </CardContent>
               </Card>
 
-              {/* Messenger Links */}
               {(companyInfo.fields.telegram || companyInfo.fields.viber || companyInfo.fields.whatsapp) && (
                 <Card className='hover:shadow-lg transition-shadow'>
                   <CardHeader className='pb-3'>
@@ -161,14 +158,12 @@ export default async function ContactsPage() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div>
             <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6'>{PAGES.CONTACTS.FORM_TITLE}</h2>
             <ContactForm />
           </div>
         </div>
 
-        {/* Map Section */}
         <div className='mt-12 sm:mt-16'>
           <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6 text-center'>{PAGES.CONTACTS.MAP_TITLE}</h2>
           {companyInfo.fields.latitude && companyInfo.fields.longitude ? (

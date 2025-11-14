@@ -20,7 +20,6 @@ export function ContactCTA({ companyInfo }: ContactCTAProps) {
           <h2 className='text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl'>{CONTACT_CTA.TITLE}</h2>
           <p className='mt-3 sm:mt-4 text-base sm:text-lg opacity-90'>{CONTACT_CTA.SUBTITLE}</p>
 
-          {/* Contact Info Grid */}
           <div className='mt-8 sm:mt-10 grid gap-6 sm:gap-4 md:gap-6 sm:grid-cols-3'>
             <div className='flex flex-col items-center gap-2 sm:gap-3'>
               <Phone className='h-5 w-5 sm:h-6 sm:w-6' />
@@ -57,7 +56,6 @@ export function ContactCTA({ companyInfo }: ContactCTAProps) {
             </div>
           </div>
 
-          {/* CTA Button */}
           <div className='mt-8 sm:mt-10'>
             <Button size='lg' variant='secondary' asChild className='w-full sm:w-auto'>
               <Link href='/contacts'>{CTA.CONTACT_US}</Link>

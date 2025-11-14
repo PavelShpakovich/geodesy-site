@@ -41,7 +41,6 @@ export default async function AboutPage() {
     <>
       <StructuredData data={structuredData} />
       <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6'>
-        {/* Header */}
         <div className='mx-auto max-w-3xl text-center mb-12 sm:mb-16'>
           <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4 sm:mb-6'>
             {companyInfo.fields.name}
@@ -51,7 +50,6 @@ export default async function AboutPage() {
           </p>
         </div>
 
-        {/* Company Info Cards */}
         <div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-12 sm:mb-16'>
           <Card className='hover:shadow-lg transition-shadow'>
             <CardHeader className='pb-3'>
@@ -106,7 +104,6 @@ export default async function AboutPage() {
           </Card>
         </div>
 
-        {/* Advantages Section */}
         {advantages.length > 0 && (
           <div className='mb-12 sm:mb-16'>
             <h2 className='text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12'>{PAGES.ABOUT.TITLE_ADVANTAGES}</h2>
@@ -127,7 +124,6 @@ export default async function AboutPage() {
           </div>
         )}
 
-        {/* Messenger Links (if available) */}
         {(companyInfo.fields.telegram || companyInfo.fields.viber || companyInfo.fields.whatsapp) && (
           <div className='bg-muted/50 rounded-lg p-6 sm:p-8 mb-12 sm:mb-16'>
             <h3 className='text-lg sm:text-xl font-bold text-center mb-4 sm:mb-6'>{PAGES.ABOUT.MESSENGERS_TITLE}</h3>
@@ -160,7 +156,6 @@ export default async function AboutPage() {
           </div>
         )}
 
-        {/* CTA Section */}
         <div className='bg-primary text-primary-foreground rounded-lg p-6 sm:p-8 text-center'>
           <h2 className='text-xl sm:text-2xl font-bold mb-3 sm:mb-4'>{PAGES.ABOUT.CTA_TITLE}</h2>
           <p className='text-sm sm:text-base mb-5 sm:mb-6 opacity-90'>{PAGES.ABOUT.CTA_SUBTITLE}</p>

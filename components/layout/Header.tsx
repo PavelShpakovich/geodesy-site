@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/logo';
 import { NAV, CTA } from '@/lib/constants/text';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface HeaderProps {
   companyName: string;
@@ -14,17 +15,22 @@ interface HeaderProps {
 
 export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close menu when clicking outside
+  useClickOutside(mobileMenuRef, () => setMobileMenuOpen(false), mobileMenuOpen);
 
   return (
-    <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60'>
+    <header
+      className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60'
+      ref={mobileMenuRef}
+    >
       <div className='container flex h-16 items-center justify-between'>
-        {/* Logo and Company Name */}
         <Link href='/' className='flex items-center transition-opacity hover:opacity-80'>
           <Logo showText={false} />
           <span className='ml-2 text-lg md:text-xl font-bold'>{companyName}</span>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className='hidden md:flex items-center space-x-6'>
           <Link href='/' className='text-sm font-medium transition-colors hover:text-primary'>
             {NAV.HOME}
@@ -40,7 +46,6 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
           </Link>
         </nav>
 
-        {/* Desktop CTA */}
         <div className='hidden md:flex items-center space-x-4'>
           {companyPhone && (
             <a
@@ -56,7 +61,6 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className='md:hidden p-2 hover:bg-accent rounded-md transition-colors'
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -66,7 +70,6 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className='md:hidden border-t bg-background/98 backdrop-blur-lg'>
           <nav className='container py-4 flex flex-col space-y-3'>

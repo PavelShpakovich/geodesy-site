@@ -16,7 +16,6 @@ export async function Footer() {
     <footer className='border-t bg-muted/30'>
       <div className='container py-8 md:py-12'>
         <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
-          {/* Company Info */}
           <div className='space-y-3 sm:col-span-2 lg:col-span-1'>
             <Link href='/' className='flex items-center gap-2 mb-2 w-fit'>
               <Logo showText={false} className='opacity-80' />
@@ -25,7 +24,6 @@ export async function Footer() {
             <p className='text-sm text-muted-foreground max-w-xs'>{companyInfo.fields.description}</p>
           </div>
 
-          {/* Navigation */}
           <div className='space-y-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.NAVIGATION}</h4>
             <ul className='space-y-2 text-sm'>
@@ -58,7 +56,6 @@ export async function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
           <div className='space-y-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.SERVICES}</h4>
             <ul className='space-y-2 text-sm text-muted-foreground'>
@@ -70,7 +67,6 @@ export async function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div className='space-y-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.CONTACTS}</h4>
             <ul className='space-y-2 text-sm text-muted-foreground'>
