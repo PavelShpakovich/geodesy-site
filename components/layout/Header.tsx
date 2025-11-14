@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/logo';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { NAV, CTA } from '@/lib/constants/text';
 import { useClickOutside } from '@/hooks/useClickOutside';
 
@@ -56,18 +57,22 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
               <span className='hidden lg:inline'>{companyPhone}</span>
             </a>
           )}
+          <ThemeToggle />
           <Button asChild size='sm'>
             <Link href='/contacts'>{CTA.ORDER}</Link>
           </Button>
         </div>
 
-        <button
-          className='md:hidden p-2 hover:bg-accent rounded-md transition-colors'
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label='Toggle menu'
-        >
-          {mobileMenuOpen ? <X className='h-6 w-6' /> : <Menu className='h-6 w-6' />}
-        </button>
+        <div className='flex md:hidden items-center gap-2'>
+          <ThemeToggle />
+          <button
+            className='p-2 hover:bg-accent rounded-md transition-colors'
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label='Toggle menu'
+          >
+            {mobileMenuOpen ? <X className='h-6 w-6' /> : <Menu className='h-6 w-6' />}
+          </button>
+        </div>
       </div>
 
       {mobileMenuOpen && (

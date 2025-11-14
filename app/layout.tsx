@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/HeaderServer';
 import { Footer } from '@/components/layout/Footer';
+import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE } from '@/lib/constants/text';
 import { SEO_CONFIG } from '@/lib/seo/metadata';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -73,14 +74,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={SITE.LANG} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('geodesy-site-theme') || 'system';
+                const root = document.documentElement;
+                if (theme === 'system') {
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  root.classList.add(systemTheme);
+                } else {
+                  root.classList.add(theme);
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
-        <div className='relative flex min-h-screen flex-col'>
-          <Header />
-          <main className='flex-1'>{children}</main>
-          <Footer />
-        </div>
-        <SpeedInsights />
-        <Analytics />
+        <ThemeProvider defaultTheme='system' storageKey='geodesy-site-theme'>
+          <div className='relative flex min-h-screen flex-col'>
+            <Header />
+            <main className='flex-1'>{children}</main>
+            <Footer />
+          </div>
+          <SpeedInsights />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
