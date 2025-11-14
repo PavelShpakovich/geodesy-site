@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
-import { getCompanyInfo, getServices } from '@/lib/contentful/api';
+import { getCompanyInfo } from '@/lib/contentful/api';
 import { NAV, FOOTER, COMPANY_INFO } from '@/lib/constants/text';
 
 export async function Footer() {
   const currentYear = new Date().getFullYear();
   const companyInfo = await getCompanyInfo();
-  const services = await getServices();
 
   if (!companyInfo) {
     return null;
@@ -15,8 +14,8 @@ export async function Footer() {
   return (
     <footer className='border-t bg-muted/30'>
       <div className='container py-8 md:py-12'>
-        <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
-          <div className='space-y-3 sm:col-span-2 lg:col-span-1'>
+        <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
+          <div className='space-y-3'>
             <Link href='/' className='flex items-center gap-2 mb-2 w-fit'>
               <Logo showText={false} className='opacity-80' />
               <h3 className='text-lg font-semibold'>{companyInfo.fields.name}</h3>
@@ -26,7 +25,7 @@ export async function Footer() {
 
           <div className='space-y-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.NAVIGATION}</h4>
-            <ul className='space-y-2 text-sm'>
+            <ul className='flex flex-wrap gap-x-4 gap-y-2 text-sm'>
               <li>
                 <Link href='/' className='text-muted-foreground hover:text-primary transition-colors inline-block'>
                   {NAV.HOME}
@@ -53,17 +52,6 @@ export async function Footer() {
                   {NAV.CONTACTS}
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          <div className='space-y-3'>
-            <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.SERVICES}</h4>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
-              {services.slice(0, 4).map((service) => (
-                <li key={service.fields.title} className='line-clamp-1'>
-                  {service.fields.title}
-                </li>
-              ))}
             </ul>
           </div>
 
@@ -101,7 +89,6 @@ export async function Footer() {
             </div>
           </div>
 
-          {/* Реквизиты в футере */}
           {(companyInfo.fields.unp || companyInfo.fields.legalName) && (
             <div className='pt-4 border-t text-xs text-muted-foreground space-y-1'>
               {companyInfo.fields.legalName && <p>{companyInfo.fields.legalName}</p>}

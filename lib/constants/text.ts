@@ -11,7 +11,7 @@ export const SITE = {
 export const NAV = {
   HOME: 'Главная',
   SERVICES: 'Услуги',
-  ABOUT: 'О компании',
+  ABOUT: 'Обо мне',
   CONTACTS: 'Контакты',
 } as const;
 
@@ -142,15 +142,6 @@ export const FOOTER = {
   CONTACTS: 'Контакты',
   COPYRIGHT: (year: number, companyName: string) => `© ${year} ${companyName}. Все права защищены.`,
   PRIVACY_POLICY: 'Политика конфиденциальности',
-} as const;
-
-export const PLACEHOLDERS = {
-  HOME: 'Главная страница',
-  SERVICES: 'Услуги',
-  ABOUT: 'О компании',
-  CONTACTS: 'Контакты',
-  PRIVACY: 'Политика конфиденциальности',
-  PHASE_MESSAGE: (phase: number) => `Placeholder — будет реализовано в Phase ${phase}`,
 } as const;
 
 export const ARIA = {
