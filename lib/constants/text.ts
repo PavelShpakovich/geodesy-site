@@ -118,7 +118,7 @@ export const FORM = {
   EMAIL: {
     SUBJECT: 'Новая заявка с сайта',
     HEADING: 'Новая заявка с формы обратной связи',
-    EMAIL_HEADING: 'Новая заявка с сайта',
+    EMAIL_HEADING: 'Новая заявка',
     NOT_PROVIDED: 'Не указан',
   },
 } as const;
