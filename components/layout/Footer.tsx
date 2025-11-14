@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/ui/logo';
 import { getCompanyInfo, getServices } from '@/lib/contentful/api';
-import { NAV, FOOTER } from '@/lib/constants/text';
+import { NAV, FOOTER, COMPANY_INFO } from '@/lib/constants/text';
 
 export async function Footer() {
   const currentYear = new Date().getFullYear();
@@ -91,13 +91,27 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className='mt-8 border-t pt-6 md:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground'>
-          <p className='text-center sm:text-left'>{FOOTER.COPYRIGHT(currentYear, companyInfo.fields.name)}</p>
-          <div className='flex gap-4'>
-            <Link href='/privacy' className='hover:text-primary transition-colors'>
-              {FOOTER.PRIVACY_POLICY}
-            </Link>
+        <div className='mt-8 border-t pt-6 md:pt-8'>
+          <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-muted-foreground mb-4'>
+            <p className='text-center sm:text-left'>{FOOTER.COPYRIGHT(currentYear, companyInfo.fields.name)}</p>
+            <div className='flex gap-4'>
+              <Link href='/privacy' className='hover:text-primary transition-colors'>
+                {FOOTER.PRIVACY_POLICY}
+              </Link>
+            </div>
           </div>
+
+          {/* Реквизиты в футере */}
+          {(companyInfo.fields.unp || companyInfo.fields.legalName) && (
+            <div className='pt-4 border-t text-xs text-muted-foreground space-y-1'>
+              {companyInfo.fields.legalName && <p>{companyInfo.fields.legalName}</p>}
+              {companyInfo.fields.unp && (
+                <p>
+                  {COMPANY_INFO.UNP}: <span className='font-mono'>{companyInfo.fields.unp}</span>
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </footer>

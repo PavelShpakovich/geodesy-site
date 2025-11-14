@@ -26,6 +26,11 @@ interface CompanyInfoSkeleton extends EntrySkeletonType {
     instagram?: EntryFieldTypes.Text;
     latitude?: EntryFieldTypes.Number;
     longitude?: EntryFieldTypes.Number;
+    unp?: EntryFieldTypes.Text;
+    legalName?: EntryFieldTypes.Text;
+    bankName?: EntryFieldTypes.Text;
+    bankAccount?: EntryFieldTypes.Text;
+    bic?: EntryFieldTypes.Text;
   };
 }
 

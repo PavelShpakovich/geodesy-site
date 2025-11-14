@@ -10,6 +10,14 @@ export interface TypeCompanyInfoFields {
     telegram?: EntryFieldTypes.Symbol;
     viber?: EntryFieldTypes.Symbol;
     whatsapp?: EntryFieldTypes.Symbol;
+    latitude?: EntryFieldTypes.Number;
+    longitude?: EntryFieldTypes.Number;
+    instagram?: EntryFieldTypes.Symbol;
+    unp?: EntryFieldTypes.Symbol;
+    legalName?: EntryFieldTypes.Symbol;
+    bankName?: EntryFieldTypes.Symbol;
+    bankAccount?: EntryFieldTypes.Symbol;
+    bic?: EntryFieldTypes.Symbol;
 }
 
 export type TypeCompanyInfoSkeleton = EntrySkeletonType<TypeCompanyInfoFields, "companyInfo">;

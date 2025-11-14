@@ -78,6 +78,12 @@ export const COMPANY_INFO = {
   ADDRESS: 'Адрес',
   WORK_HOURS: 'Режим работы',
   MESSENGERS: 'Мессенджеры',
+  LEGAL_INFO: 'Реквизиты',
+  UNP: 'УНП',
+  LEGAL_NAME: 'Юридическое название',
+  BANK_NAME: 'Банк',
+  BANK_ACCOUNT: 'Расчетный счет',
+  BIC: 'БИК',
 } as const;
 
 export const FORM = {

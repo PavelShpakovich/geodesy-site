@@ -175,6 +175,53 @@ export default async function ContactsPage() {
                 </Card>
               )}
             </div>
+
+            {/* Реквизиты */}
+            {(companyInfo.fields.unp ||
+              companyInfo.fields.legalName ||
+              companyInfo.fields.bankName ||
+              companyInfo.fields.bankAccount ||
+              companyInfo.fields.bic) && (
+              <div className='mt-6 sm:mt-8'>
+                <h3 className='text-lg sm:text-xl font-bold mb-4'>{COMPANY_INFO.LEGAL_INFO}</h3>
+                <Card className='hover:shadow-lg transition-shadow'>
+                  <CardContent>
+                    <dl className='space-y-3 text-sm sm:text-base'>
+                      {companyInfo.fields.legalName && (
+                        <div>
+                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.LEGAL_NAME}:</dt>
+                          <dd className='mt-1'>{companyInfo.fields.legalName}</dd>
+                        </div>
+                      )}
+                      {companyInfo.fields.unp && (
+                        <div>
+                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.UNP}:</dt>
+                          <dd className='mt-1 font-mono'>{companyInfo.fields.unp}</dd>
+                        </div>
+                      )}
+                      {companyInfo.fields.bankName && (
+                        <div>
+                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BANK_NAME}:</dt>
+                          <dd className='mt-1'>{companyInfo.fields.bankName}</dd>
+                        </div>
+                      )}
+                      {companyInfo.fields.bankAccount && (
+                        <div>
+                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BANK_ACCOUNT}:</dt>
+                          <dd className='mt-1 font-mono'>{companyInfo.fields.bankAccount}</dd>
+                        </div>
+                      )}
+                      {companyInfo.fields.bic && (
+                        <div>
+                          <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BIC}:</dt>
+                          <dd className='mt-1 font-mono'>{companyInfo.fields.bic}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
           </div>
 
           <div>
