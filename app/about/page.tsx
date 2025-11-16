@@ -72,7 +72,7 @@ export default async function AboutPage() {
           </div>
         )}
 
-        <div className='bg-muted/50 rounded-lg p-6 sm:p-8 flex flex-col gap-4 sm:gap-6'>
+        <div className='bg-muted/50 rounded-lg p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6'>
           <h3 className='text-lg sm:text-xl font-bold text-center'>{PAGES.ABOUT.MESSENGERS_TITLE}</h3>
           <SocialLinks companyInfo={companyInfo} variant='buttons' className='justify-center' />
         </div>
