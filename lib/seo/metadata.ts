@@ -42,14 +42,13 @@ export function generatePageMetadata(
 ): Metadata {
   const title = seoData?.fields.title || SEO_CONFIG.DEFAULT_TITLE;
   const description = seoData?.fields.description || SEO_CONFIG.DEFAULT_DESCRIPTION;
-  const keywords = seoData?.fields.keywords || SEO_CONFIG.DEFAULT_KEYWORDS;
   const url = `${SEO_CONFIG.SITE_URL}${options?.path || ''}`;
   const images = options?.images || [`${SEO_CONFIG.SITE_URL}/og-image.jpg`];
 
   return {
     title,
     description,
-    keywords: keywords.join(', '),
+    keywords: SEO_CONFIG.DEFAULT_KEYWORDS.join(', '),
 
     // Basic metadata
     applicationName: SEO_CONFIG.SITE_NAME,

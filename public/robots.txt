@@ -1,6 +1,4 @@
-# PRODUCTION MODE - SEO Enabled
-
-# All search engines
+# *
 User-agent: *
 Allow: /
 Disallow: /api
