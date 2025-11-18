@@ -13,6 +13,9 @@ import { generateContactsMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
 import { generateBreadcrumbSchema, generateLocalBusinessSchema } from '@/lib/seo/structured-data';
 import type { Metadata } from 'next';
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('contacts');
   return generateContactsMetadata(seoData);

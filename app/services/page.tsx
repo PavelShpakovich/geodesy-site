@@ -11,6 +11,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('services');
   return generateServicesMetadata(seoData);

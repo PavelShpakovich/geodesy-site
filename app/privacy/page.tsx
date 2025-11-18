@@ -2,6 +2,9 @@ import { getCompanyInfo } from '@/lib/contentful/api';
 import { PRIVACY } from '@/lib/constants/text';
 import type { Metadata } from 'next';
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: PRIVACY.PAGE_TITLE + ' | ИП Пузин И.А.',
   description: PRIVACY.PAGE_DESCRIPTION,

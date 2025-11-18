@@ -1,4 +1,3 @@
-import { unstable_cache } from 'next/cache';
 import { getContentfulClient } from './client';
 import type { EntrySkeletonType, Entry, EntryFieldTypes } from 'contentful';
 
@@ -8,6 +7,11 @@ import type { EntrySkeletonType, Entry, EntryFieldTypes } from 'contentful';
  * - This is the official approach from Contentful TypeScript documentation
  * - Auto-generated types from cf-content-types-generator are outdated for SDK v11
  * - We only use the I*Fields interfaces from generated types as a reference
+ *
+ * Caching Strategy:
+ * - No data cache (unstable_cache) - relies on Next.js ISR at page level
+ * - Pages set `revalidate` export to control static regeneration
+ * - Simpler, more predictable caching with automatic cache purge on redeploy
  */
 
 // Company Info Skeleton (Single Type)
@@ -74,9 +78,8 @@ export type SeoPage = Entry<SeoPageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', strin
 
 /**
  * Fetch company information (Single Type)
- * Uses Next.js cache with 1 week revalidation
  */
-const getCompanyInfoUncached = async (): Promise<CompanyInfo | null> => {
+export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
   try {
     const client = getContentfulClient();
 
@@ -96,18 +99,10 @@ const getCompanyInfoUncached = async (): Promise<CompanyInfo | null> => {
   }
 };
 
-export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
-  return unstable_cache(async () => getCompanyInfoUncached(), ['company-info'], {
-    revalidate: 604800,
-    tags: ['contentful', 'company-info'],
-  })();
-};
-
 /**
  * Fetch all services
- * Uses Next.js cache with 1 week revalidation
  */
-const getServicesUncached = async (): Promise<Service[]> => {
+export const getServices = async (): Promise<Service[]> => {
   try {
     const client = getContentfulClient();
 
@@ -122,13 +117,6 @@ const getServicesUncached = async (): Promise<Service[]> => {
     console.error('Error fetching services:', error);
     return [];
   }
-};
-
-export const getServices = async (): Promise<Service[]> => {
-  return unstable_cache(async () => getServicesUncached(), ['services'], {
-    revalidate: 604800,
-    tags: ['contentful', 'services'],
-  })();
 };
 
 /**
@@ -160,9 +148,8 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 
 /**
  * Fetch all advantages
- * Uses Next.js cache with 1 week revalidation
  */
-const getAdvantagesUncached = async (): Promise<Advantage[]> => {
+export const getAdvantages = async (): Promise<Advantage[]> => {
   try {
     const client = getContentfulClient();
 
@@ -178,19 +165,11 @@ const getAdvantagesUncached = async (): Promise<Advantage[]> => {
   }
 };
 
-export const getAdvantages = async (): Promise<Advantage[]> => {
-  return unstable_cache(async () => getAdvantagesUncached(), ['advantages'], {
-    revalidate: 604800,
-    tags: ['contentful', 'advantages'],
-  })();
-};
-
 /**
  * Fetch SEO data for a specific page
- * Uses Next.js cache with 1 week revalidation
  * @param slug - Page slug
  */
-const getSeoDataUncached = async (slug: string): Promise<SeoPage | null> => {
+export const getSeoData = async (slug: string): Promise<SeoPage | null> => {
   try {
     const client = getContentfulClient();
 
@@ -210,13 +189,6 @@ const getSeoDataUncached = async (slug: string): Promise<SeoPage | null> => {
     console.error(`Error fetching SEO data for slug ${slug}:`, error);
     return null;
   }
-};
-
-export const getSeoData = async (slug: string): Promise<SeoPage | null> => {
-  return unstable_cache(async () => getSeoDataUncached(slug), ['seo-data', slug], {
-    revalidate: 604800,
-    tags: ['contentful', 'seo', `seo-${slug}`],
-  })();
 };
 
 /**

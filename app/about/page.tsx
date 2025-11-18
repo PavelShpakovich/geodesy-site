@@ -11,6 +11,9 @@ import { generateBreadcrumbSchema, generateOrganizationSchema } from '@/lib/seo/
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('about');
   return generateAboutMetadata(seoData);
