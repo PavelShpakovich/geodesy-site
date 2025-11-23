@@ -4,12 +4,8 @@ import { AdvantagesSection } from '@/components/sections/AdvantagesSection';
 import { ServicesPreview } from '@/components/sections/ServicesPreview';
 import { ContactCTA } from '@/components/sections/ContactCTA';
 import { StructuredData } from '@/components/seo/StructuredData';
-import { generateHomeMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
-import {
-  generateLocalBusinessSchema,
-  generateWebSiteSchema,
-  generateBreadcrumbSchema,
-} from '@/lib/seo/structured-data';
+import { generateHomeMetadata } from '@/lib/seo/metadata';
+import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
 import type { Metadata } from 'next';
 
 // Revalidate every hour
@@ -23,14 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const [companyInfo, advantages, services] = await Promise.all([getCompanyInfo(), getAdvantages(), getServices()]);
 
-  // Generate structured data for SEO
-  const structuredData = companyInfo
-    ? [
-        generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL),
-        generateWebSiteSchema(SEO_CONFIG.SITE_URL, SEO_CONFIG.SITE_NAME),
-        generateBreadcrumbSchema([{ name: 'Главная', url: '/' }], SEO_CONFIG.SITE_URL),
-      ]
-    : [];
+  const structuredData = structuredDataHelpers.forHomePage(companyInfo);
 
   return (
     <>

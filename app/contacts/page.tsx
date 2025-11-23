@@ -1,5 +1,4 @@
 import { getCompanyInfo, getSeoData } from '@/lib/contentful/api';
-import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { YandexMap } from '@/components/map/YandexMap';
@@ -7,10 +6,11 @@ import { PageHeader } from '@/components/sections/PageHeader';
 import { ContactInfo } from '@/components/sections/ContactInfo';
 import { SocialLinks } from '@/components/sections/SocialLinks';
 import { LegalInfo } from '@/components/sections/LegalInfo';
-import { PAGES, NAV } from '@/lib/constants/text';
+import { PageLayout } from '@/components/layout/PageLayout';
+import { PAGES } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
-import { generateContactsMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema, generateLocalBusinessSchema } from '@/lib/seo/structured-data';
+import { generateContactsMetadata } from '@/lib/seo/metadata';
+import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
 import type { Metadata } from 'next';
 
 // Revalidate every hour
@@ -32,22 +32,12 @@ export default async function ContactsPage() {
     );
   }
 
-  // Generate structured data
-  const structuredData = [
-    generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL),
-    generateBreadcrumbSchema(
-      [
-        { name: NAV.HOME, url: '/' },
-        { name: NAV.CONTACTS, url: '/contacts' },
-      ],
-      SEO_CONFIG.SITE_URL
-    ),
-  ];
+  const structuredData = structuredDataHelpers.forContactsPage(companyInfo);
 
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 flex flex-col gap-12 sm:gap-16'>
+      <PageLayout className='gap-12 sm:gap-16'>
         <PageHeader title={PAGES.CONTACTS.TITLE} subtitle={PAGES.CONTACTS.SUBTITLE} />
 
         <div className='grid gap-8 sm:gap-12 lg:grid-cols-2'>
@@ -85,7 +75,7 @@ export default async function ContactsPage() {
             </div>
           )}
         </div>
-      </div>
+      </PageLayout>
     </>
   );
 }

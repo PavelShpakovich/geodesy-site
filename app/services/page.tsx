@@ -3,10 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
 import { PageHeader } from '@/components/sections/PageHeader';
-import { CTA, PAGES, NAV } from '@/lib/constants/text';
+import { PageLayout } from '@/components/layout/PageLayout';
+import { CTA, PAGES } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
-import { generateServicesMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema, generateServiceSchema } from '@/lib/seo/structured-data';
+import { generateServicesMetadata } from '@/lib/seo/metadata';
+import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -22,29 +23,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ServicesPage() {
   const [services, companyInfo] = await Promise.all([getServices(), getCompanyInfo()]);
 
-  // Generate structured data
-  const structuredData = [
-    generateBreadcrumbSchema(
-      [
-        { name: NAV.HOME, url: '/' },
-        { name: NAV.SERVICES, url: '/services' },
-      ],
-      SEO_CONFIG.SITE_URL
-    ),
-    // Add service schemas for each service
-    ...services
-      .map((service) =>
-        companyInfo
-          ? generateServiceSchema(service.fields.title, service.fields.description, companyInfo, SEO_CONFIG.SITE_URL)
-          : null
-      )
-      .filter(Boolean),
-  ];
+  const structuredData = structuredDataHelpers.forServicesPage(companyInfo, services);
 
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 flex flex-col gap-10 sm:gap-12 lg:gap-16'>
+      <PageLayout>
         <PageHeader title={PAGES.SERVICES.TITLE} subtitle={PAGES.SERVICES.SUBTITLE} />
 
         {services.length > 0 && (
@@ -95,7 +79,7 @@ export default async function ServicesPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </PageLayout>
     </>
   );
 }

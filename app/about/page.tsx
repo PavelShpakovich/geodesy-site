@@ -1,13 +1,13 @@
 import { getCompanyInfo, getAdvantages, getSeoData } from '@/lib/contentful/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { PageHeader } from '@/components/sections/PageHeader';
 import { ContactInfo } from '@/components/sections/ContactInfo';
 import { SocialLinks } from '@/components/sections/SocialLinks';
-import { CTA, PAGES, NAV } from '@/lib/constants/text';
+import { PageLayout } from '@/components/layout/PageLayout';
+import { CTA, PAGES } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
-import { generateAboutMetadata, SEO_CONFIG } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema, generateOrganizationSchema } from '@/lib/seo/structured-data';
+import { generateAboutMetadata } from '@/lib/seo/metadata';
+import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -30,22 +30,12 @@ export default async function AboutPage() {
     );
   }
 
-  // Generate structured data
-  const structuredData = [
-    generateOrganizationSchema(companyInfo, SEO_CONFIG.SITE_URL),
-    generateBreadcrumbSchema(
-      [
-        { name: NAV.HOME, url: '/' },
-        { name: NAV.ABOUT, url: '/about' },
-      ],
-      SEO_CONFIG.SITE_URL
-    ),
-  ];
+  const structuredData = structuredDataHelpers.forAboutPage(companyInfo);
 
   return (
     <>
       <StructuredData data={structuredData} />
-      <div className='container py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 flex flex-col gap-12 sm:gap-16'>
+      <PageLayout className='gap-12 sm:gap-16'>
         <div className='flex flex-col gap-4 sm:gap-6 mx-auto max-w-3xl text-center'>
           <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl'>{companyInfo.fields.name}</h1>
           <p className='text-base sm:text-lg md:text-xl text-muted-foreground whitespace-pre-line leading-relaxed'>
@@ -89,7 +79,7 @@ export default async function AboutPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </PageLayout>
     </>
   );
 }
