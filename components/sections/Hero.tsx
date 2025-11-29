@@ -35,7 +35,7 @@ export function Hero({ companyInfo }: HeroProps) {
             sizes='100vw'
             quality={90}
           />
-          <div className='absolute inset-0 bg-background/80 dark:bg-background/95' />
+          <div className='absolute inset-0 bg-background/80 dark:bg-background/85' />
         </div>
       )}
 
@@ -51,7 +51,7 @@ export function Hero({ companyInfo }: HeroProps) {
             sizes='100vw'
             quality={70}
           />
-          <div className='absolute inset-0 bg-background/85 dark:bg-background/95' />
+          <div className='absolute inset-0 bg-background/85 dark:bg-background/90' />
         </div>
       )}
 
