@@ -14,7 +14,7 @@ export function Hero({ companyInfo }: HeroProps) {
     return null;
   }
 
-  // Get Contentful image URLs (no fallback - only show if provided)
+  // Get Contentful image URLs
   const heroDesktopUrl = companyInfo.fields.heroImageDesktop?.fields?.file?.url;
   const heroMobileUrl = companyInfo.fields.heroImageMobile?.fields?.file?.url;
 
@@ -30,11 +30,12 @@ export function Hero({ companyInfo }: HeroProps) {
             alt='Геодезические работы в Бресте'
             fill
             priority
-            className='object-cover'
+            fetchPriority='high'
+            className='object-cover object-right'
             sizes='100vw'
             quality={90}
           />
-          <div className='absolute inset-0 bg-linear-to-b from-background/95 via-background/90 to-background/95' />
+          <div className='absolute inset-0 bg-background/80 dark:bg-background/95' />
         </div>
       )}
 
@@ -45,11 +46,12 @@ export function Hero({ companyInfo }: HeroProps) {
             alt='Геодезические работы в Бресте'
             fill
             priority
+            fetchPriority='high'
             className='object-cover object-top'
             sizes='100vw'
-            quality={85}
+            quality={70}
           />
-          <div className='absolute inset-0 bg-linear-to-b from-background/95 via-background/90 to-background/95' />
+          <div className='absolute inset-0 bg-background/85 dark:bg-background/95' />
         </div>
       )}
 
@@ -93,14 +95,6 @@ export function Hero({ companyInfo }: HeroProps) {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* Decorative gradient accents */}
-      <div className='absolute top-0 right-0 -z-10 transform-gpu blur-3xl pointer-events-none' aria-hidden='true'>
-        <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/10 to-primary/5 opacity-50' />
-      </div>
-      <div className='absolute bottom-0 left-0 -z-10 transform-gpu blur-3xl pointer-events-none' aria-hidden='true'>
-        <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/10 to-primary/5 opacity-50' />
       </div>
     </section>
   );
