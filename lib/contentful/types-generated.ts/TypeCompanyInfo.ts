@@ -18,6 +18,8 @@ export interface TypeCompanyInfoFields {
     bankName?: EntryFieldTypes.Symbol;
     bankAccount?: EntryFieldTypes.Symbol;
     bic?: EntryFieldTypes.Symbol;
+    heroImageDesktop?: EntryFieldTypes.AssetLink;
+    heroImageMobile?: EntryFieldTypes.AssetLink;
 }
 
 export type TypeCompanyInfoSkeleton = EntrySkeletonType<TypeCompanyInfoFields, "companyInfo">;

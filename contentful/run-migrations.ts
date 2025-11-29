@@ -13,7 +13,7 @@ if (result.error) {
   console.error('⚠️  Warning: Could not load .env.local file');
   console.error('   Make sure .env.local exists in the project root');
 }
-
+console.log('✅ Environment variables loaded from .env.local\n:', process.env);
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const MANAGEMENT_TOKEN = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
 const ENVIRONMENT_ID = process.env.CONTENTFUL_ENVIRONMENT || 'master';
@@ -54,10 +54,10 @@ async function runMigrations() {
 
   // Load completed migrations
   const completedMigrations = loadMigrationsLog();
-  
+
   if (completedMigrations.length > 0) {
     console.log(`📋 ${completedMigrations.length} migration(s) already applied:\n`);
-    completedMigrations.forEach(m => console.log(`   ✓ ${m}`));
+    completedMigrations.forEach((m) => console.log(`   ✓ ${m}`));
     console.log();
   }
 
@@ -68,7 +68,7 @@ async function runMigrations() {
     .sort();
 
   // Filter out already completed migrations
-  const pendingFiles = allFiles.filter(file => !completedMigrations.includes(file));
+  const pendingFiles = allFiles.filter((file) => !completedMigrations.includes(file));
 
   if (pendingFiles.length === 0) {
     console.log('✨ No new migrations to run. All migrations are up to date!\n');
@@ -76,7 +76,7 @@ async function runMigrations() {
   }
 
   console.log(`Found ${pendingFiles.length} pending migration(s) to run:\n`);
-  pendingFiles.forEach(f => console.log(`   → ${f}`));
+  pendingFiles.forEach((f) => console.log(`   → ${f}`));
   console.log();
 
   for (const file of pendingFiles) {
@@ -93,15 +93,16 @@ async function runMigrations() {
       });
 
       console.log(`✅ Completed: ${file}\n`);
-      
+
       // Mark migration as completed
       completedMigrations.push(file);
       saveMigrationsLog(completedMigrations);
-      
     } catch (error) {
       console.error(`❌ Failed: ${file}`);
       console.error(error);
-      console.error('\n💡 Tip: If this migration should be skipped, manually add it to contentful/.migrations-log.json');
+      console.error(
+        '\n💡 Tip: If this migration should be skipped, manually add it to contentful/.migrations-log.json'
+      );
       process.exit(1);
     }
   }

@@ -30,13 +30,14 @@ export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
     const response = await client.getEntries<TypeCompanyInfoSkeleton>({
       content_type: 'companyInfo',
       limit: 1,
+      include: 2, // Include linked assets (hero images)
     });
 
     if (!response.items.length) {
       return null;
     }
 
-    return response.items[0];
+    return response.items[0] as CompanyInfo;
   } catch (error) {
     console.error('Error fetching company info:', error);
     return null;

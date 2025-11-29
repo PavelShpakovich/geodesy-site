@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CTA } from '@/lib/constants/text';
@@ -13,9 +14,46 @@ export function Hero({ companyInfo }: HeroProps) {
     return null;
   }
 
+  // Get Contentful image URLs (no fallback - only show if provided)
+  const heroDesktopUrl = companyInfo.fields.heroImageDesktop?.fields?.file?.url;
+  const heroMobileUrl = companyInfo.fields.heroImageMobile?.fields?.file?.url;
+
+  const desktopSrc = heroDesktopUrl ? `https:${heroDesktopUrl}` : null;
+  const mobileSrc = heroMobileUrl ? `https:${heroMobileUrl}` : null;
+
   return (
-    <section className='relative overflow-hidden bg-linear-to-b from-background via-background to-muted/30 py-12 sm:py-16 md:py-24 lg:py-32'>
-      <div className='container'>
+    <section className='relative overflow-hidden py-12 sm:py-16 md:py-24 lg:py-32'>
+      {desktopSrc && (
+        <div className='absolute inset-0 -z-20 hidden md:block'>
+          <Image
+            src={desktopSrc}
+            alt='Геодезические работы в Бресте'
+            fill
+            priority
+            className='object-cover'
+            sizes='100vw'
+            quality={90}
+          />
+          <div className='absolute inset-0 bg-linear-to-b from-background/95 via-background/90 to-background/95' />
+        </div>
+      )}
+
+      {mobileSrc && (
+        <div className='absolute inset-0 -z-20 block md:hidden'>
+          <Image
+            src={mobileSrc}
+            alt='Геодезические работы в Бресте'
+            fill
+            priority
+            className='object-cover object-top'
+            sizes='100vw'
+            quality={85}
+          />
+          <div className='absolute inset-0 bg-linear-to-b from-background/95 via-background/90 to-background/95' />
+        </div>
+      )}
+
+      <div className='container relative z-10'>
         <div className='mx-auto max-w-4xl text-center px-4 sm:px-6 flex flex-col gap-8 sm:gap-10'>
           <div className='flex flex-col gap-4 sm:gap-6'>
             <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent'>
@@ -57,11 +95,12 @@ export function Hero({ companyInfo }: HeroProps) {
         </div>
       </div>
 
-      <div className='absolute top-0 right-0 -z-10 transform-gpu blur-3xl' aria-hidden='true'>
-        <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/20 to-primary/5 opacity-30' />
+      {/* Decorative gradient accents */}
+      <div className='absolute top-0 right-0 -z-10 transform-gpu blur-3xl pointer-events-none' aria-hidden='true'>
+        <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/10 to-primary/5 opacity-50' />
       </div>
-      <div className='absolute bottom-0 left-0 -z-10 transform-gpu blur-3xl' aria-hidden='true'>
-        <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/20 to-primary/5 opacity-30' />
+      <div className='absolute bottom-0 left-0 -z-10 transform-gpu blur-3xl pointer-events-none' aria-hidden='true'>
+        <div className='aspect-1155/678 w-144.5 bg-linear-to-tr from-primary/10 to-primary/5 opacity-50' />
       </div>
     </section>
   );
