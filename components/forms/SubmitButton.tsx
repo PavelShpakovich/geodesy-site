@@ -9,7 +9,12 @@ export function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type='submit' size='lg' className='w-full text-sm sm:text-base h-11 sm:h-12' disabled={pending}>
+    <Button
+      type='submit'
+      size='lg'
+      className='w-full text-sm sm:text-base h-11 sm:h-12 cursor-pointer'
+      disabled={pending}
+    >
       {pending ? (
         <>
           <Loader2 className='mr-2 h-4 w-4 animate-spin' />
