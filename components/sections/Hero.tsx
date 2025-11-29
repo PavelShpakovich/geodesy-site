@@ -22,9 +22,9 @@ export function Hero({ companyInfo }: HeroProps) {
   const mobileSrc = heroMobileUrl ? `https:${heroMobileUrl}` : null;
 
   return (
-    <section className='relative overflow-hidden py-12 sm:py-16 md:py-24 lg:py-32'>
+    <section className='relative overflow-hidden py-12 sm:py-16 md:py-24 lg:py-32 min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] xl:min-h-[65vh] flex items-center'>
       {desktopSrc && (
-        <div className='absolute inset-0 -z-20 hidden md:block'>
+        <div className='absolute inset-0 -z-20 hidden lg:block'>
           <Image
             src={desktopSrc}
             alt='Геодезические работы в Бресте'
@@ -39,7 +39,7 @@ export function Hero({ companyInfo }: HeroProps) {
       )}
 
       {mobileSrc && (
-        <div className='absolute inset-0 -z-20 block md:hidden'>
+        <div className='absolute inset-0 -z-20 block lg:hidden'>
           <Image
             src={mobileSrc}
             alt='Геодезические работы в Бресте'
