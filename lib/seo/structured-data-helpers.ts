@@ -1,4 +1,5 @@
-import type { CompanyInfo } from '../contentful/api';
+import type { CompanyInfo, BlogPost } from '../contentful/api';
+import { getAssetUrl } from '../contentful/client';
 import { SEO_CONFIG } from './metadata';
 import {
   generateLocalBusinessSchema,
@@ -23,6 +24,8 @@ interface StructuredDataHelpers {
   ) => StructuredDataSchema[];
   forAboutPage: (companyInfo: CompanyInfo | null) => StructuredDataSchema[];
   forContactsPage: (companyInfo: CompanyInfo | null) => StructuredDataSchema[];
+  forBlogPage: (posts: BlogPost[]) => StructuredDataSchema[];
+  forBlogPost: (post: BlogPost, companyInfo: CompanyInfo | null) => StructuredDataSchema[];
 }
 
 /**
@@ -97,5 +100,88 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     if (!companyInfo) return [breadcrumbs];
 
     return [generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL), breadcrumbs];
+  },
+
+  /**
+   * Blog listing page structured data
+   */
+  forBlogPage: (posts) => {
+    const breadcrumbs = generateBreadcrumbSchema(
+      [
+        { name: 'Главная', url: '/' },
+        { name: 'Блог', url: '/blog' },
+      ],
+      SEO_CONFIG.SITE_URL
+    );
+
+    // Blog listing schema (CollectionPage)
+    const blogListSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Блог о геодезии',
+      description: 'Полезные статьи о геодезии и землеустройстве',
+      url: `${SEO_CONFIG.SITE_URL}/blog`,
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: posts.map((post, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          url: `${SEO_CONFIG.SITE_URL}/blog/${post.fields.slug}`,
+          name: post.fields.title,
+        })),
+      },
+    };
+
+    return [breadcrumbs, blogListSchema];
+  },
+
+  /**
+   * Individual blog post structured data
+   */
+  forBlogPost: (post, companyInfo) => {
+    const breadcrumbs = generateBreadcrumbSchema(
+      [
+        { name: 'Главная', url: '/' },
+        { name: 'Блог', url: '/blog' },
+        { name: post.fields.title, url: `/blog/${post.fields.slug}` },
+      ],
+      SEO_CONFIG.SITE_URL
+    );
+
+    const imageUrl = getAssetUrl(post.fields.coverImage) || undefined;
+
+    // Article schema
+    const articleSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.fields.title,
+      description: post.fields.metaDescription || post.fields.excerpt,
+      ...(imageUrl && { image: imageUrl }),
+      datePublished: post.fields.publishedAt,
+      dateModified: post.sys.updatedAt,
+      author: {
+        '@type': 'Person',
+        name: post.fields.author || companyInfo?.fields.name || SEO_CONFIG.SITE_NAME,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: companyInfo?.fields.name || SEO_CONFIG.SITE_NAME,
+        ...(companyInfo && {
+          logo: {
+            '@type': 'ImageObject',
+            url: `${SEO_CONFIG.SITE_URL}/logo.png`,
+          },
+        }),
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `${SEO_CONFIG.SITE_URL}/blog/${post.fields.slug}`,
+      },
+      ...(post.fields.readingTime && {
+        timeRequired: `PT${post.fields.readingTime}M`,
+      }),
+    };
+
+    return [breadcrumbs, articleSchema];
   },
 };

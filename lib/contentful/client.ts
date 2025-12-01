@@ -48,10 +48,18 @@ export const contentfulClient = new Proxy({} as ContentfulClientApi<undefined>, 
 });
 
 /**
+ * Helper to format a protocol-relative Contentful URL to absolute
+ */
+export const formatContentfulUrl = (url: string | undefined | null): string => {
+  if (!url) return '';
+  return url.startsWith('//') ? `https:${url}` : url;
+};
+
+/**
  * Helper to extract asset URL from Contentful asset
  */
-export const getAssetUrl = (asset: { fields?: { file?: { url?: string } } }): string => {
-  return asset?.fields?.file?.url ? `https:${asset.fields.file.url}` : '';
+export const getAssetUrl = (asset: { fields?: { file?: { url?: string } } } | undefined | null): string => {
+  return formatContentfulUrl(asset?.fields?.file?.url);
 };
 
 /**

@@ -5,6 +5,7 @@ import type {
   TypeServiceSkeleton,
   TypeAdvantageSkeleton,
   TypeSeoPageSkeleton,
+  TypeBlogPostSkeleton,
 } from './types-generated.ts';
 
 /**
@@ -19,6 +20,7 @@ export type CompanyInfo = Entry<TypeCompanyInfoSkeleton, 'WITHOUT_UNRESOLVABLE_L
 export type Service = Entry<TypeServiceSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type Advantage = Entry<TypeAdvantageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type SeoPage = Entry<TypeSeoPageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
+export type BlogPost = Entry<TypeBlogPostSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 
 /**
  * Fetch company information (Single Type)
@@ -151,6 +153,71 @@ export async function getAllServiceSlugs(): Promise<string[]> {
     return response.items.map((entry) => entry.fields.slug);
   } catch (error) {
     console.error('Error fetching service slugs:', error);
+    return [];
+  }
+}
+
+/**
+ * Fetch all blog posts (sorted by published date, newest first)
+ */
+export const getBlogPosts = async (): Promise<BlogPost[]> => {
+  try {
+    const client = getContentfulClient();
+
+    const response = await client.getEntries<TypeBlogPostSkeleton>({
+      content_type: 'blogPost',
+      order: ['-fields.publishedAt'],
+      include: 2, // Include linked assets (cover images)
+    });
+
+    return response.items as BlogPost[];
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    return [];
+  }
+};
+
+/**
+ * Fetch a single blog post by slug
+ * @param slug - Blog post slug
+ */
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  try {
+    const client = getContentfulClient();
+
+    const response = await client.getEntries<TypeBlogPostSkeleton>({
+      content_type: 'blogPost',
+      include: 2, // Include linked assets
+    });
+
+    const entry = response.items.find((item) => item.fields.slug === slug);
+
+    if (!entry) {
+      return null;
+    }
+
+    return entry as BlogPost;
+  } catch (error) {
+    console.error(`Error fetching blog post with slug ${slug}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Get all blog post slugs (for static generation)
+ */
+export async function getAllBlogSlugs(): Promise<string[]> {
+  try {
+    const client = getContentfulClient();
+
+    const response = await client.getEntries<TypeBlogPostSkeleton>({
+      content_type: 'blogPost',
+      select: ['fields.slug'],
+    });
+
+    return response.items.map((entry) => entry.fields.slug);
+  } catch (error) {
+    console.error('Error fetching blog slugs:', error);
     return [];
   }
 }

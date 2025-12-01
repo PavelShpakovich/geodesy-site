@@ -13,6 +13,7 @@ export const NAV = {
   SERVICES: 'Услуги',
   ABOUT: 'Обо мне',
   CONTACTS: 'Контакты',
+  BLOG: 'Блог',
 } as const;
 
 export const CTA = {
@@ -21,6 +22,8 @@ export const CTA = {
   VIEW_SERVICES: 'Мои услуги',
   VIEW_ALL_SERVICES: 'Все услуги',
   CONTACT_US: 'Связаться со мной',
+  READ_MORE: 'Читать далее',
+  BACK_TO_BLOG: 'Назад к блогу',
 } as const;
 
 export const SECTIONS = {
@@ -64,6 +67,19 @@ export const PAGES = {
     MAP_PLACEHOLDER: 'Ошибка отображения карты',
     MAP_PLACEHOLDER_HINT: '(Yandex Maps или Leaflet)',
     NO_INFO: 'Контактная информация пока не добавлена',
+  },
+  BLOG: {
+    TITLE: 'Блог',
+    SUBTITLE: 'Полезные статьи о геодезии и землеустройстве',
+    NO_POSTS: 'Статьи пока не опубликованы',
+    NOT_FOUND: 'Статья не найдена',
+    READING_TIME: (minutes: number) => `${minutes} мин. чтения`,
+    PUBLISHED: 'Опубликовано',
+    AUTHOR: 'Автор',
+    SHARE: 'Поделиться',
+    RELATED_POSTS: 'Похожие статьи',
+    CTA_TITLE: 'Остались вопросы?',
+    CTA_SUBTITLE: 'Свяжитесь со мной для бесплатной консультации по геодезическим работам',
   },
 } as const;
 

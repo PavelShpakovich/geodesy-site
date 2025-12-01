@@ -1,4 +1,5 @@
 import { getServices, getSeoData, getCompanyInfo } from '@/lib/contentful/api';
+import { getAssetUrl } from '@/lib/contentful/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
@@ -12,8 +13,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every 24 hours
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('services');
@@ -38,11 +39,11 @@ export default async function ServicesPage() {
                 key={service.sys.id}
                 className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300 overflow-hidden p-0'
               >
-                {service.fields.image?.fields?.file?.url && (
+                {getAssetUrl(service.fields.image) && (
                   <div className='relative w-full h-48 overflow-hidden'>
                     <Image
-                      src={`https:${service.fields.image.fields.file.url}`}
-                      alt={service.fields.image.fields.title || service.fields.title}
+                      src={getAssetUrl(service.fields.image)}
+                      alt={service.fields.image?.fields?.title || service.fields.title}
                       fill
                       className='object-cover'
                       sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'

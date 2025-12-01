@@ -1,8 +1,8 @@
 import { getCompanyInfo, getAdvantages, getSeoData } from '@/lib/contentful/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ContactInfo } from '@/components/sections/ContactInfo';
 import { SocialLinks } from '@/components/sections/SocialLinks';
+import { AdvantagesSection } from '@/components/sections/AdvantagesSection';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { CTA, PAGES } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
@@ -11,8 +11,8 @@ import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every 24 hours
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('about');
@@ -46,23 +46,7 @@ export default async function AboutPage() {
         <ContactInfo companyInfo={companyInfo} layout='grid' />
 
         {advantages.length > 0 && (
-          <div className='flex flex-col gap-8 sm:gap-12'>
-            <h2 className='text-2xl sm:text-3xl font-bold text-center'>{PAGES.ABOUT.TITLE_ADVANTAGES}</h2>
-            <div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-              {advantages.map((advantage) => (
-                <Card key={advantage.sys.id} className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300'>
-                  <CardHeader>
-                    <CardTitle className='text-lg sm:text-xl'>{advantage.fields.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className='text-sm sm:text-base text-muted-foreground leading-relaxed'>
-                      {advantage.fields.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
+          <AdvantagesSection advantages={advantages} title={PAGES.ABOUT.TITLE_ADVANTAGES} subtitle='' />
         )}
 
         <div className='bg-muted/50 rounded-lg p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6'>

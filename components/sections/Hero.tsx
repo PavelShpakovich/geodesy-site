@@ -4,6 +4,7 @@ import { Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CTA } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';
+import { getAssetUrl } from '@/lib/contentful/client';
 
 interface HeroProps {
   companyInfo: CompanyInfo | null;
@@ -14,12 +15,8 @@ export function Hero({ companyInfo }: HeroProps) {
     return null;
   }
 
-  // Get Contentful image URLs
-  const heroDesktopUrl = companyInfo.fields.heroImageDesktop?.fields?.file?.url;
-  const heroMobileUrl = companyInfo.fields.heroImageMobile?.fields?.file?.url;
-
-  const desktopSrc = heroDesktopUrl ? `https:${heroDesktopUrl}` : null;
-  const mobileSrc = heroMobileUrl ? `https:${heroMobileUrl}` : null;
+  const desktopSrc = getAssetUrl(companyInfo.fields.heroImageDesktop);
+  const mobileSrc = getAssetUrl(companyInfo.fields.heroImageMobile);
 
   return (
     <section className='relative overflow-hidden py-12 sm:py-16 md:py-24 lg:py-32 min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] xl:min-h-[65vh] flex items-center'>

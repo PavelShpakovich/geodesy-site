@@ -13,8 +13,8 @@ import { generateContactsMetadata } from '@/lib/seo/metadata';
 import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
 import type { Metadata } from 'next';
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every 24 hours
+export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = await getSeoData('contacts');

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { SeoPage } from '../contentful/api';
+import { getAssetUrl } from '../contentful/client';
 
 /**
  * SEO Configuration
@@ -197,4 +198,98 @@ export function generateContactsMetadata(seoData: SeoPage | null): Metadata {
     path: '/contacts',
     type: 'website',
   });
+}
+
+/**
+ * Generate metadata for blog listing page
+ */
+export function generateBlogMetadata(seoData: SeoPage | null): Metadata {
+  const defaultTitle = 'Блог | Полезные статьи о геодезии';
+  const defaultDescription =
+    'Полезные статьи о геодезии и землеустройстве. Советы по топографической съёмке, межеванию участков, подготовке к геодезическим работам.';
+
+  return generatePageMetadata(
+    seoData ||
+      ({
+        fields: {
+          title: defaultTitle,
+          description: defaultDescription,
+        },
+      } as SeoPage),
+    {
+      path: '/blog',
+      type: 'website',
+    }
+  );
+}
+
+/**
+ * Generate metadata for a single blog post
+ */
+export function generateBlogPostMetadata(
+  post: {
+    title: string;
+    excerpt: string;
+    metaDescription?: string;
+    coverImage?: { fields?: { file?: { url?: string } } };
+    slug: string;
+    publishedAt: string;
+    author?: string;
+  },
+  seoData: SeoPage | null
+): Metadata {
+  const title = seoData?.fields.title || post.title;
+  const description = seoData?.fields.description || post.metaDescription || post.excerpt;
+  const url = `${SEO_CONFIG.SITE_URL}/blog/${post.slug}`;
+  const imageUrl = getAssetUrl(post.coverImage) || `${SEO_CONFIG.SITE_URL}/og-image.jpg`;
+
+  return {
+    title,
+    description,
+    keywords: SEO_CONFIG.DEFAULT_KEYWORDS.join(', '),
+    authors: [{ name: post.author || SEO_CONFIG.SITE_NAME }],
+
+    alternates: {
+      canonical: url,
+    },
+
+    openGraph: {
+      type: 'article',
+      url,
+      title,
+      description,
+      siteName: SEO_CONFIG.SITE_NAME,
+      locale: SEO_CONFIG.LOCALE,
+      publishedTime: post.publishedAt,
+      authors: [post.author || SEO_CONFIG.SITE_NAME],
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      site: SEO_CONFIG.TWITTER_HANDLE,
+      title,
+      description,
+      images: [imageUrl],
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
 }

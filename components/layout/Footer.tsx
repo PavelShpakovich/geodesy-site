@@ -3,6 +3,14 @@ import { Logo } from '@/components/ui/logo';
 import { getCompanyInfo } from '@/lib/contentful/api';
 import { NAV, FOOTER, COMPANY_INFO } from '@/lib/constants/text';
 
+const NAV_ITEMS = [
+  { href: '/', label: NAV.HOME },
+  { href: '/services', label: NAV.SERVICES },
+  { href: '/blog', label: NAV.BLOG },
+  { href: '/about', label: NAV.ABOUT },
+  { href: '/contacts', label: NAV.CONTACTS },
+] as const;
+
 export async function Footer() {
   const currentYear = new Date().getFullYear();
   const companyInfo = await getCompanyInfo();
@@ -26,32 +34,13 @@ export async function Footer() {
           <div className='flex flex-col gap-3'>
             <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.NAVIGATION}</h4>
             <ul className='flex flex-wrap gap-x-4 gap-y-2 text-sm'>
-              <li>
-                <Link href='/' className='text-muted-foreground hover:text-primary transition-colors inline-block'>
-                  {NAV.HOME}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/services'
-                  className='text-muted-foreground hover:text-primary transition-colors inline-block'
-                >
-                  {NAV.SERVICES}
-                </Link>
-              </li>
-              <li>
-                <Link href='/about' className='text-muted-foreground hover:text-primary transition-colors inline-block'>
-                  {NAV.ABOUT}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/contacts'
-                  className='text-muted-foreground hover:text-primary transition-colors inline-block'
-                >
-                  {NAV.CONTACTS}
-                </Link>
-              </li>
+              {NAV_ITEMS.map(({ href, label }) => (
+                <li key={href}>
+                  <Link href={href} className='text-muted-foreground hover:text-primary transition-colors inline-block'>
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

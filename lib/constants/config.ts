@@ -1,14 +1,10 @@
 /**
- * Application-wide configuration constants
- */
-
-/**
  * Revalidation time for ISR (Incremental Static Regeneration)
- * Pages will be revalidated every hour (3600 seconds)
+ * Pages will be revalidated every 24 hours (86400 seconds)
  *
  * Note: Must be a literal number for Next.js segment config exports
  */
-export const REVALIDATE_TIME = 3600 as const;
+export const REVALIDATE_TIME = 86400 as const;
 
 /**
  * Common page configuration
