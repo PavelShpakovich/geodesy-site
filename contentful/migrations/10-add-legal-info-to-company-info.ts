@@ -3,10 +3,9 @@ import type { MigrationFunction } from 'contentful-migration';
 const migration: MigrationFunction = (migration) => {
   const companyInfo = migration.editContentType('companyInfo');
 
-  // УНП (Учетный номер плательщика)
   companyInfo
     .createField('unp')
-    .name('УНП')
+    .name('UNP')
     .type('Symbol')
     .required(false)
     .validations([
@@ -15,10 +14,9 @@ const migration: MigrationFunction = (migration) => {
       },
     ]);
 
-  // Полное юридическое название
   companyInfo
     .createField('legalName')
-    .name('Юридическое название')
+    .name('Legal Name')
     .type('Symbol')
     .required(false)
     .validations([
@@ -30,7 +28,7 @@ const migration: MigrationFunction = (migration) => {
   // Банковские реквизиты
   companyInfo
     .createField('bankName')
-    .name('Название банка')
+    .name('Bank Name')
     .type('Symbol')
     .required(false)
     .validations([
@@ -41,7 +39,7 @@ const migration: MigrationFunction = (migration) => {
 
   companyInfo
     .createField('bankAccount')
-    .name('Расчетный счет')
+    .name('Bank Account')
     .type('Symbol')
     .required(false)
     .validations([
@@ -52,7 +50,7 @@ const migration: MigrationFunction = (migration) => {
 
   companyInfo
     .createField('bic')
-    .name('БИК банка')
+    .name('BIC')
     .type('Symbol')
     .required(false)
     .validations([
@@ -63,23 +61,23 @@ const migration: MigrationFunction = (migration) => {
 
   // Field controls
   companyInfo.changeFieldControl('unp', 'builtin', 'singleLine', {
-    helpText: 'Учетный номер плательщика (УНП)',
+    helpText: 'Unified National Party number',
   });
 
   companyInfo.changeFieldControl('legalName', 'builtin', 'singleLine', {
-    helpText: 'Полное юридическое название организации',
+    helpText: 'Full legal name of the organization',
   });
 
   companyInfo.changeFieldControl('bankName', 'builtin', 'singleLine', {
-    helpText: 'Название банка для расчетов',
+    helpText: 'Bank name for settlements',
   });
 
   companyInfo.changeFieldControl('bankAccount', 'builtin', 'singleLine', {
-    helpText: 'Номер расчетного счета',
+    helpText: 'Bank account number',
   });
 
   companyInfo.changeFieldControl('bic', 'builtin', 'singleLine', {
-    helpText: 'БИК банка',
+    helpText: 'Bank Identification Code',
   });
 };
 
