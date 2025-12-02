@@ -47,7 +47,7 @@ export default async function AboutPage() {
         {transformedInfo && <OwnerIntroSection owner={transformedInfo.owner} showPhoto={transformedInfo.hasPhoto} />}
 
         {transformedInfo?.hasStats && (
-          <div className='bg-muted/30 rounded-2xl p-6 sm:p-8'>
+          <div className='bg-muted/50 rounded-2xl p-6 sm:p-8'>
             <StatsSection stats={transformedInfo.stats} />
           </div>
         )}
@@ -55,7 +55,7 @@ export default async function AboutPage() {
         {transformedInfo?.hasCredentials && <CredentialsSection credentials={transformedInfo.credentials} />}
 
         {transformedInfo?.hasEquipment && (
-          <div className='bg-muted/30 rounded-2xl p-6 sm:p-8'>
+          <div className='bg-muted/50 rounded-2xl p-6 sm:p-8'>
             <EquipmentSection equipment={transformedInfo.equipment} />
           </div>
         )}

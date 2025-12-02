@@ -12,7 +12,7 @@ export async function Footer() {
   }
 
   return (
-    <footer className='border-t bg-muted/30'>
+    <footer className='border-t bg-muted/50'>
       <div className='container py-8 md:py-12'>
         <div className='flex flex-col md:flex-row gap-8 md:justify-between'>
           <div className='flex flex-col gap-3'>
