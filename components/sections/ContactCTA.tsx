@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
+import { ContactItem, type ContactItemProps } from '@/components/ui/ContactItem';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import { CTA, CONTACT_CTA, COMPANY_INFO } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';
@@ -13,6 +14,14 @@ export function ContactCTA({ companyInfo }: ContactCTAProps) {
     return null;
   }
 
+  const { phone, email, address } = companyInfo.fields;
+
+  const contactItems: ContactItemProps[] = [
+    { icon: Phone, label: COMPANY_INFO.PHONE, value: phone, href: `tel:${phone}` },
+    { icon: Mail, label: COMPANY_INFO.EMAIL, value: email, href: `mailto:${email}` },
+    { icon: MapPin, label: COMPANY_INFO.ADDRESS, value: address },
+  ];
+
   return (
     <section className='py-12 sm:py-16 md:py-20 lg:py-24 bg-primary text-primary-foreground'>
       <div className='container px-4 sm:px-6'>
@@ -23,39 +32,9 @@ export function ContactCTA({ companyInfo }: ContactCTAProps) {
           </div>
 
           <div className='grid gap-6 sm:gap-4 md:gap-6 sm:grid-cols-3'>
-            <div className='flex flex-col items-center gap-2 sm:gap-3'>
-              <Phone className='h-5 w-5 sm:h-6 sm:w-6' />
-              <div className='text-center flex flex-col gap-1'>
-                <div className='text-xs sm:text-sm opacity-75'>{COMPANY_INFO.PHONE}</div>
-                <a
-                  href={`tel:${companyInfo.fields.phone}`}
-                  className='text-sm sm:text-base font-medium hover:underline'
-                >
-                  {companyInfo.fields.phone}
-                </a>
-              </div>
-            </div>
-
-            <div className='flex flex-col items-center gap-2 sm:gap-3'>
-              <Mail className='h-5 w-5 sm:h-6 sm:w-6' />
-              <div className='text-center flex flex-col gap-1'>
-                <div className='text-xs sm:text-sm opacity-75'>{COMPANY_INFO.EMAIL}</div>
-                <a
-                  href={`mailto:${companyInfo.fields.email}`}
-                  className='text-sm sm:text-base font-medium hover:underline break-all'
-                >
-                  {companyInfo.fields.email}
-                </a>
-              </div>
-            </div>
-
-            <div className='flex flex-col items-center gap-2 sm:gap-3'>
-              <MapPin className='h-5 w-5 sm:h-6 sm:w-6' />
-              <div className='text-center flex flex-col gap-1'>
-                <div className='text-xs sm:text-sm opacity-75'>{COMPANY_INFO.ADDRESS}</div>
-                <div className='text-sm sm:text-base font-medium'>{companyInfo.fields.address}</div>
-              </div>
-            </div>
+            {contactItems.map((item) => (
+              <ContactItem key={item.label} {...item} />
+            ))}
           </div>
 
           <div>

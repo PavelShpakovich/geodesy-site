@@ -9,11 +9,6 @@ import {
   generateServiceSchema,
 } from './structured-data';
 
-/**
- * Helper utilities for generating structured data across pages
- * Reduces code duplication and centralizes schema generation logic
- */
-
 type StructuredDataSchema = Record<string, unknown>;
 
 interface StructuredDataHelpers {
@@ -28,13 +23,7 @@ interface StructuredDataHelpers {
   forBlogPost: (post: BlogPost, companyInfo: CompanyInfo | null) => StructuredDataSchema[];
 }
 
-/**
- * Centralized structured data generators for all pages
- */
 export const structuredDataHelpers: StructuredDataHelpers = {
-  /**
-   * Homepage structured data
-   */
   forHomePage: (companyInfo) => {
     if (!companyInfo) return [];
 
@@ -45,9 +34,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     ];
   },
 
-  /**
-   * Services page structured data
-   */
   forServicesPage: (companyInfo, services) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
@@ -68,9 +54,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     return [breadcrumbs, ...serviceSchemas];
   },
 
-  /**
-   * About page structured data
-   */
   forAboutPage: (companyInfo) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
@@ -85,9 +68,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     return [generateOrganizationSchema(companyInfo, SEO_CONFIG.SITE_URL), breadcrumbs];
   },
 
-  /**
-   * Contacts page structured data
-   */
   forContactsPage: (companyInfo) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
@@ -102,9 +82,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     return [generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL), breadcrumbs];
   },
 
-  /**
-   * Blog listing page structured data
-   */
   forBlogPage: (posts) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
@@ -114,7 +91,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
       SEO_CONFIG.SITE_URL
     );
 
-    // Blog listing schema (CollectionPage)
     const blogListSchema = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
@@ -135,9 +111,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     return [breadcrumbs, blogListSchema];
   },
 
-  /**
-   * Individual blog post structured data
-   */
   forBlogPost: (post, companyInfo) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
@@ -150,7 +123,6 @@ export const structuredDataHelpers: StructuredDataHelpers = {
 
     const imageUrl = getAssetUrl(post.fields.coverImage) || undefined;
 
-    // Article schema
     const articleSchema = {
       '@context': 'https://schema.org',
       '@type': 'Article',

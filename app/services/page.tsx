@@ -1,7 +1,7 @@
 import { getServices, getSeoData, getCompanyInfo } from '@/lib/contentful/api';
 import { getAssetUrl } from '@/lib/contentful/client';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { Phone } from 'lucide-react';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { PageLayout } from '@/components/layout/PageLayout';

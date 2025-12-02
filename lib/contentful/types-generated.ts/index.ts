@@ -1,5 +1,11 @@
 export type { TypeAdvantage, TypeAdvantageFields, TypeAdvantageSkeleton } from "./TypeAdvantage";
 export type { TypeBlogPost, TypeBlogPostFields, TypeBlogPostSkeleton } from "./TypeBlogPost";
+export type { TypeCertificationItem, TypeCertificationItemFields, TypeCertificationItemSkeleton } from "./TypeCertificationItem";
 export type { TypeCompanyInfo, TypeCompanyInfoFields, TypeCompanyInfoSkeleton } from "./TypeCompanyInfo";
+export type { TypeEducationItem, TypeEducationItemFields, TypeEducationItemSkeleton } from "./TypeEducationItem";
+export type { TypeEquipmentItem, TypeEquipmentItemFields, TypeEquipmentItemSkeleton } from "./TypeEquipmentItem";
+export type { TypeLicenseItem, TypeLicenseItemFields, TypeLicenseItemSkeleton } from "./TypeLicenseItem";
+export type { TypePersonalInfo, TypePersonalInfoFields, TypePersonalInfoSkeleton } from "./TypePersonalInfo";
+export type { TypeReview, TypeReviewFields, TypeReviewSkeleton } from "./TypeReview";
 export type { TypeSeoPage, TypeSeoPageFields, TypeSeoPageSkeleton } from "./TypeSeoPage";
 export type { TypeService, TypeServiceFields, TypeServiceSkeleton } from "./TypeService";

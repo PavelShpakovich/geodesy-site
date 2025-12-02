@@ -2,8 +2,9 @@
 
 import { Moon, Sun, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { useEffect, useState } from 'react';
+import { THEME, ARIA } from '@/lib/constants/text';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -14,9 +15,9 @@ export function ThemeToggle() {
   }, []);
 
   const cycleTheme = () => {
-    if (theme === 'light') {
+    if (theme === THEME.LIGHT) {
       setTheme('dark');
-    } else if (theme === 'dark') {
+    } else if (theme === THEME.DARK) {
       setTheme('system');
     } else {
       setTheme('light');
@@ -32,11 +33,11 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant='ghost' size='icon' className='h-9 w-9' onClick={cycleTheme} title={`Тема: ${theme}`}>
-      {theme === 'light' && <Sun className='h-[1.2rem] w-[1.2rem] transition-transform hover:rotate-12' />}
-      {theme === 'dark' && <Moon className='h-[1.2rem] w-[1.2rem] transition-transform hover:-rotate-12' />}
-      {theme === 'system' && <Monitor className='h-[1.2rem] w-[1.2rem] transition-transform hover:scale-110' />}
-      <span className='sr-only'>Переключить тему (текущая: {theme})</span>
+    <Button variant='ghost' size='icon' className='h-9 w-9' onClick={cycleTheme} title={THEME.LABEL(theme)}>
+      {theme === THEME.LIGHT && <Sun className='h-[1.2rem] w-[1.2rem] transition-transform hover:rotate-12' />}
+      {theme === THEME.DARK && <Moon className='h-[1.2rem] w-[1.2rem] transition-transform hover:-rotate-12' />}
+      {theme === THEME.SYSTEM && <Monitor className='h-[1.2rem] w-[1.2rem] transition-transform hover:scale-110' />}
+      <span className='sr-only'>{ARIA.TOGGLE_THEME(theme)}</span>
     </Button>
   );
 }

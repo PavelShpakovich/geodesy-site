@@ -1,15 +1,7 @@
 import Link from 'next/link';
-import { Logo } from '@/components/ui/logo';
+import { Logo } from '@/components/ui/Logo';
 import { getCompanyInfo } from '@/lib/contentful/api';
-import { NAV, FOOTER, COMPANY_INFO } from '@/lib/constants/text';
-
-const NAV_ITEMS = [
-  { href: '/', label: NAV.HOME },
-  { href: '/services', label: NAV.SERVICES },
-  { href: '/blog', label: NAV.BLOG },
-  { href: '/about', label: NAV.ABOUT },
-  { href: '/contacts', label: NAV.CONTACTS },
-] as const;
+import { NAV_ITEMS, FOOTER, COMPANY_INFO } from '@/lib/constants/text';
 
 export async function Footer() {
   const currentYear = new Date().getFullYear();

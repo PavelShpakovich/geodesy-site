@@ -1,9 +1,5 @@
 import type { CompanyInfo } from '../contentful/api';
 
-/**
- * Generate LocalBusiness JSON-LD structured data for Google
- * This helps with local SEO and rich snippets in search results
- */
 export function generateLocalBusinessSchema(companyInfo: CompanyInfo, siteUrl: string) {
   return {
     '@context': 'https://schema.org',
@@ -76,7 +72,6 @@ export function generateLocalBusinessSchema(companyInfo: CompanyInfo, siteUrl: s
       'GNSS-приёмники',
       'Геодезические измерения',
     ],
-    // Service types for better categorization
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Геодезические услуги',
@@ -113,7 +108,6 @@ export function generateLocalBusinessSchema(companyInfo: CompanyInfo, siteUrl: s
         },
       ],
     },
-    // Social media links (if available)
     ...(companyInfo.fields.telegram && {
       sameAs: [
         `https://t.me/${companyInfo.fields.telegram}`,
@@ -123,9 +117,6 @@ export function generateLocalBusinessSchema(companyInfo: CompanyInfo, siteUrl: s
   };
 }
 
-/**
- * Generate Organization schema
- */
 export function generateOrganizationSchema(companyInfo: CompanyInfo, siteUrl: string) {
   return {
     '@context': 'https://schema.org',
@@ -133,7 +124,7 @@ export function generateOrganizationSchema(companyInfo: CompanyInfo, siteUrl: st
     '@id': `${siteUrl}/#organization`,
     name: companyInfo.fields.name,
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`, // Add logo to public folder
+    logo: `${siteUrl}/logo.png`,
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: companyInfo.fields.phone,
@@ -145,9 +136,6 @@ export function generateOrganizationSchema(companyInfo: CompanyInfo, siteUrl: st
   };
 }
 
-/**
- * Generate WebSite schema for site-wide search
- */
 export function generateWebSiteSchema(siteUrl: string, siteName: string) {
   return {
     '@context': 'https://schema.org',
@@ -168,9 +156,6 @@ export function generateWebSiteSchema(siteUrl: string, siteName: string) {
   };
 }
 
-/**
- * Generate BreadcrumbList schema for navigation
- */
 export function generateBreadcrumbSchema(items: Array<{ name: string; url: string }>, siteUrl: string) {
   return {
     '@context': 'https://schema.org',
@@ -184,9 +169,6 @@ export function generateBreadcrumbSchema(items: Array<{ name: string; url: strin
   };
 }
 
-/**
- * Generate Service schema for individual services
- */
 export function generateServiceSchema(
   serviceName: string,
   serviceDescription: string,

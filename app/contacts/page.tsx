@@ -48,13 +48,15 @@ export default async function ContactsPage() {
             </div>
 
             <SocialLinks companyInfo={companyInfo} variant='card' />
-
-            <LegalInfo companyInfo={companyInfo} />
           </div>
 
           <div>
             <h2 className='text-xl sm:text-2xl font-bold mb-5 sm:mb-6'>{PAGES.CONTACTS.FORM_TITLE}</h2>
             <ContactForm />
+          </div>
+
+          <div className='lg:col-span-2 lg:max-w-md'>
+            <LegalInfo companyInfo={companyInfo} />
           </div>
         </div>
 

@@ -2,9 +2,6 @@ import type { Metadata } from 'next';
 import type { SeoPage } from '../contentful/api';
 import { getAssetUrl } from '../contentful/client';
 
-/**
- * SEO Configuration
- */
 export const SEO_CONFIG = {
   SITE_NAME: 'ИП Пузин И.А.',
   SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://mygeodesy.by',
@@ -12,7 +9,6 @@ export const SEO_CONFIG = {
   DEFAULT_DESCRIPTION:
     'Профессиональные геодезические услуги в Бресте и Брестской области. Топографическая съемка, топосъемка для ландшафтного дизайна, топосъемка для подключения инженерных сетей. Современное GNSS-оборудование. Опыт работы более 10 лет.',
   DEFAULT_KEYWORDS: [
-    // Primary target keywords - exact match
     'геодезия брест',
     'геодезия в бресте',
     'геодезист брест',
@@ -20,13 +16,11 @@ export const SEO_CONFIG = {
     'топосъемка брест',
     'топосъемка в бресте',
 
-    // Secondary keywords with variations
     'геодезические услуги брест',
     'геодезические работы брест',
     'геодезия брестская область',
     'геодезист брестская область',
 
-    // Long-tail keywords - services
     'топографическая съемка брест',
     'топографическая съемка в бресте',
     'вынос границ участка брест',
@@ -37,14 +31,12 @@ export const SEO_CONFIG = {
     'кадастровые работы брест',
     'землеустроительные работы брест',
 
-    // Related terms
     'геодезия цена брест',
     'геодезист недорого брест',
     'заказать геодезиста брест',
     'вызвать геодезиста брест',
     'геодезия под ключ брест',
 
-    // Company
     'ИП Пузин',
     'Пузин геодезия',
     'геодезия пузин брест',
@@ -54,10 +46,6 @@ export const SEO_CONFIG = {
   TYPE: 'website' as const,
 } as const;
 
-/**
- * Generate complete metadata for a page
- * Integrates with Contentful SEO data
- */
 export function generatePageMetadata(
   seoData: SeoPage | null,
   options?: {
@@ -76,13 +64,11 @@ export function generatePageMetadata(
     description,
     keywords: SEO_CONFIG.DEFAULT_KEYWORDS.join(', '),
 
-    // Basic metadata
     applicationName: SEO_CONFIG.SITE_NAME,
     authors: [{ name: SEO_CONFIG.SITE_NAME }],
     generator: 'Next.js',
     referrer: 'origin-when-cross-origin',
 
-    // Geographic targeting for local SEO
     other: {
       'geo.region': 'BY-BR',
       'geo.placename': 'Брест',
@@ -98,13 +84,11 @@ export function generatePageMetadata(
       target: 'Брест, Брестская область, Беларусь',
     },
 
-    // Verification (add real codes in production)
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
       yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
     },
 
-    // Alternate languages
     alternates: {
       canonical: url,
       languages: {
@@ -114,7 +98,6 @@ export function generatePageMetadata(
       },
     },
 
-    // OpenGraph metadata for social sharing
     openGraph: {
       type: options?.type || SEO_CONFIG.TYPE,
       url,
@@ -131,7 +114,6 @@ export function generatePageMetadata(
       })),
     },
 
-    // Twitter Card metadata
     twitter: {
       card: 'summary_large_image',
       site: SEO_CONFIG.TWITTER_HANDLE,
@@ -141,7 +123,6 @@ export function generatePageMetadata(
       images,
     },
 
-    // Robots directives - ENABLED FOR PRODUCTION
     robots: {
       index: true,
       follow: true,
@@ -155,14 +136,10 @@ export function generatePageMetadata(
       },
     },
 
-    // Additional metadata
     category: 'business',
   };
 }
 
-/**
- * Generate metadata for homepage
- */
 export function generateHomeMetadata(seoData: SeoPage | null): Metadata {
   return generatePageMetadata(seoData, {
     path: '/',
@@ -170,9 +147,6 @@ export function generateHomeMetadata(seoData: SeoPage | null): Metadata {
   });
 }
 
-/**
- * Generate metadata for services page
- */
 export function generateServicesMetadata(seoData: SeoPage | null): Metadata {
   return generatePageMetadata(seoData, {
     path: '/services',
@@ -180,9 +154,6 @@ export function generateServicesMetadata(seoData: SeoPage | null): Metadata {
   });
 }
 
-/**
- * Generate metadata for about page
- */
 export function generateAboutMetadata(seoData: SeoPage | null): Metadata {
   return generatePageMetadata(seoData, {
     path: '/about',
@@ -190,9 +161,6 @@ export function generateAboutMetadata(seoData: SeoPage | null): Metadata {
   });
 }
 
-/**
- * Generate metadata for contacts page
- */
 export function generateContactsMetadata(seoData: SeoPage | null): Metadata {
   return generatePageMetadata(seoData, {
     path: '/contacts',
@@ -200,9 +168,6 @@ export function generateContactsMetadata(seoData: SeoPage | null): Metadata {
   });
 }
 
-/**
- * Generate metadata for blog listing page
- */
 export function generateBlogMetadata(seoData: SeoPage | null): Metadata {
   const defaultTitle = 'Блог | Полезные статьи о геодезии';
   const defaultDescription =
@@ -223,9 +188,6 @@ export function generateBlogMetadata(seoData: SeoPage | null): Metadata {
   );
 }
 
-/**
- * Generate metadata for a single blog post
- */
 export function generateBlogPostMetadata(
   post: {
     title: string;

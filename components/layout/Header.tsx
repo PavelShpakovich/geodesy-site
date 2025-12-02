@@ -3,24 +3,16 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Logo } from '@/components/ui/logo';
+import { Button } from '@/components/ui/Button';
+import { Logo } from '@/components/ui/Logo';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { NAV, CTA } from '@/lib/constants/text';
+import { NAV_ITEMS, CTA } from '@/lib/constants/text';
 
 interface HeaderProps {
   companyName: string;
   companyPhone?: string;
 }
-
-const NAV_ITEMS = [
-  { href: '/', label: NAV.HOME },
-  { href: '/services', label: NAV.SERVICES },
-  { href: '/blog', label: NAV.BLOG },
-  { href: '/about', label: NAV.ABOUT },
-  { href: '/contacts', label: NAV.CONTACTS },
-] as const;
 
 export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

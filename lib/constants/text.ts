@@ -1,9 +1,3 @@
-/**
- * Text constants for the application
- * Centralized location for all static text to improve maintainability
- * and prepare for future i18n implementation
- */
-
 export const SITE = {
   LANG: 'ru',
 } as const;
@@ -15,6 +9,14 @@ export const NAV = {
   CONTACTS: 'Контакты',
   BLOG: 'Блог',
 } as const;
+
+export const NAV_ITEMS = [
+  { href: '/', label: NAV.HOME },
+  { href: '/services', label: NAV.SERVICES },
+  { href: '/blog', label: NAV.BLOG },
+  { href: '/about', label: NAV.ABOUT },
+  { href: '/contacts', label: NAV.CONTACTS },
+] as const;
 
 export const CTA = {
   ORDER_SERVICE: 'Заказать услугу',
@@ -57,6 +59,23 @@ export const PAGES = {
     CTA_TITLE: 'Готовы начать сотрудничество?',
     CTA_SUBTITLE: 'Свяжитесь со мной для консультации и обсуждения вашего проекта',
     NO_INFO: 'Информация пока не добавлена',
+    STATS: {
+      YEARS: 'Лет опыта',
+      PROJECTS: 'Выполненных проектов',
+      CLIENTS: 'Довольных клиентов',
+      REGION: 'Регион работы',
+    },
+    CREDENTIALS: {
+      TITLE: 'Образование и квалификация',
+      EDUCATION: 'Образование',
+      CERTIFICATIONS: 'Сертификаты',
+      LICENSES: 'Лицензии',
+      LICENSE_NUMBER: '№',
+      VALID_UNTIL: 'Действует до',
+    },
+    EQUIPMENT: {
+      TITLE: 'Оборудование и технологии',
+    },
   },
   CONTACTS: {
     TITLE: 'Контакты',
@@ -145,6 +164,44 @@ export const FORM = {
   },
 } as const;
 
+export const REVIEW_FORM = {
+  TITLE: 'Оставить отзыв',
+  SUBTITLE: 'Поделитесь своим опытом работы со мной',
+  MODERATION_NOTICE: 'Отзыв будет опубликован после проверки в течение 1-2 рабочих дней.',
+  LABELS: {
+    NAME: 'Ваше имя',
+    LOCATION: 'Ваш город/район',
+    RATING: 'Ваша оценка',
+    TEXT: 'Текст отзыва',
+  },
+  PLACEHOLDERS: {
+    NAME: 'Иван Иванов',
+    LOCATION: 'г. Брест',
+    TEXT: 'Расскажите о вашем опыте работы со мной...',
+  },
+  VALIDATION: {
+    NAME_LENGTH: 'Имя должно содержать от 2 до 100 символов',
+    LOCATION_LENGTH: 'Город/район должен содержать от 2 до 100 символов',
+    TEXT_LENGTH: 'Отзыв должен содержать от 20 до 1000 символов',
+    RATING_REQUIRED: 'Пожалуйста, выберите оценку',
+  },
+  TEXT_MAX: 'Максимум 1000 символов',
+  SUBMIT: 'Отправить отзыв',
+  SUCCESS: {
+    TITLE: 'Спасибо за ваш отзыв!',
+    MESSAGE: 'Ваш отзыв отправлен на модерацию и будет опубликован в течение 1-2 рабочих дней.',
+  },
+  EMAIL: {
+    SUBJECT: 'Новый отзыв с сайта',
+    HEADING: 'Новый отзыв на модерацию',
+  },
+  CTA: {
+    BUTTON: 'Оставить отзыв',
+    TITLE: 'Работали со мной?',
+    SUBTITLE: 'Поделитесь своим опытом — это поможет другим клиентам',
+  },
+} as const;
+
 export const MESSENGERS = {
   TELEGRAM: 'Telegram',
   VIBER: 'Viber',
@@ -162,6 +219,18 @@ export const FOOTER = {
 
 export const ARIA = {
   STAR_RATING: (rating: number, max: number) => `${rating} из ${max} звёзд`,
+  PREV_REVIEW: 'Предыдущий отзыв',
+  NEXT_REVIEW: 'Следующий отзыв',
+  GO_TO_REVIEW: (index: number) => `Перейти к отзыву ${index}`,
+  CLOSE: 'Закрыть',
+  TOGGLE_THEME: (theme: string) => `Переключить тему (текущая: ${theme})`,
+} as const;
+
+export const THEME = {
+  LABEL: (theme: string) => `Тема: ${theme}`,
+  LIGHT: 'light',
+  DARK: 'dark',
+  SYSTEM: 'system',
 } as const;
 
 export const SEO = {

@@ -1,10 +1,9 @@
 'use server';
 
 import nodemailer from 'nodemailer';
-import { revalidatePath } from 'next/cache';
-import { FORM } from '@/lib/constants/text';
+import { FORM, REVIEW_FORM } from '@/lib/constants/text';
 
-interface FormState {
+interface ReviewFormState {
   success: boolean;
   message: string;
   errors?: string[];
@@ -12,11 +11,8 @@ interface FormState {
 
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_REGEX = /^\+?[0-9\s\-()]{10,20}$/;
-
 const RATE_LIMIT_WINDOW = 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 3;
+const RATE_LIMIT_MAX_REQUESTS = 2;
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -64,29 +60,38 @@ function createTransporter() {
   });
 }
 
-export async function submitContactForm(prevState: FormState | null, formData: FormData): Promise<FormState> {
+function generateStarRating(rating: number): string {
+  const filled = '★'.repeat(rating);
+  const empty = '☆'.repeat(5 - rating);
+  return filled + empty;
+}
+
+export async function submitReviewForm(
+  prevState: ReviewFormState | null,
+  formData: FormData
+): Promise<ReviewFormState> {
   try {
     const name = formData.get('name')?.toString().trim() || '';
-    const phone = formData.get('phone')?.toString().trim() || '';
-    const email = formData.get('email')?.toString().trim() || '';
-    const message = formData.get('message')?.toString().trim() || '';
+    const location = formData.get('location')?.toString().trim() || '';
+    const rating = parseInt(formData.get('rating')?.toString() || '0');
+    const text = formData.get('text')?.toString().trim() || '';
 
     const errors: string[] = [];
 
     if (!name || name.length < 2 || name.length > 100) {
-      errors.push(FORM.VALIDATION.NAME_LENGTH);
+      errors.push(REVIEW_FORM.VALIDATION.NAME_LENGTH);
     }
 
-    if (!phone || !PHONE_REGEX.test(phone)) {
-      errors.push(FORM.VALIDATION.PHONE_INVALID);
+    if (location && (location.length < 2 || location.length > 100)) {
+      errors.push(REVIEW_FORM.VALIDATION.LOCATION_LENGTH);
     }
 
-    if (email && !EMAIL_REGEX.test(email)) {
-      errors.push(FORM.VALIDATION.EMAIL_INVALID);
+    if (!rating || rating < 1 || rating > 5) {
+      errors.push(REVIEW_FORM.VALIDATION.RATING_REQUIRED);
     }
 
-    if (!message || message.length < 10 || message.length > 2000) {
-      errors.push(FORM.VALIDATION.MESSAGE_LENGTH);
+    if (!text || text.length < 20 || text.length > 1000) {
+      errors.push(REVIEW_FORM.VALIDATION.TEXT_LENGTH);
     }
 
     if (errors.length > 0) {
@@ -97,7 +102,7 @@ export async function submitContactForm(prevState: FormState | null, formData: F
       };
     }
 
-    if (!checkRateLimit('contact-form')) {
+    if (!checkRateLimit('review-form')) {
       return {
         success: false,
         message: FORM.ERRORS.RATE_LIMIT,
@@ -118,20 +123,26 @@ export async function submitContactForm(prevState: FormState | null, formData: F
 
     const contactEmail = process.env.CONTACT_EMAIL;
     const fromEmail = process.env.SMTP_FROM;
+    const starRating = generateStarRating(rating);
 
     const mailOptions = {
       from: fromEmail,
       to: contactEmail,
-      subject: FORM.EMAIL.SUBJECT,
+      subject: `${REVIEW_FORM.EMAIL.SUBJECT} - ${starRating} от ${name}`,
       text: `
-${FORM.EMAIL.HEADING}
+${REVIEW_FORM.EMAIL.HEADING}
 
 Имя: ${name}
-Телефон: ${phone}
-Email: ${email || FORM.EMAIL.NOT_PROVIDED}
+Город/район: ${location || 'Не указан'}
+Оценка: ${starRating} (${rating}/5)
 
-Сообщение:
-${message}
+Текст отзыва:
+${text}
+
+---
+Дата: ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Minsk' })}
+
+Для публикации добавьте этот отзыв в Contentful.
       `.trim(),
       html: `
 <!DOCTYPE html>
@@ -141,18 +152,20 @@ ${message}
   <style>
     body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #64748b; color: white; padding: 20px; border-radius: 5px 5px 0 0; }
+    .header { background: #f59e0b; color: white; padding: 20px; border-radius: 5px 5px 0 0; }
     .content { background: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 0 0 5px 5px; }
     .field { margin-bottom: 15px; }
     .label { font-weight: bold; color: #666; }
-    .value { margin-top: 5px; padding: 10px; background: white; border-left: 3px solid #64748b; }
-    .message { white-space: pre-wrap; }
+    .value { margin-top: 5px; padding: 10px; background: white; border-left: 3px solid #f59e0b; }
+    .stars { font-size: 24px; color: #f59e0b; }
+    .review-text { white-space: pre-wrap; font-style: italic; }
+    .notice { margin-top: 20px; padding: 15px; background: #fef3c7; border-radius: 5px; font-size: 14px; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h2 style="margin: 0;">${FORM.EMAIL.EMAIL_HEADING}</h2>
+      <h2 style="margin: 0;">⭐ ${REVIEW_FORM.EMAIL.HEADING}</h2>
     </div>
     <div class="content">
       <div class="field">
@@ -160,16 +173,23 @@ ${message}
         <div class="value">${name}</div>
       </div>
       <div class="field">
-        <div class="label">Телефон:</div>
-        <div class="value">${phone}</div>
+        <div class="label">Город/район:</div>
+        <div class="value">${location || 'Не указан'}</div>
       </div>
       <div class="field">
-        <div class="label">Email:</div>
-        <div class="value">${email || FORM.EMAIL.NOT_PROVIDED}</div>
+        <div class="label">Оценка:</div>
+        <div class="value">
+          <span class="stars">${starRating}</span>
+          <span style="color: #666; margin-left: 10px;">(${rating} из 5)</span>
+        </div>
       </div>
       <div class="field">
-        <div class="label">Сообщение:</div>
-        <div class="value message">${message}</div>
+        <div class="label">Текст отзыва:</div>
+        <div class="value review-text">"${text}"</div>
+      </div>
+      <div class="notice">
+        📋 <strong>Для публикации:</strong> Добавьте этот отзыв в Contentful CMS.<br>
+        📅 <strong>Дата получения:</strong> ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Minsk' })}
       </div>
     </div>
   </div>
@@ -180,16 +200,14 @@ ${message}
 
     await transporter.sendMail(mailOptions);
 
-    console.log('Contact form submitted:', { name, phone, email: email || 'N/A' });
-
-    revalidatePath('/contacts');
+    console.log('Review submitted:', { name, location, rating });
 
     return {
       success: true,
-      message: FORM.SUCCESS.MESSAGE,
+      message: REVIEW_FORM.SUCCESS.MESSAGE,
     };
   } catch (error) {
-    console.error('Error submitting contact form:', error);
+    console.error('Error submitting review:', error);
 
     return {
       success: false,

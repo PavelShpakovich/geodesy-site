@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { COMPANY_INFO } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';
 import { cn } from '@/lib/utils';
@@ -8,10 +8,24 @@ interface LegalInfoProps {
   className?: string;
 }
 
+interface LegalInfoItem {
+  label: string;
+  value?: string;
+  mono?: boolean;
+}
+
 export function LegalInfo({ companyInfo, className }: LegalInfoProps) {
   const { unp, legalName, bankName, bankAccount, bic } = companyInfo.fields;
 
-  if (!unp && !legalName && !bankName && !bankAccount && !bic) {
+  const items: LegalInfoItem[] = [
+    { label: COMPANY_INFO.LEGAL_NAME, value: legalName },
+    { label: COMPANY_INFO.UNP, value: unp, mono: true },
+    { label: COMPANY_INFO.BANK_NAME, value: bankName },
+    { label: COMPANY_INFO.BANK_ACCOUNT, value: bankAccount, mono: true },
+    { label: COMPANY_INFO.BIC, value: bic, mono: true },
+  ].filter((item) => item.value);
+
+  if (items.length === 0) {
     return null;
   }
 
@@ -21,36 +35,12 @@ export function LegalInfo({ companyInfo, className }: LegalInfoProps) {
       <Card className='hover:shadow-lg transition-shadow'>
         <CardContent>
           <dl className='flex flex-col gap-3 text-sm sm:text-base'>
-            {legalName && (
-              <div>
-                <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.LEGAL_NAME}:</dt>
-                <dd className='mt-1'>{legalName}</dd>
+            {items.map((item) => (
+              <div key={item.label}>
+                <dt className='font-semibold text-muted-foreground'>{item.label}:</dt>
+                <dd className={`mt-1 ${item.mono ? 'font-mono' : ''}`}>{item.value}</dd>
               </div>
-            )}
-            {unp && (
-              <div>
-                <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.UNP}:</dt>
-                <dd className='mt-1 font-mono'>{unp}</dd>
-              </div>
-            )}
-            {bankName && (
-              <div>
-                <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BANK_NAME}:</dt>
-                <dd className='mt-1'>{bankName}</dd>
-              </div>
-            )}
-            {bankAccount && (
-              <div>
-                <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BANK_ACCOUNT}:</dt>
-                <dd className='mt-1 font-mono'>{bankAccount}</dd>
-              </div>
-            )}
-            {bic && (
-              <div>
-                <dt className='font-semibold text-muted-foreground'>{COMPANY_INFO.BIC}:</dt>
-                <dd className='mt-1 font-mono'>{bic}</dd>
-              </div>
-            )}
+            ))}
           </dl>
         </CardContent>
       </Card>

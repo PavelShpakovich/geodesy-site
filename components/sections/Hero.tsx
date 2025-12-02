@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { CTA } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';
 import { getAssetUrl } from '@/lib/contentful/client';

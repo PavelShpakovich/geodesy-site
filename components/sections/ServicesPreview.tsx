@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
 import { SECTIONS, CTA } from '@/lib/constants/text';
 import type { Service } from '@/lib/contentful/api';

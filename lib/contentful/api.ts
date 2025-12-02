@@ -6,25 +6,18 @@ import type {
   TypeAdvantageSkeleton,
   TypeSeoPageSkeleton,
   TypeBlogPostSkeleton,
+  TypeReviewSkeleton,
+  TypePersonalInfoSkeleton,
 } from './types-generated.ts';
 
-/**
- * Caching Strategy:
- * - No data cache (unstable_cache) - relies on Next.js ISR at page level
- * - Pages set `revalidate` export to control static regeneration
- * - Simpler, more predictable caching with automatic cache purge on redeploy
- */
-
-// Export Entry types for components
 export type CompanyInfo = Entry<TypeCompanyInfoSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type Service = Entry<TypeServiceSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type Advantage = Entry<TypeAdvantageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type SeoPage = Entry<TypeSeoPageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type BlogPost = Entry<TypeBlogPostSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
+export type Review = Entry<TypeReviewSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
+export type PersonalInfo = Entry<TypePersonalInfoSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 
-/**
- * Fetch company information (Single Type)
- */
 export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
   try {
     const client = getContentfulClient();
@@ -32,7 +25,7 @@ export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
     const response = await client.getEntries<TypeCompanyInfoSkeleton>({
       content_type: 'companyInfo',
       limit: 1,
-      include: 2, // Include linked assets (hero images)
+      include: 2,
     });
 
     if (!response.items.length) {
@@ -46,9 +39,6 @@ export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
   }
 };
 
-/**
- * Fetch all services
- */
 export const getServices = async (): Promise<Service[]> => {
   try {
     const client = getContentfulClient();
@@ -56,7 +46,7 @@ export const getServices = async (): Promise<Service[]> => {
     const response = await client.getEntries<TypeServiceSkeleton>({
       content_type: 'service',
       order: ['sys.createdAt'],
-      include: 2, // Include linked assets
+      include: 2,
     });
 
     return response.items as Service[];
@@ -66,18 +56,13 @@ export const getServices = async (): Promise<Service[]> => {
   }
 };
 
-/**
- * Fetch a single service by slug
- * @param slug - Service slug
- */
 export async function getServiceBySlug(slug: string): Promise<Service | null> {
   try {
     const client = getContentfulClient();
 
-    // Fetch all services and filter by slug (Contentful's typed API limitation)
     const response = await client.getEntries<TypeServiceSkeleton>({
       content_type: 'service',
-      include: 2, // Include linked assets
+      include: 2,
     });
 
     const entry = response.items.find((item) => item.fields.slug === slug);
@@ -93,9 +78,6 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
   }
 }
 
-/**
- * Fetch all advantages
- */
 export const getAdvantages = async (): Promise<Advantage[]> => {
   try {
     const client = getContentfulClient();
@@ -112,15 +94,10 @@ export const getAdvantages = async (): Promise<Advantage[]> => {
   }
 };
 
-/**
- * Fetch SEO data for a specific page
- * @param slug - Page slug
- */
 export const getSeoData = async (slug: string): Promise<SeoPage | null> => {
   try {
     const client = getContentfulClient();
 
-    // Fetch all SEO pages and filter by slug
     const response = await client.getEntries<TypeSeoPageSkeleton>({
       content_type: 'seoPage',
     });
@@ -138,9 +115,6 @@ export const getSeoData = async (slug: string): Promise<SeoPage | null> => {
   }
 };
 
-/**
- * Get all service slugs (for static generation)
- */
 export async function getAllServiceSlugs(): Promise<string[]> {
   try {
     const client = getContentfulClient();
@@ -157,9 +131,6 @@ export async function getAllServiceSlugs(): Promise<string[]> {
   }
 }
 
-/**
- * Fetch all blog posts (sorted by published date, newest first)
- */
 export const getBlogPosts = async (): Promise<BlogPost[]> => {
   try {
     const client = getContentfulClient();
@@ -167,7 +138,7 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
     const response = await client.getEntries<TypeBlogPostSkeleton>({
       content_type: 'blogPost',
       order: ['-fields.publishedAt'],
-      include: 2, // Include linked assets (cover images)
+      include: 2,
     });
 
     return response.items as BlogPost[];
@@ -177,17 +148,13 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
   }
 };
 
-/**
- * Fetch a single blog post by slug
- * @param slug - Blog post slug
- */
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const client = getContentfulClient();
 
     const response = await client.getEntries<TypeBlogPostSkeleton>({
       content_type: 'blogPost',
-      include: 2, // Include linked assets
+      include: 2,
     });
 
     const entry = response.items.find((item) => item.fields.slug === slug);
@@ -203,9 +170,6 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
   }
 }
 
-/**
- * Get all blog post slugs (for static generation)
- */
 export async function getAllBlogSlugs(): Promise<string[]> {
   try {
     const client = getContentfulClient();
@@ -221,3 +185,42 @@ export async function getAllBlogSlugs(): Promise<string[]> {
     return [];
   }
 }
+
+export const getReviews = async (): Promise<Review[]> => {
+  try {
+    const client = getContentfulClient();
+
+    const response = await client.getEntries<TypeReviewSkeleton>({
+      content_type: 'review',
+      order: ['-fields.publishedAt'],
+    });
+
+    const activeReviews = response.items.filter((item) => item.fields.isActive === true);
+
+    return activeReviews as Review[];
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    return [];
+  }
+};
+
+export const getPersonalInfo = async (): Promise<PersonalInfo | null> => {
+  try {
+    const client = getContentfulClient();
+
+    const response = await client.getEntries<TypePersonalInfoSkeleton>({
+      content_type: 'personalInfo',
+      limit: 1,
+      include: 2,
+    });
+
+    if (!response.items.length) {
+      return null;
+    }
+
+    return response.items[0] as PersonalInfo;
+  } catch (error) {
+    console.error('Error fetching personal info:', error);
+    return null;
+  }
+};

@@ -1,79 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AdvantageCard } from '@/components/ui/AdvantageCard';
 import { SECTIONS } from '@/lib/constants/text';
 import type { Advantage } from '@/lib/contentful/api';
-import {
-  Satellite,
-  UserCheck,
-  Clock,
-  ShieldCheck,
-  BadgePercent,
-  FileText,
-  Award,
-  CheckCircle,
-  Star,
-  Zap,
-  Target,
-  ThumbsUp,
-  Heart,
-  Shield,
-  Lock,
-  Briefcase,
-  Calculator,
-  Map,
-  MapPin,
-  Compass,
-  Ruler,
-  PenTool,
-  Settings,
-  Wrench,
-  Phone,
-  Mail,
-  MessageSquare,
-  Users,
-  Building,
-  Home,
-  Landmark,
-  TreePine,
-  Mountain,
-  type LucideIcon,
-} from 'lucide-react';
-
-// Map icon names from Contentful to Lucide icons
-const iconMap: Record<string, LucideIcon> = {
-  Satellite,
-  UserCheck,
-  Clock,
-  ShieldCheck,
-  BadgePercent,
-  FileText,
-  Award,
-  CheckCircle,
-  Star,
-  Zap,
-  Target,
-  ThumbsUp,
-  Heart,
-  Shield,
-  Lock,
-  Briefcase,
-  Calculator,
-  Map,
-  MapPin,
-  Compass,
-  Ruler,
-  PenTool,
-  Settings,
-  Wrench,
-  Phone,
-  Mail,
-  MessageSquare,
-  Users,
-  Building,
-  Home,
-  Landmark,
-  TreePine,
-  Mountain,
-};
 
 interface AdvantagesSectionProps {
   advantages: Advantage[];
@@ -97,29 +24,14 @@ export function AdvantagesSection({ advantages, title, subtitle, showHeader = tr
         )}
 
         <div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {advantages.map((advantage) => {
-            const iconName = advantage.fields.icon;
-            const Icon = iconName ? iconMap[iconName] : undefined;
-            return (
-              <Card key={advantage.sys.id} className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300'>
-                <CardHeader>
-                  <div className='flex items-center gap-3'>
-                    {Icon && (
-                      <div className='shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary'>
-                        <Icon className='w-5 h-5' />
-                      </div>
-                    )}
-                    <CardTitle className='text-lg sm:text-xl'>{advantage.fields.title}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className='text-sm sm:text-base text-muted-foreground leading-relaxed'>
-                    {advantage.fields.description}
-                  </p>
-                </CardContent>
-              </Card>
-            );
-          })}
+          {advantages.map((advantage) => (
+            <AdvantageCard
+              key={advantage.sys.id}
+              title={advantage.fields.title}
+              description={advantage.fields.description}
+              icon={advantage.fields.icon}
+            />
+          ))}
         </div>
       </div>
     </section>

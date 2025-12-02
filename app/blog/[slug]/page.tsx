@@ -1,7 +1,7 @@
 import { getBlogPostBySlug, getAllBlogSlugs, getCompanyInfo, getSeoData } from '@/lib/contentful/api';
 import { getAssetUrl } from '@/lib/contentful/client';
 import { renderRichText } from '@/lib/contentful/rich-text';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { Calendar, Clock, User, ArrowLeft, Phone } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { CTA, PAGES } from '@/lib/constants/text';

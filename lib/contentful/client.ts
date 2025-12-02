@@ -1,8 +1,5 @@
 import { createClient, ContentfulClientApi, CreateClientParams } from 'contentful';
 
-/**
- * Get Contentful configuration
- */
 const getContentfulConfig = (): CreateClientParams => {
   const spaceId = process.env.CONTENTFUL_SPACE_ID;
   const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
@@ -21,24 +18,15 @@ const getContentfulConfig = (): CreateClientParams => {
   };
 };
 
-/**
- * Lazy-initialized Contentful client
- * Only initializes when actually used (server-side)
- */
 let clientInstance: ContentfulClientApi<undefined> | null = null;
 
 export function getContentfulClient(): ContentfulClientApi<undefined> {
-  // Return cached instance
   if (!clientInstance) {
     clientInstance = createClient(getContentfulConfig());
   }
   return clientInstance;
 }
 
-/**
- * Default Contentful client (lazy-initialized)
- * Uses Proxy to defer initialization until first access
- */
 export const contentfulClient = new Proxy({} as ContentfulClientApi<undefined>, {
   get: (target, prop) => {
     const client = getContentfulClient();
@@ -47,24 +35,15 @@ export const contentfulClient = new Proxy({} as ContentfulClientApi<undefined>, 
   },
 });
 
-/**
- * Helper to format a protocol-relative Contentful URL to absolute
- */
 export const formatContentfulUrl = (url: string | undefined | null): string => {
   if (!url) return '';
   return url.startsWith('//') ? `https:${url}` : url;
 };
 
-/**
- * Helper to extract asset URL from Contentful asset
- */
 export const getAssetUrl = (asset: { fields?: { file?: { url?: string } } } | undefined | null): string => {
   return formatContentfulUrl(asset?.fields?.file?.url);
 };
 
-/**
- * Helper to extract multiple asset URLs from Contentful assets array
- */
 export const getAssetUrls = (assets: { fields?: { file?: { url?: string } } }[]): string[] => {
   return assets?.map(getAssetUrl).filter(Boolean) || [];
 };

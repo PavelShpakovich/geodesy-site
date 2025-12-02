@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ContactInfoCard, type ContactInfoCardProps } from '@/components/ui/ContactInfoCard';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { COMPANY_INFO } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';
@@ -11,70 +11,23 @@ interface ContactInfoProps {
 }
 
 export function ContactInfo({ companyInfo, layout = 'grid', className }: ContactInfoProps) {
+  const { phone, email, address, workHours } = companyInfo.fields;
+
+  const contactItems: ContactInfoCardProps[] = [
+    { icon: Phone, title: COMPANY_INFO.PHONE, value: phone, href: `tel:${phone}` },
+    { icon: Mail, title: COMPANY_INFO.EMAIL, value: email, href: `mailto:${email}` },
+    { icon: MapPin, title: COMPANY_INFO.ADDRESS, value: address },
+    { icon: Clock, title: COMPANY_INFO.WORK_HOURS, value: workHours, preserveWhitespace: true },
+  ];
+
   const gridClass =
     layout === 'grid' ? 'grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4' : 'flex flex-col gap-4 sm:gap-6';
 
   return (
     <div className={cn(gridClass, className)}>
-      <Card className='hover:shadow-lg transition-shadow'>
-        <CardHeader>
-          <div className='flex items-center gap-3'>
-            <Phone className='h-6 w-6 sm:h-8 sm:w-8 text-primary shrink-0' />
-            <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.PHONE}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <a
-            href={`tel:${companyInfo.fields.phone}`}
-            className='text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors font-medium'
-          >
-            {companyInfo.fields.phone}
-          </a>
-        </CardContent>
-      </Card>
-
-      <Card className='hover:shadow-lg transition-shadow'>
-        <CardHeader>
-          <div className='flex items-center gap-3'>
-            <Mail className='h-6 w-6 sm:h-8 sm:w-8 text-primary shrink-0' />
-            <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.EMAIL}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <a
-            href={`mailto:${companyInfo.fields.email}`}
-            className='text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors break-all font-medium'
-          >
-            {companyInfo.fields.email}
-          </a>
-        </CardContent>
-      </Card>
-
-      <Card className='hover:shadow-lg transition-shadow'>
-        <CardHeader>
-          <div className='flex items-center gap-3'>
-            <MapPin className='h-6 w-6 sm:h-8 sm:w-8 text-primary shrink-0' />
-            <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.ADDRESS}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <p className='text-sm sm:text-base text-muted-foreground'>{companyInfo.fields.address}</p>
-        </CardContent>
-      </Card>
-
-      <Card className='hover:shadow-lg transition-shadow'>
-        <CardHeader>
-          <div className='flex items-center gap-3'>
-            <Clock className='h-6 w-6 sm:h-8 sm:w-8 text-primary shrink-0' />
-            <CardTitle className='text-base sm:text-lg'>{COMPANY_INFO.WORK_HOURS}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <p className='text-sm sm:text-base text-muted-foreground whitespace-pre-line'>
-            {companyInfo.fields.workHours}
-          </p>
-        </CardContent>
-      </Card>
+      {contactItems.map((item) => (
+        <ContactInfoCard key={item.title} {...item} />
+      ))}
     </div>
   );
 }

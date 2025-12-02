@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Send, Phone, MessageCircle, Instagram } from 'lucide-react';
 import { MESSENGERS, COMPANY_INFO } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';

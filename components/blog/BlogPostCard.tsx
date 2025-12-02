@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { CTA, PAGES } from '@/lib/constants/text';
 import type { BlogPost } from '@/lib/contentful/api';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { cn, formatDate } from '@/lib/utils';
 import { getAssetUrl } from '@/lib/contentful/client';
 
