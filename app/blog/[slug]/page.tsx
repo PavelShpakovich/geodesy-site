@@ -2,6 +2,7 @@ import { getBlogPostBySlug, getAllBlogSlugs, getCompanyInfo, getSeoData } from '
 import { getAssetUrl } from '@/lib/contentful/client';
 import { renderRichText } from '@/lib/contentful/rich-text';
 import { Button } from '@/components/ui/Button';
+import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
 import { Calendar, Clock, User, ArrowLeft, Phone } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { CTA, PAGES } from '@/lib/constants/text';
@@ -73,7 +74,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         <article className='max-w-3xl mx-auto w-full'>
           <header className='mb-8'>
-            <div className='flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4'>
+            <div className='flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground mb-4'>
               <span className='flex items-center gap-1.5'>
                 <Calendar className='h-4 w-4' />
                 {formatDate(post.fields.publishedAt)}
@@ -90,6 +91,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   {post.fields.author}
                 </span>
               )}
+              <CopyLinkButton className='ml-auto' />
             </div>
 
             <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6'>{post.fields.title}</h1>
