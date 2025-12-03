@@ -1,5 +1,20 @@
 import { useEffect, RefObject } from 'react';
 
+// Track if user is using keyboard navigation
+let isKeyboardUser = false;
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') isKeyboardUser = true;
+  });
+  window.addEventListener('mousedown', () => {
+    isKeyboardUser = false;
+  });
+  window.addEventListener('touchstart', () => {
+    isKeyboardUser = false;
+  });
+}
+
 /**
  * Custom hook that traps focus within a container element for accessibility
  * Useful for modals, mobile menus, and other overlay components
@@ -21,8 +36,10 @@ export function useFocusTrap(ref: RefObject<HTMLElement | null>, isActive: boole
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    // Focus first element when trap activates
-    firstElement?.focus();
+    // Only auto-focus for keyboard users
+    if (isKeyboardUser) {
+      firstElement?.focus();
+    }
 
     const handleTabKey = (e: KeyboardEvent) => {
       if (e.key !== 'Tab') return;
