@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Logo } from '@/components/ui/Logo';
@@ -17,9 +18,14 @@ interface HeaderProps {
 export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [pathname]);
 
   // Trap focus in mobile menu when open
   useFocusTrap(mobileMenuRef, mobileMenuOpen);
@@ -36,11 +42,7 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60'>
       <div className='container flex h-16 items-center justify-between'>
-        <Link
-          href='/'
-          onClick={closeMobileMenu}
-          className='flex items-center gap-2 transition-opacity hover:opacity-80'
-        >
+        <Link href='/' className='flex items-center gap-2 transition-opacity hover:opacity-80'>
           <Logo showText={false} />
           <span className='text-lg md:text-xl font-bold'>{companyName}</span>
         </Link>
@@ -90,7 +92,6 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
                 key={item.href}
                 href={item.href}
                 className='px-4 py-2 text-base font-medium transition-colors hover:bg-accent rounded-md'
-                onClick={closeMobileMenu}
               >
                 {item.label}
               </Link>
@@ -107,7 +108,7 @@ export function HeaderClient({ companyName, companyPhone }: HeaderProps) {
             )}
 
             <div className='px-4 pt-2'>
-              <Button asChild className='w-full' onClick={closeMobileMenu}>
+              <Button asChild className='w-full'>
                 <Link href='/contacts'>{CTA.ORDER}</Link>
               </Button>
             </div>

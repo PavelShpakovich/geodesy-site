@@ -222,18 +222,6 @@ export function ReviewsSection({
           </div>
         </div>
 
-        {/* Mobile Navigation Buttons */}
-        {reviews.length > 1 && (
-          <div className='flex justify-center gap-4 mt-4 sm:hidden'>
-            <Button variant='outline' size='icon' onClick={goToPrev} aria-label={ARIA.PREV_REVIEW}>
-              <ChevronLeft className='h-5 w-5' />
-            </Button>
-            <Button variant='outline' size='icon' onClick={goToNext} aria-label={ARIA.NEXT_REVIEW}>
-              <ChevronRight className='h-5 w-5' />
-            </Button>
-          </div>
-        )}
-
         {/* Dots Indicator */}
         {reviews.length > 1 && (
           <div className='flex justify-center gap-2 mt-6'>

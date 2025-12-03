@@ -34,13 +34,13 @@ export function CopyLinkButton({ className }: CopyLinkButtonProps) {
     <Button variant='ghost' size='sm' onClick={handleCopy} className={className}>
       {copied ? (
         <>
-          <Check className='h-4 w-4 mr-1.5' />
-          <span className='text-sm'>{PAGES.BLOG.COPIED}</span>
+          <Check className='h-4 w-4 sm:mr-1.5' />
+          <span className='hidden sm:inline text-sm'>{PAGES.BLOG.COPIED}</span>
         </>
       ) : (
         <>
-          <Link2 className='h-4 w-4 mr-1.5' />
-          <span className='text-sm'>{PAGES.BLOG.COPY_LINK}</span>
+          <Link2 className='h-4 w-4 sm:mr-1.5' />
+          <span className='hidden sm:inline text-sm'>{PAGES.BLOG.COPY_LINK}</span>
         </>
       )}
     </Button>
