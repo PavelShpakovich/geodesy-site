@@ -23,7 +23,7 @@ export function ServicesPreview({ services, limit = 3 }: ServicesPreviewProps) {
 
         <div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {displayedServices.map((service) => (
-            <Card key={service.sys.id} className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300'>
+            <Card key={service.sys.id} className='hover:shadow-lg transition-shadow duration-300'>
               <CardHeader>
                 <CardTitle className='text-lg sm:text-xl'>{service.fields.title}</CardTitle>
               </CardHeader>

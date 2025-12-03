@@ -24,13 +24,13 @@ export function EquipmentSection({ equipment, className }: EquipmentSectionProps
   return (
     <section className={cn('flex flex-col gap-8', className)}>
       <div className='text-center flex flex-col gap-3'>
-        <h2 className='text-2xl sm:text-3xl font-bold'>{PAGES.ABOUT.EQUIPMENT.TITLE}</h2>
+        <h2 className='text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl'>{PAGES.ABOUT.EQUIPMENT.TITLE}</h2>
         <p className='text-muted-foreground max-w-2xl mx-auto'>{equipment.description}</p>
       </div>
 
       <div className='grid gap-4 md:gap-6 md:grid-cols-2'>
         {equipment.items.map((item, index) => (
-          <Card key={index} className='hover:shadow-lg transition-all hover:scale-[1.01] duration-300'>
+          <Card key={index} className='hover:shadow-lg transition-shadow duration-300'>
             <CardContent className='p-4 sm:p-6'>
               <div className='flex gap-3 sm:gap-4'>
                 <div className='shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary'>

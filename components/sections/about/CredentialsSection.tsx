@@ -55,7 +55,7 @@ export function CredentialsSection({ credentials, className }: CredentialsSectio
 
   return (
     <section className={cn('flex flex-col gap-8', className)}>
-      <h2 className='text-2xl sm:text-3xl font-bold text-center'>{CREDENTIALS.TITLE}</h2>
+      <h2 className='text-2xl font-bold tracking-tight text-center sm:text-3xl md:text-4xl'>{CREDENTIALS.TITLE}</h2>
 
       <div className='flex flex-col md:flex-row gap-6'>
         <CredentialCard title={CREDENTIALS.EDUCATION} icon={GraduationCap} items={educationItems} />

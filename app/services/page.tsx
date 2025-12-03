@@ -2,9 +2,10 @@ import { getServices, getSeoData, getCompanyInfo } from '@/lib/contentful/api';
 import { getAssetUrl } from '@/lib/contentful/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Phone } from 'lucide-react';
+import { Phone, Clock } from 'lucide-react';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { PageLayout } from '@/components/layout/PageLayout';
+import { ProcessSection } from '@/components/sections/ProcessSection';
 import { CTA, PAGES } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { generateServicesMetadata } from '@/lib/seo/metadata';
@@ -37,7 +38,7 @@ export default async function ServicesPage() {
             {services.map((service) => (
               <Card
                 key={service.sys.id}
-                className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300 overflow-hidden p-0'
+                className='hover:shadow-lg transition-shadow duration-300 overflow-hidden p-0 flex flex-col'
               >
                 {getAssetUrl(service.fields.image) && (
                   <div className='relative w-full h-48 overflow-hidden'>
@@ -50,23 +51,38 @@ export default async function ServicesPage() {
                     />
                   </div>
                 )}
-                <div className='flex flex-col gap-4 p-6'>
+                <div className='flex flex-col gap-4 p-6 flex-1'>
                   <CardHeader>
                     <CardTitle className='text-xl sm:text-2xl'>{service.fields.title}</CardTitle>
-                    {service.fields.price && (
-                      <div className='text-lg sm:text-xl font-semibold text-primary'>{service.fields.price}</div>
-                    )}
+                    <div className='flex flex-wrap items-center gap-x-4 gap-y-1'>
+                      {service.fields.price && (
+                        <span className='text-lg sm:text-xl font-semibold text-primary'>{service.fields.price}</span>
+                      )}
+                      {service.fields.timeframe && (
+                        <span className='flex items-center gap-1.5 text-sm text-muted-foreground'>
+                          <Clock className='h-4 w-4' />
+                          {service.fields.timeframe}
+                        </span>
+                      )}
+                    </div>
                   </CardHeader>
                   <CardContent className='flex-1'>
                     <CardDescription className='text-sm sm:text-base whitespace-pre-line leading-relaxed'>
                       {service.fields.description}
                     </CardDescription>
                   </CardContent>
+                  <div className='mt-auto pt-2'>
+                    <Button asChild className='w-full'>
+                      <Link href='/contacts'>{CTA.ORDER_SERVICE}</Link>
+                    </Button>
+                  </div>
                 </div>
               </Card>
             ))}
           </div>
         )}
+
+        <ProcessSection />
 
         <div className='bg-muted/50 rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
           <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.SERVICES.CTA_TITLE}</h2>

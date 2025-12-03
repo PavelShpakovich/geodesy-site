@@ -21,12 +21,7 @@ export function BlogPostCard({ post, className }: BlogPostCardProps) {
   const reading = post.fields.readingTime ? PAGES.BLOG.READING_TIME(post.fields.readingTime) : null;
 
   return (
-    <Card
-      className={cn(
-        'overflow-hidden p-0 flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-[1.02]',
-        className
-      )}
-    >
+    <Card className={cn('overflow-hidden p-0 flex flex-col transition-shadow duration-300 hover:shadow-lg', className)}>
       {coverUrl && (
         <div className='relative block h-48 w-full overflow-hidden'>
           <Image

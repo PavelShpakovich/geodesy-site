@@ -9,7 +9,7 @@ interface AdvantageCardProps {
 
 export function AdvantageCard({ title, description, icon }: AdvantageCardProps) {
   return (
-    <Card className='hover:shadow-lg transition-all hover:scale-[1.02] duration-300'>
+    <Card className='hover:shadow-lg transition-shadow duration-300'>
       <CardHeader>
         <div className='flex items-center gap-3'>
           {icon && (

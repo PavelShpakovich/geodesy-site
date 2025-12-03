@@ -149,7 +149,7 @@ export function ReviewsSection({
   return (
     <section className={cn('flex flex-col gap-8', className)}>
       <div className='text-center flex flex-col gap-3'>
-        <h2 className='text-2xl sm:text-3xl font-bold'>{SECTIONS.REVIEWS.TITLE}</h2>
+        <h2 className='text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl'>{SECTIONS.REVIEWS.TITLE}</h2>
         <p className='text-muted-foreground'>{SECTIONS.REVIEWS.SUBTITLE}</p>
       </div>
 
