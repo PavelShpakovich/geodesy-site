@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://mygeodesy.by/about</loc><lastmod>2025-12-02T21:39:01.718Z</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-<url><loc>https://mygeodesy.by/blog/chto-takoe-gnss-i-pochemu-eto-vazhno-dlya-tochnosti-izmerenii</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog/chto-vklyuchaet-standartnyi-topograficheskii-plan-klyuchevye-elementy-na</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog/kak-podgotovitsya-k-geodezicheskim-rabotam-chek-list-dlya-zakazchika</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog/kogda-nuzhna-topograficheskaya-syomka-uchastka-7-situacii</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog/masshtaby-toposyomki-kak-vybrat-masshtab-dlya-vashikh-zadach</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog/pochemu-vazhno-obnovlyat-topograficheskii-plan-kogda-toposyomka-teryaet</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog/raznica-mezhdu-toposyomkoi-i-mezhevaniem</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/blog</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/contacts</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://mygeodesy.by</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>1</priority></url>
-<url><loc>https://mygeodesy.by/privacy</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://mygeodesy.by/services</loc><lastmod>2025-12-02T21:39:01.719Z</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://mygeodesy.by/about</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+<url><loc>https://mygeodesy.by/blog/chto-takoe-gnss-i-pochemu-eto-vazhno-dlya-tochnosti-izmerenii</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog/chto-vklyuchaet-standartnyi-topograficheskii-plan-klyuchevye-elementy-na</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog/kak-podgotovitsya-k-geodezicheskim-rabotam-chek-list-dlya-zakazchika</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog/kogda-nuzhna-topograficheskaya-syomka-uchastka-7-situacii</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog/masshtaby-toposyomki-kak-vybrat-masshtab-dlya-vashikh-zadach</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog/pochemu-vazhno-obnovlyat-topograficheskii-plan-kogda-toposyomka-teryaet</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog/raznica-mezhdu-toposyomkoi-i-mezhevaniem</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/blog</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/contacts</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://mygeodesy.by</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>1</priority></url>
+<url><loc>https://mygeodesy.by/privacy</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/services/topograficheskaya-syomka</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/services/topograficheskaya-syomka-dlya-landshaftnogo-dizaina</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/services/topograficheskaya-syomka-dlya-podklyucheniya-inzhenernykh-setei</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://mygeodesy.by/services</loc><lastmod>2025-12-03T22:50:03.185Z</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 </urlset>

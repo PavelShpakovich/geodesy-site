@@ -4,19 +4,19 @@ import type {
   TypeCompanyInfoSkeleton,
   TypeServiceSkeleton,
   TypeAdvantageSkeleton,
-  TypeSeoPageSkeleton,
   TypeBlogPostSkeleton,
   TypeReviewSkeleton,
   TypePersonalInfoSkeleton,
+  TypeFaqSkeleton,
 } from './types-generated.ts';
 
 export type CompanyInfo = Entry<TypeCompanyInfoSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type Service = Entry<TypeServiceSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type Advantage = Entry<TypeAdvantageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
-export type SeoPage = Entry<TypeSeoPageSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type BlogPost = Entry<TypeBlogPostSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type Review = Entry<TypeReviewSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 export type PersonalInfo = Entry<TypePersonalInfoSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
+export type FAQ = Entry<TypeFaqSkeleton, 'WITHOUT_UNRESOLVABLE_LINKS', string>;
 
 export const getCompanyInfo = async (): Promise<CompanyInfo | null> => {
   try {
@@ -91,27 +91,6 @@ export const getAdvantages = async (): Promise<Advantage[]> => {
   } catch (error) {
     console.error('Error fetching advantages:', error);
     return [];
-  }
-};
-
-export const getSeoData = async (slug: string): Promise<SeoPage | null> => {
-  try {
-    const client = getContentfulClient();
-
-    const response = await client.getEntries<TypeSeoPageSkeleton>({
-      content_type: 'seoPage',
-    });
-
-    const entry = response.items.find((item) => item.fields.slug === slug);
-
-    if (!entry) {
-      return null;
-    }
-
-    return entry;
-  } catch (error) {
-    console.error(`Error fetching SEO data for slug ${slug}:`, error);
-    return null;
   }
 };
 
@@ -204,6 +183,25 @@ export const getReviews = async (): Promise<Review[]> => {
   }
 };
 
+export interface ReviewStats {
+  ratingValue: number;
+  reviewCount: number;
+}
+
+export const getReviewStats = async (): Promise<ReviewStats | null> => {
+  const reviews = await getReviews();
+
+  if (reviews.length === 0) return null;
+
+  const totalRating = reviews.reduce((sum, review) => sum + (review.fields.rating || 5), 0);
+  const averageRating = totalRating / reviews.length;
+
+  return {
+    ratingValue: Math.round(averageRating * 10) / 10, // Round to 1 decimal
+    reviewCount: reviews.length,
+  };
+};
+
 export const getPersonalInfo = async (): Promise<PersonalInfo | null> => {
   try {
     const client = getContentfulClient();
@@ -222,5 +220,21 @@ export const getPersonalInfo = async (): Promise<PersonalInfo | null> => {
   } catch (error) {
     console.error('Error fetching personal info:', error);
     return null;
+  }
+};
+
+export const getFAQs = async (): Promise<FAQ[]> => {
+  try {
+    const client = getContentfulClient();
+
+    const response = await client.getEntries<TypeFaqSkeleton>({
+      content_type: 'faq',
+      order: ['fields.order'],
+    });
+
+    return response.items as FAQ[];
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    return [];
   }
 };

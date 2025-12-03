@@ -4,8 +4,8 @@ export type { TypeCertificationItem, TypeCertificationItemFields, TypeCertificat
 export type { TypeCompanyInfo, TypeCompanyInfoFields, TypeCompanyInfoSkeleton } from "./TypeCompanyInfo";
 export type { TypeEducationItem, TypeEducationItemFields, TypeEducationItemSkeleton } from "./TypeEducationItem";
 export type { TypeEquipmentItem, TypeEquipmentItemFields, TypeEquipmentItemSkeleton } from "./TypeEquipmentItem";
+export type { TypeFaq, TypeFaqFields, TypeFaqSkeleton } from "./TypeFaq";
 export type { TypeLicenseItem, TypeLicenseItemFields, TypeLicenseItemSkeleton } from "./TypeLicenseItem";
 export type { TypePersonalInfo, TypePersonalInfoFields, TypePersonalInfoSkeleton } from "./TypePersonalInfo";
 export type { TypeReview, TypeReviewFields, TypeReviewSkeleton } from "./TypeReview";
-export type { TypeSeoPage, TypeSeoPageFields, TypeSeoPageSkeleton } from "./TypeSeoPage";
 export type { TypeService, TypeServiceFields, TypeServiceSkeleton } from "./TypeService";

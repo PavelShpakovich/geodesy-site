@@ -1,6 +1,10 @@
-import type { CompanyInfo } from '../contentful/api';
+import type { CompanyInfo, ReviewStats } from '../contentful/api';
 
-export function generateLocalBusinessSchema(companyInfo: CompanyInfo, siteUrl: string) {
+export function generateLocalBusinessSchema(
+  companyInfo: CompanyInfo,
+  siteUrl: string,
+  reviewStats?: ReviewStats | null
+) {
   return {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'ProfessionalService'],
@@ -14,6 +18,15 @@ export function generateLocalBusinessSchema(companyInfo: CompanyInfo, siteUrl: s
     telephone: companyInfo.fields.phone,
     email: companyInfo.fields.email,
     image: `${siteUrl}/og-image.jpg`,
+    ...(reviewStats && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: reviewStats.ratingValue.toString(),
+        reviewCount: reviewStats.reviewCount.toString(),
+        bestRating: '5',
+        worstRating: '1',
+      },
+    }),
     address: {
       '@type': 'PostalAddress',
       streetAddress: companyInfo.fields.address,
@@ -212,5 +225,20 @@ export function generateServiceSchema(
         contactType: 'customer service',
       },
     },
+  };
+}
+
+export function generateFAQSchema(faqItems: Array<{ question: string; answer: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   };
 }

@@ -3,6 +3,8 @@ import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleC
 export interface TypeServiceFields {
     title: EntryFieldTypes.Symbol;
     description: EntryFieldTypes.Text;
+    fullDescription?: EntryFieldTypes.RichText;
+    metaDescription?: EntryFieldTypes.Symbol;
     price: EntryFieldTypes.Symbol;
     timeframe?: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;

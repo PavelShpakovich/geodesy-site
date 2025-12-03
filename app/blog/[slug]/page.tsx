@@ -1,8 +1,9 @@
-import { getBlogPostBySlug, getAllBlogSlugs, getCompanyInfo, getSeoData } from '@/lib/contentful/api';
+import { getBlogPostBySlug, getAllBlogSlugs, getCompanyInfo, getServices } from '@/lib/contentful/api';
 import { getAssetUrl } from '@/lib/contentful/client';
 import { renderRichText } from '@/lib/contentful/rich-text';
 import { Button } from '@/components/ui/Button';
 import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
+import { ServiceCard } from '@/components/services/ServiceCard';
 import { Calendar, Clock, User, ArrowLeft, Phone } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { CTA, PAGES } from '@/lib/constants/text';
@@ -33,25 +34,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
-  const seoData = await getSeoData(slug);
-
-  return generateBlogPostMetadata(
-    {
-      title: post.fields.title,
-      excerpt: post.fields.excerpt,
-      metaDescription: post.fields.metaDescription,
-      coverImage: post.fields.coverImage,
-      slug: post.fields.slug,
-      publishedAt: post.fields.publishedAt,
-      author: post.fields.author,
-    },
-    seoData
-  );
+  return generateBlogPostMetadata({
+    title: post.fields.title,
+    excerpt: post.fields.excerpt,
+    metaDescription: post.fields.metaDescription,
+    coverImage: post.fields.coverImage,
+    slug: post.fields.slug,
+    publishedAt: post.fields.publishedAt,
+    author: post.fields.author,
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [post, companyInfo] = await Promise.all([getBlogPostBySlug(slug), getCompanyInfo()]);
+  const [post, companyInfo, services] = await Promise.all([getBlogPostBySlug(slug), getCompanyInfo(), getServices()]);
 
   if (!post) {
     notFound();
@@ -114,6 +110,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <div className='prose prose-lg dark:prose-invert max-w-none'>{renderRichText(post.fields.content)}</div>
         </article>
+
+        {/* Related services */}
+        {services.length > 0 && (
+          <section className='max-w-3xl mx-auto w-full'>
+            <h2 className='text-2xl font-bold mb-6'>{PAGES.BLOG.RELATED_SERVICES}</h2>
+            <div className='flex gap-4 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide'>
+              {services.map((service) => (
+                <ServiceCard
+                  key={service.sys.id}
+                  service={service}
+                  variant='compact'
+                  className='w-[280px] sm:w-[300px] shrink-0 snap-start'
+                />
+              ))}
+            </div>
+          </section>
+        )}
 
         <div className='bg-primary text-primary-foreground rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6 max-w-3xl mx-auto w-full'>
           <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.BLOG.CTA_TITLE}</h2>

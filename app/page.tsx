@@ -1,4 +1,4 @@
-import { getCompanyInfo, getAdvantages, getServices, getSeoData } from '@/lib/contentful/api';
+import { getCompanyInfo, getAdvantages, getServices, getReviewStats } from '@/lib/contentful/api';
 import { Hero } from '@/components/sections/Hero';
 import { AdvantagesSection } from '@/components/sections/AdvantagesSection';
 import { ServicesPreview } from '@/components/sections/ServicesPreview';
@@ -13,14 +13,18 @@ import type { Metadata } from 'next';
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getSeoData('home');
-  return generateHomeMetadata(seoData);
+  return generateHomeMetadata();
 }
 
 export default async function Home() {
-  const [companyInfo, advantages, services] = await Promise.all([getCompanyInfo(), getAdvantages(), getServices()]);
+  const [companyInfo, advantages, services, reviewStats] = await Promise.all([
+    getCompanyInfo(),
+    getAdvantages(),
+    getServices(),
+    getReviewStats(),
+  ]);
 
-  const structuredData = structuredDataHelpers.forHomePage(companyInfo);
+  const structuredData = structuredDataHelpers.forHomePage(companyInfo, reviewStats);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { getCompanyInfo, getSeoData, getPersonalInfo, getReviews } from '@/lib/contentful/api';
+import { getCompanyInfo, getPersonalInfo, getReviews } from '@/lib/contentful/api';
 import { transformPersonalInfo, transformReviews } from '@/lib/contentful/transformers';
 import { Button } from '@/components/ui/Button';
 import { SocialLinks } from '@/components/sections/SocialLinks';
@@ -21,8 +21,7 @@ import {
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getSeoData('about');
-  return generateAboutMetadata(seoData);
+  return generateAboutMetadata();
 }
 
 export default async function AboutPage() {

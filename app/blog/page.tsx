@@ -1,4 +1,4 @@
-import { getBlogPosts, getSeoData } from '@/lib/contentful/api';
+import { getBlogPosts } from '@/lib/contentful/api';
 import { BlogPostCard } from '@/components/blog/BlogPostCard';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { PageLayout } from '@/components/layout/PageLayout';
@@ -11,9 +11,8 @@ import type { Metadata } from 'next';
 // Revalidate every 24 hours
 export const revalidate = 86400;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getSeoData('blog');
-  return generateBlogMetadata(seoData);
+export function generateMetadata(): Metadata {
+  return generateBlogMetadata();
 }
 
 export default async function BlogPage() {

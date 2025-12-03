@@ -1,4 +1,4 @@
-import { getCompanyInfo, getSeoData } from '@/lib/contentful/api';
+import { getCompanyInfo, getReviewStats } from '@/lib/contentful/api';
 import { MapPin } from 'lucide-react';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { YandexMap } from '@/components/map/YandexMap';
@@ -17,12 +17,11 @@ import type { Metadata } from 'next';
 export const revalidate = 86400;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await getSeoData('contacts');
-  return generateContactsMetadata(seoData);
+  return generateContactsMetadata();
 }
 
 export default async function ContactsPage() {
-  const companyInfo = await getCompanyInfo();
+  const [companyInfo, reviewStats] = await Promise.all([getCompanyInfo(), getReviewStats()]);
 
   if (!companyInfo) {
     return (
@@ -32,7 +31,7 @@ export default async function ContactsPage() {
     );
   }
 
-  const structuredData = structuredDataHelpers.forContactsPage(companyInfo);
+  const structuredData = structuredDataHelpers.forContactsPage(companyInfo, reviewStats);
 
   return (
     <>

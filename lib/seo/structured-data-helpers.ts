@@ -1,4 +1,4 @@
-import type { CompanyInfo, BlogPost } from '../contentful/api';
+import type { CompanyInfo, BlogPost, ReviewStats, Service } from '../contentful/api';
 import { getAssetUrl } from '../contentful/client';
 import { SEO_CONFIG } from './metadata';
 import {
@@ -7,34 +7,42 @@ import {
   generateBreadcrumbSchema,
   generateOrganizationSchema,
   generateServiceSchema,
+  generateFAQSchema,
 } from './structured-data';
 
 type StructuredDataSchema = Record<string, unknown>;
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 interface StructuredDataHelpers {
-  forHomePage: (companyInfo: CompanyInfo | null) => StructuredDataSchema[];
+  forHomePage: (companyInfo: CompanyInfo | null, reviewStats?: ReviewStats | null) => StructuredDataSchema[];
   forServicesPage: (
     companyInfo: CompanyInfo | null,
-    services: Array<{ fields: { title: string; description: string } }>
+    services: Array<{ fields: { title: string; description: string } }>,
+    faqs: FAQItem[]
   ) => StructuredDataSchema[];
+  forServicePage: (service: Service, companyInfo: CompanyInfo | null) => StructuredDataSchema[];
   forAboutPage: (companyInfo: CompanyInfo | null) => StructuredDataSchema[];
-  forContactsPage: (companyInfo: CompanyInfo | null) => StructuredDataSchema[];
+  forContactsPage: (companyInfo: CompanyInfo | null, reviewStats?: ReviewStats | null) => StructuredDataSchema[];
   forBlogPage: (posts: BlogPost[]) => StructuredDataSchema[];
   forBlogPost: (post: BlogPost, companyInfo: CompanyInfo | null) => StructuredDataSchema[];
 }
 
 export const structuredDataHelpers: StructuredDataHelpers = {
-  forHomePage: (companyInfo) => {
+  forHomePage: (companyInfo, reviewStats) => {
     if (!companyInfo) return [];
 
     return [
-      generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL),
+      generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL, reviewStats),
       generateWebSiteSchema(SEO_CONFIG.SITE_URL, SEO_CONFIG.SITE_NAME),
       generateBreadcrumbSchema([{ name: 'Главная', url: '/' }], SEO_CONFIG.SITE_URL),
     ];
   },
 
-  forServicesPage: (companyInfo, services) => {
+  forServicesPage: (companyInfo, services, faqs) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
         { name: 'Главная', url: '/' },
@@ -43,7 +51,9 @@ export const structuredDataHelpers: StructuredDataHelpers = {
       SEO_CONFIG.SITE_URL
     );
 
-    if (!companyInfo) return [breadcrumbs];
+    const faqSchema = faqs.length > 0 ? generateFAQSchema(faqs) : null;
+
+    if (!companyInfo) return faqSchema ? [breadcrumbs, faqSchema] : [breadcrumbs];
 
     const serviceSchemas = services
       .map((service) =>
@@ -51,7 +61,55 @@ export const structuredDataHelpers: StructuredDataHelpers = {
       )
       .filter(Boolean);
 
-    return [breadcrumbs, ...serviceSchemas];
+    return faqSchema ? [breadcrumbs, faqSchema, ...serviceSchemas] : [breadcrumbs, ...serviceSchemas];
+  },
+
+  forServicePage: (service, companyInfo) => {
+    const breadcrumbs = generateBreadcrumbSchema(
+      [
+        { name: 'Главная', url: '/' },
+        { name: 'Услуги', url: '/services' },
+        { name: service.fields.title, url: `/services/${service.fields.slug}` },
+      ],
+      SEO_CONFIG.SITE_URL
+    );
+
+    const serviceSchema = companyInfo
+      ? generateServiceSchema(service.fields.title, service.fields.description, companyInfo, SEO_CONFIG.SITE_URL)
+      : null;
+
+    const imageUrl = getAssetUrl(service.fields.image);
+
+    const serviceDetailSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: service.fields.title,
+      description: service.fields.metaDescription || service.fields.description,
+      url: `${SEO_CONFIG.SITE_URL}/services/${service.fields.slug}`,
+      ...(imageUrl && { image: imageUrl }),
+      ...(service.fields.price && {
+        offers: {
+          '@type': 'Offer',
+          price: service.fields.price.replace(/[^\d]/g, ''),
+          priceCurrency: 'BYN',
+          availability: 'https://schema.org/InStock',
+        },
+      }),
+      provider: companyInfo
+        ? {
+            '@type': 'LocalBusiness',
+            name: companyInfo.fields.name,
+            ...(companyInfo.fields.phone && { telephone: companyInfo.fields.phone }),
+            ...(companyInfo.fields.email && { email: companyInfo.fields.email }),
+          }
+        : undefined,
+      areaServed: {
+        '@type': 'City',
+        name: 'Брест',
+      },
+    };
+
+    return serviceSchema ? [breadcrumbs, serviceDetailSchema] : [breadcrumbs, serviceDetailSchema];
   },
 
   forAboutPage: (companyInfo) => {
@@ -68,7 +126,7 @@ export const structuredDataHelpers: StructuredDataHelpers = {
     return [generateOrganizationSchema(companyInfo, SEO_CONFIG.SITE_URL), breadcrumbs];
   },
 
-  forContactsPage: (companyInfo) => {
+  forContactsPage: (companyInfo, reviewStats) => {
     const breadcrumbs = generateBreadcrumbSchema(
       [
         { name: 'Главная', url: '/' },
@@ -79,7 +137,7 @@ export const structuredDataHelpers: StructuredDataHelpers = {
 
     if (!companyInfo) return [breadcrumbs];
 
-    return [generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL), breadcrumbs];
+    return [generateLocalBusinessSchema(companyInfo, SEO_CONFIG.SITE_URL, reviewStats), breadcrumbs];
   },
 
   forBlogPage: (posts) => {
