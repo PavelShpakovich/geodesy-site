@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Clock } from 'lucide-react';
-import { CTA, PAGES } from '@/lib/constants/text';
+import { CTA, PAGES, ALT_TEXTS } from '@/lib/constants/text';
 import type { Service } from '@/lib/contentful/api';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -83,13 +83,18 @@ export function ServiceCard({ service, variant = 'full', className }: ServiceCar
   }
 
   // Full variant: with image, all details
+  const imageAlt =
+    service.fields.imageAltText ||
+    service.fields.image?.fields?.title ||
+    ALT_TEXTS.SERVICE_IMAGE_FALLBACK(service.fields.title);
+
   return (
     <Card className={cn('hover:shadow-lg transition-shadow duration-300 overflow-hidden p-0 flex flex-col', className)}>
       {imageUrl && (
         <div className='relative w-full h-48 overflow-hidden'>
           <Image
             src={imageUrl}
-            alt={service.fields.image?.fields?.title || service.fields.title}
+            alt={imageAlt}
             fill
             className='object-cover'
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'

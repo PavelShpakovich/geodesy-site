@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { CTA } from '@/lib/constants/text';
+import { CTA, ALT_TEXTS } from '@/lib/constants/text';
 import type { CompanyInfo } from '@/lib/contentful/api';
 import { getAssetUrl } from '@/lib/contentful/client';
 
@@ -24,7 +24,7 @@ export function Hero({ companyInfo }: HeroProps) {
         <div className='absolute inset-0 -z-20 hidden lg:block'>
           <Image
             src={desktopSrc}
-            alt='Геодезические работы в Бресте'
+            alt={ALT_TEXTS.HERO_IMAGE}
             fill
             priority
             fetchPriority='high'
@@ -40,7 +40,7 @@ export function Hero({ companyInfo }: HeroProps) {
         <div className='absolute inset-0 -z-20 block lg:hidden'>
           <Image
             src={mobileSrc}
-            alt='Геодезические работы в Бресте'
+            alt={ALT_TEXTS.HERO_IMAGE}
             fill
             priority
             fetchPriority='high'
@@ -59,7 +59,7 @@ export function Hero({ companyInfo }: HeroProps) {
               {companyInfo.fields.description}
             </h1>
             <p className='text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto'>
-              {companyInfo.fields.legalName}
+              Выполняю топографическую съемку участков для строительства, ландшафтного дизайна, подключения коммуникаций
             </p>
           </div>
 

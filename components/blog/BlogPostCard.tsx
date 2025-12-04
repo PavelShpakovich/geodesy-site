@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
-import { CTA, PAGES } from '@/lib/constants/text';
+import { CTA, PAGES, ALT_TEXTS } from '@/lib/constants/text';
 import type { BlogPost } from '@/lib/contentful/api';
 import { Button } from '@/components/ui/Button';
 import { cn, formatDate } from '@/lib/utils';
@@ -88,7 +88,7 @@ export function BlogPostCard({ post, variant = 'full', className }: BlogPostCard
         <div className='relative block h-48 w-full overflow-hidden'>
           <Image
             src={coverUrl}
-            alt={post.fields.coverImage?.fields?.title || post.fields.title}
+            alt={post.fields.coverImage?.fields?.title || ALT_TEXTS.BLOG_IMAGE_FALLBACK(post.fields.title)}
             fill
             className='object-cover'
             sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'

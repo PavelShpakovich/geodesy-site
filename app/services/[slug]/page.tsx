@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { Phone, Clock, ArrowLeft, CheckCircle } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { CTA, PAGES } from '@/lib/constants/text';
+import { CTA, PAGES, ALT_TEXTS } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { generateServicePageMetadata } from '@/lib/seo/metadata';
 import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
@@ -92,7 +92,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <div className='relative w-full aspect-video rounded-lg overflow-hidden mb-8'>
               <Image
                 src={getAssetUrl(service.fields.image)}
-                alt={service.fields.image?.fields?.title || service.fields.title}
+                alt={
+                  service.fields.imageAltText ||
+                  service.fields.image?.fields?.title ||
+                  ALT_TEXTS.SERVICE_IMAGE_FALLBACK(service.fields.title)
+                }
                 fill
                 priority
                 className='object-cover'

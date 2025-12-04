@@ -9,6 +9,7 @@ export interface TypeServiceFields {
     timeframe?: EntryFieldTypes.Symbol;
     slug: EntryFieldTypes.Symbol;
     image?: EntryFieldTypes.AssetLink;
+    imageAltText?: EntryFieldTypes.Symbol;
 }
 
 export type TypeServiceSkeleton = EntrySkeletonType<TypeServiceFields, "service">;

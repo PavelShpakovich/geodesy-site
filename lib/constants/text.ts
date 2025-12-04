@@ -280,6 +280,19 @@ export const SEO = {
   DEFAULT_DESCRIPTION: 'Профессиональные геодезические услуги в Бресте и Брестской области',
 } as const;
 
+export const ALT_TEXTS = {
+  // Hero section
+  HERO_IMAGE: 'Геодезические работы в Бресте',
+
+  // Rich text embedded images
+  ARTICLE_IMAGE: 'Изображение в статье',
+
+  // Fallback for dynamic content
+  SERVICE_IMAGE_FALLBACK: (title: string) => `Услуга: ${title}`,
+  BLOG_IMAGE_FALLBACK: (title: string) => `Статья: ${title}`,
+  OWNER_PHOTO: (name: string) => `Геодезист ${name} — топосъемка в Бресте и Брестской области`,
+} as const;
+
 export const PRIVACY = {
   PAGE_TITLE: 'Политика конфиденциальности',
   PAGE_DESCRIPTION: 'Политика конфиденциальности и обработки персональных данных',

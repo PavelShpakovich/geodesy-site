@@ -6,7 +6,7 @@ import { CopyLinkButton } from '@/components/ui/CopyLinkButton';
 import { ServiceCard } from '@/components/services/ServiceCard';
 import { Calendar, Clock, User, ArrowLeft, Phone } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { CTA, PAGES } from '@/lib/constants/text';
+import { CTA, PAGES, ALT_TEXTS } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
 import { generateBlogPostMetadata } from '@/lib/seo/metadata';
 import { structuredDataHelpers } from '@/lib/seo/structured-data-helpers';
@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div className='relative w-full aspect-video rounded-lg overflow-hidden mb-8'>
               <Image
                 src={getAssetUrl(post.fields.coverImage)}
-                alt={post.fields.coverImage?.fields?.title || post.fields.title}
+                alt={post.fields.coverImage?.fields?.title || ALT_TEXTS.BLOG_IMAGE_FALLBACK(post.fields.title)}
                 fill
                 priority
                 className='object-contain'

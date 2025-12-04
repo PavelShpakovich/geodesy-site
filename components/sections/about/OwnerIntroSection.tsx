@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+import { ALT_TEXTS } from '@/lib/constants/text';
 
 interface OwnerData {
   name: string;
@@ -23,7 +24,7 @@ export function OwnerIntroSection({ owner, showPhoto = false, className }: Owner
             <div className='relative w-48 h-56 sm:w-56 sm:h-64 lg:w-64 lg:h-72 rounded-2xl overflow-hidden shadow-xl'>
               <Image
                 src={owner.photo}
-                alt={owner.name}
+                alt={ALT_TEXTS.OWNER_PHOTO(owner.name)}
                 fill
                 className='object-cover'
                 sizes='(max-width: 640px) 192px, (max-width: 1024px) 224px, 256px'

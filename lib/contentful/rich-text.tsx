@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES, Document } from '@contentful/rich-text-types';
 import { formatContentfulUrl } from './client';
+import { ALT_TEXTS } from '@/lib/constants/text';
 import type { Options } from '@contentful/rich-text-react-renderer';
 
 export const richTextOptions: Options = {
@@ -27,7 +28,7 @@ export const richTextOptions: Options = {
           <div className='relative w-full aspect-video rounded-lg overflow-hidden'>
             <Image
               src={imageUrl}
-              alt={description || title || 'Изображение в статье'}
+              alt={description || title || ALT_TEXTS.ARTICLE_IMAGE}
               fill
               className='object-cover'
               sizes='(max-width: 768px) 100vw, 800px'
