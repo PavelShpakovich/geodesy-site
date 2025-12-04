@@ -49,12 +49,8 @@ export default async function ServicesPage() {
             ))}
           </div>
         )}
-
-        <ProcessSection />
-
         <FAQSection faqs={faqData} />
 
-        {/* Blog preview section */}
         {blogPosts.length > 0 && (
           <section>
             <div className='text-center mb-8'>

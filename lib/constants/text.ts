@@ -75,7 +75,7 @@ export const PAGES = {
     CTA_CONSULTATION: 'Свяжитесь со мной для бесплатной консультации и расчёта стоимости работ',
     MORE_DETAILS: 'Подробнее',
     PROCESS: {
-      TITLE: 'Как я работаю',
+      TITLE: 'Этапы работы',
       STEPS: [
         {
           title: 'Заявка',
