@@ -56,8 +56,8 @@ export function generateLocalBusinessSchema(
     ],
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 52.0975,
-      longitude: 23.734,
+      latitude: companyInfo.fields.latitude ?? 52.094479,
+      longitude: companyInfo.fields.longitude ?? 23.716584,
     },
     areaServed: [
       {
@@ -121,12 +121,28 @@ export function generateLocalBusinessSchema(
         },
       ],
     },
-    ...(companyInfo.fields.telegram && {
-      sameAs: [
-        `https://t.me/${companyInfo.fields.telegram}`,
-        ...(companyInfo.fields.whatsapp ? [`https://wa.me/${companyInfo.fields.whatsapp}`] : []),
-      ],
-    }),
+    ...(() => {
+      const sameAs: string[] = [];
+
+      if (companyInfo.fields.telegram) {
+        const handle = companyInfo.fields.telegram.replace('@', '');
+        sameAs.push(`https://t.me/${handle}`);
+      }
+
+      if (companyInfo.fields.whatsapp) {
+        const digits = companyInfo.fields.whatsapp.replace(/[^\d]/g, '');
+        if (digits) {
+          sameAs.push(`https://wa.me/${digits}`);
+        }
+      }
+
+      if (companyInfo.fields.instagram) {
+        const handle = companyInfo.fields.instagram.replace('@', '');
+        sameAs.push(`https://www.instagram.com/${handle}/`);
+      }
+
+      return sameAs.length > 0 ? { sameAs } : {};
+    })(),
   };
 }
 

@@ -91,25 +91,10 @@ function generatePageMetadata(
   return {
     title,
     description,
-    keywords: SEO_CONFIG.DEFAULT_KEYWORDS.join(', '),
     applicationName: SEO_CONFIG.SITE_NAME,
     authors: [{ name: SEO_CONFIG.SITE_NAME }],
     generator: 'Next.js',
     referrer: 'origin-when-cross-origin',
-    other: {
-      'geo.region': 'BY-BR',
-      'geo.placename': 'Брест',
-      'geo.position': '52.134722;23.656944',
-      ICBM: '52.134722, 23.656944',
-      'DC.title': title,
-      'DC.subject': 'Геодезия, Геодезические услуги, Топосъемка',
-      'DC.description': description,
-      rating: 'general',
-      distribution: 'global',
-      'revisit-after': '7 days',
-      language: 'Russian',
-      target: 'Брест, Брестская область, Беларусь',
-    },
     verification: {
       google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
       yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
@@ -202,7 +187,6 @@ export function generateBlogPostMetadata(post: {
   return {
     title,
     description,
-    keywords: SEO_CONFIG.DEFAULT_KEYWORDS.join(', '),
     authors: [{ name: post.author || SEO_CONFIG.SITE_NAME }],
     alternates: {
       canonical: url,
@@ -261,7 +245,6 @@ export function generateServicePageMetadata(service: {
   return {
     title,
     description,
-    keywords: SEO_CONFIG.DEFAULT_KEYWORDS.join(', '),
     alternates: {
       canonical: url,
     },
