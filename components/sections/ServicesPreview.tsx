@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
 import { SECTIONS, CTA } from '@/lib/constants/text';
 import type { Service } from '@/lib/contentful/api';
+import { ServiceCard } from '@/components/services/ServiceCard';
 
 interface ServicesPreviewProps {
   services: Service[];
@@ -23,16 +23,7 @@ export function ServicesPreview({ services, limit = 3 }: ServicesPreviewProps) {
 
         <div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {displayedServices.map((service) => (
-            <Card key={service.sys.id} className='hover:shadow-lg transition-shadow duration-300'>
-              <CardHeader>
-                <CardTitle className='text-lg sm:text-xl'>{service.fields.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className='text-sm sm:text-base line-clamp-3 leading-relaxed'>
-                  {service.fields.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
+            <ServiceCard key={service.sys.id} service={service} variant='minimal' />
           ))}
         </div>
 

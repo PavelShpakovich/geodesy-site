@@ -11,16 +11,37 @@ import { getAssetUrl } from '@/lib/contentful/client';
 export interface ServiceCardProps {
   service: Service;
   /**
-   * full: With image, all details, two buttons (for carousels/related sections)
-   * compact: No image, minimal info, single button (for listing pages)
+   * full: With image, all details, two buttons
+   * compact: No image, description + two buttons
+   * minimal: No image, only title + price + single "More details" button
    */
-  variant?: 'full' | 'compact';
+  variant?: 'full' | 'compact' | 'minimal';
   className?: string;
 }
 
 export function ServiceCard({ service, variant = 'full', className }: ServiceCardProps) {
   const imageUrl = getAssetUrl(service.fields.image);
   const href = `/services/${service.fields.slug}`;
+
+  if (variant === 'minimal') {
+    // Minimal: title + single CTA only
+    return (
+      <Card
+        className={cn('hover:shadow-lg transition-shadow duration-300 overflow-hidden p-0 flex flex-col', className)}
+      >
+        <div className='flex flex-col gap-4 p-6 flex-1'>
+          <CardHeader>
+            <CardTitle className='text-lg sm:text-xl'>{service.fields.title}</CardTitle>
+          </CardHeader>
+          <div className='mt-auto'>
+            <Button variant='outline' asChild className='w-full'>
+              <Link href={href}>{PAGES.SERVICES.MORE_DETAILS}</Link>
+            </Button>
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   if (variant === 'compact') {
     // Compact: no image, minimal info
