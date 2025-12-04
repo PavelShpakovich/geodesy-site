@@ -44,6 +44,8 @@ export default async function PrivacyPage() {
         <section>
           <h2 className='text-2xl font-semibold mb-4 mt-8'>2. {PRIVACY.SECTION_2.TITLE}</h2>
           <p>{PRIVACY.SECTION_2.INTRO}</p>
+
+          <p className='mt-4 font-semibold'>{PRIVACY.SECTION_2.SUBTITLE_CONTACT}</p>
           <ul className='list-disc pl-6 space-y-2'>
             <li>
               <strong>Имя</strong> — {PRIVACY.SECTION_2.ITEMS.NAME}
@@ -55,10 +57,30 @@ export default async function PrivacyPage() {
               <strong>Текст сообщения</strong> — {PRIVACY.SECTION_2.ITEMS.MESSAGE}
             </li>
           </ul>
+
+          <p className='mt-4 font-semibold'>{PRIVACY.SECTION_2.SUBTITLE_REVIEW}</p>
+          <ul className='list-disc pl-6 space-y-2'>
+            <li>
+              <strong>Имя</strong> — {PRIVACY.SECTION_2.ITEMS_REVIEW.NAME}
+            </li>
+            <li>
+              <strong>Город/район</strong> — {PRIVACY.SECTION_2.ITEMS_REVIEW.LOCATION}
+            </li>
+            <li>
+              <strong>Оценка</strong> — {PRIVACY.SECTION_2.ITEMS_REVIEW.RATING}
+            </li>
+            <li>
+              <strong>Текст отзыва</strong> — {PRIVACY.SECTION_2.ITEMS_REVIEW.TEXT}
+            </li>
+          </ul>
+
           <p className='mt-4'>
             <strong>{PRIVACY.SECTION_2.NO_STORAGE}</strong> {PRIVACY.SECTION_2.EXPLANATION}
           </p>
           <p>{PRIVACY.SECTION_2.LIKE_EMAIL}</p>
+          <p className='mt-2'>
+            <strong>Отзывы:</strong> {PRIVACY.SECTION_2.REVIEW_PUBLICATION}
+          </p>
         </section>
 
         <section>
