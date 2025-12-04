@@ -12,7 +12,7 @@ export function ProcessSection({ className }: ProcessSectionProps) {
   const { PROCESS } = PAGES.SERVICES;
 
   return (
-    <section className={cn('flex flex-col gap-8', className)}>
+    <section className={cn('flex flex-col gap-8 bg-muted/50', className)}>
       <h2 className='text-2xl font-bold tracking-tight text-center sm:text-3xl md:text-4xl'>{PROCESS.TITLE}</h2>
 
       <div className='grid gap-6 sm:gap-8 md:grid-cols-3'>

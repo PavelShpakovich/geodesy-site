@@ -30,9 +30,9 @@ export default async function Home() {
     <>
       {structuredData.length > 0 && <StructuredData data={structuredData} />}
       <Hero companyInfo={companyInfo} />
-      <AdvantagesSection advantages={advantages} />
       <ServicesPreview services={services} limit={3} />
       <ProcessSection className='container py-12 sm:py-16' />
+      <AdvantagesSection advantages={advantages} />
       <ContactCTA companyInfo={companyInfo} />
     </>
   );

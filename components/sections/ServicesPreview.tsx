@@ -14,7 +14,7 @@ export function ServicesPreview({ services, limit = 3 }: ServicesPreviewProps) {
   const displayedServices = services.slice(0, limit);
 
   return (
-    <section className='py-12 sm:py-16 md:py-20 lg:py-24 bg-muted/50'>
+    <section className='py-12 sm:py-16 md:py-20 lg:py-24'>
       <div className='container px-4 sm:px-6 flex flex-col gap-10 sm:gap-12'>
         <div className='mx-auto max-w-2xl text-center flex flex-col gap-3 sm:gap-4'>
           <h2 className='text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl'>{SECTIONS.SERVICES.TITLE}</h2>
