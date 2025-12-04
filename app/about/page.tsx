@@ -62,7 +62,7 @@ export default async function AboutPage() {
         {transformedReviews.length > 0 && <ReviewsSection reviews={transformedReviews} />}
 
         <div className='bg-muted/50 rounded-lg p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6'>
-          <h3 className='text-lg sm:text-xl font-bold text-center'>{PAGES.ABOUT.MESSENGERS_TITLE}</h3>
+          <p className='text-lg sm:text-xl font-bold text-center'>{PAGES.ABOUT.MESSENGERS_TITLE}</p>
           <SocialLinks companyInfo={companyInfo} variant='buttons' className='justify-center' />
         </div>
 

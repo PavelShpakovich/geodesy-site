@@ -34,26 +34,31 @@ export function BlogPostCard({ post, variant = 'full', className }: BlogPostCard
         <div className='flex flex-1 flex-col p-6'>
           <CardHeader className='mb-3 p-0'>
             <div className='mb-2 flex items-center gap-4 text-xs text-muted-foreground sm:text-sm'>
-              <span className='flex items-center gap-1'>
-                <Calendar className='h-3.5 w-3.5' />
+              <time dateTime={post.fields.publishedAt} className='flex items-center gap-1'>
+                <Calendar className='h-3.5 w-3.5' aria-hidden='true' />
                 {date}
-              </span>
+              </time>
               {reading && (
                 <span className='flex items-center gap-1'>
-                  <Clock className='h-3.5 w-3.5' />
+                  <Clock className='h-3.5 w-3.5' aria-hidden='true' />
                   {reading}
                 </span>
               )}
             </div>
-            <Link href={href} className='rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'>
-              <CardTitle className='line-clamp-2 text-lg sm:text-xl'>{post.fields.title}</CardTitle>
-            </Link>
+            <CardTitle className='line-clamp-2 text-lg sm:text-xl'>
+              <Link
+                href={href}
+                className='rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'
+              >
+                {post.fields.title}
+              </Link>
+            </CardTitle>
           </CardHeader>
           <CardContent className='flex flex-col p-0'>
             <CardDescription className='flex-1 text-sm leading-relaxed sm:text-base line-clamp-3'>
               {post.fields.excerpt}
             </CardDescription>
-            <div className='mt-4 border-t pt-4'>
+            <footer className='mt-4 border-t pt-4'>
               <Button
                 variant='ghost'
                 size='sm'
@@ -66,10 +71,10 @@ export function BlogPostCard({ post, variant = 'full', className }: BlogPostCard
                   aria-label={`Читать далее: ${post.fields.title}`}
                 >
                   {CTA.READ_MORE}
-                  <ArrowRight className='h-4 w-4' />
+                  <ArrowRight className='h-4 w-4' aria-hidden='true' />
                 </Link>
               </Button>
-            </div>
+            </footer>
           </CardContent>
         </div>
       </Card>
@@ -90,30 +95,31 @@ export function BlogPostCard({ post, variant = 'full', className }: BlogPostCard
           />
         </div>
       )}
-      <span className='sr-only'>{post.fields.title}</span>
       <div className='flex flex-1 flex-col justify-end-safe p-6'>
         <CardHeader className='mb-3 p-0'>
           <div className='mb-2 flex items-center gap-4 text-xs text-muted-foreground sm:text-sm'>
-            <span className='flex items-center gap-1'>
-              <Calendar className='h-3.5 w-3.5' />
+            <time dateTime={post.fields.publishedAt} className='flex items-center gap-1'>
+              <Calendar className='h-3.5 w-3.5' aria-hidden='true' />
               {date}
-            </span>
+            </time>
             {reading && (
               <span className='flex items-center gap-1'>
-                <Clock className='h-3.5 w-3.5' />
+                <Clock className='h-3.5 w-3.5' aria-hidden='true' />
                 {reading}
               </span>
             )}
           </div>
-          <Link href={href} className='rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'>
-            <CardTitle className='line-clamp-2 text-lg sm:text-xl'>{post.fields.title}</CardTitle>
-          </Link>
+          <CardTitle className='line-clamp-2 text-lg sm:text-xl'>
+            <Link href={href} className='rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'>
+              {post.fields.title}
+            </Link>
+          </CardTitle>
         </CardHeader>
         <CardContent className='flex flex-col p-0'>
           <CardDescription className='flex-1 text-sm leading-relaxed sm:text-base max-h-[4.5em] overflow-hidden'>
             {post.fields.excerpt}
           </CardDescription>
-          <div className='mt-4 border-t pt-4'>
+          <footer className='mt-4 border-t pt-4'>
             <Button
               variant='ghost'
               size='sm'
@@ -126,10 +132,10 @@ export function BlogPostCard({ post, variant = 'full', className }: BlogPostCard
                 aria-label={`Читать далее: ${post.fields.title}`}
               >
                 {CTA.READ_MORE}
-                <ArrowRight className='h-4 w-4' />
+                <ArrowRight className='h-4 w-4' aria-hidden='true' />
               </Link>
             </Button>
-          </div>
+          </footer>
         </CardContent>
       </div>
     </Card>

@@ -71,19 +71,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <article className='max-w-3xl mx-auto w-full'>
           <header className='mb-8'>
             <div className='flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground mb-4'>
-              <span className='flex items-center gap-1.5'>
-                <Calendar className='h-4 w-4' />
+              <time dateTime={post.fields.publishedAt} className='flex items-center gap-1.5'>
+                <Calendar className='h-4 w-4' aria-hidden='true' />
                 {formatDate(post.fields.publishedAt)}
-              </span>
+              </time>
               {post.fields.readingTime && (
                 <span className='flex items-center gap-1.5'>
-                  <Clock className='h-4 w-4' />
+                  <Clock className='h-4 w-4' aria-hidden='true' />
                   {PAGES.BLOG.READING_TIME(post.fields.readingTime)}
                 </span>
               )}
               {post.fields.author && (
                 <span className='flex items-center gap-1.5'>
-                  <User className='h-4 w-4' />
+                  <User className='h-4 w-4' aria-hidden='true' />
                   {post.fields.author}
                 </span>
               )}

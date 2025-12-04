@@ -22,7 +22,6 @@ export const metadata: Metadata = {
     template: `%s | ${SEO_CONFIG.SITE_NAME}`,
   },
   description: SEO_CONFIG.DEFAULT_DESCRIPTION,
-  keywords: [...SEO_CONFIG.DEFAULT_KEYWORDS],
   authors: [{ name: SEO_CONFIG.SITE_NAME }],
   creator: SEO_CONFIG.SITE_NAME,
   publisher: SEO_CONFIG.SITE_NAME,

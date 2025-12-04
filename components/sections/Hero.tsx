@@ -58,9 +58,9 @@ export function Hero({ companyInfo }: HeroProps) {
             <h1 className='text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent'>
               {companyInfo.fields.description}
             </h1>
-            <h2 className='text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto'>
+            <p className='text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto'>
               {companyInfo.fields.legalName}
-            </h2>
+            </p>
           </div>
 
           <div className='flex flex-col gap-3 sm:gap-4 sm:flex-row sm:justify-center px-4 sm:px-0'>

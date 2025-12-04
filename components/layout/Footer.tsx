@@ -18,13 +18,13 @@ export async function Footer() {
           <div className='flex flex-col gap-3'>
             <Link href='/' className='flex items-center gap-2 w-fit'>
               <Logo showText={false} className='opacity-80' />
-              <h3 className='text-lg font-semibold'>{companyInfo.fields.name}</h3>
+              <span className='text-lg font-semibold'>{companyInfo.fields.name}</span>
             </Link>
             <p className='text-sm text-muted-foreground max-w-xs'>{companyInfo.fields.description}</p>
           </div>
 
           <div className='flex flex-col gap-3'>
-            <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.NAVIGATION}</h4>
+            <p className='text-sm font-semibold tracking-wide'>{FOOTER.NAVIGATION}</p>
             <ul className='flex flex-wrap gap-x-4 gap-y-2 text-sm'>
               {NAV_ITEMS.map(({ href, label }) => (
                 <li key={href}>
@@ -37,7 +37,7 @@ export async function Footer() {
           </div>
 
           <div className='flex flex-col gap-3'>
-            <h4 className='text-sm font-semibold tracking-wide'>{FOOTER.CONTACTS}</h4>
+            <p className='text-sm font-semibold tracking-wide'>{FOOTER.CONTACTS}</p>
             <ul className='flex flex-col gap-2 text-sm text-muted-foreground'>
               <li>
                 <a
