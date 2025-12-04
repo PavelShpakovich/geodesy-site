@@ -33,6 +33,11 @@ export function ServiceCard({ service, variant = 'full', className }: ServiceCar
           <CardHeader>
             <CardTitle className='text-lg sm:text-xl'>{service.fields.title}</CardTitle>
           </CardHeader>
+          <CardContent className='flex-1'>
+            <CardDescription className='text-sm sm:text-base whitespace-pre-line leading-relaxed line-clamp-3'>
+              {service.fields.description}
+            </CardDescription>
+          </CardContent>
           <div className='mt-auto'>
             <Button variant='outline' asChild className='w-full'>
               <Link href={href}>{PAGES.SERVICES.MORE_DETAILS}</Link>
