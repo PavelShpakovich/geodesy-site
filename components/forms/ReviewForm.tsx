@@ -108,13 +108,13 @@ export function ReviewForm({ onClose, showCloseButton = false }: ReviewFormProps
       </CardHeader>
       <CardContent>
         <form ref={formRef} action={formAction} className='flex flex-col gap-5'>
-          <div className='p-3 sm:p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 flex items-start gap-2 sm:gap-3'>
+          <div className='p-3 sm:p-4 rounded-xl bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 flex items-start gap-2 sm:gap-3'>
             <Info className='h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5' />
             <p className='text-xs sm:text-sm text-blue-800 dark:text-blue-200'>{REVIEW_FORM.MODERATION_NOTICE}</p>
           </div>
 
           {!state.success && state.message && (
-            <div className='p-3 sm:p-4 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 flex items-start gap-2 sm:gap-3'>
+            <div className='p-3 sm:p-4 rounded-xl bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 flex items-start gap-2 sm:gap-3'>
               <AlertCircle className='h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5' />
               <div className='flex-1 flex flex-col gap-1'>
                 <p className='text-xs sm:text-sm font-medium text-red-800 dark:text-red-200'>{state.message}</p>

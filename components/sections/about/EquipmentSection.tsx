@@ -33,7 +33,7 @@ export function EquipmentSection({ equipment, className }: EquipmentSectionProps
           <Card key={index} className='hover:shadow-lg transition-shadow duration-300'>
             <CardContent className='p-4 sm:p-6'>
               <div className='flex gap-3 sm:gap-4'>
-                <div className='shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary'>
+                <div className='shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary'>
                   <DynamicIcon name={item.icon} fallback='Satellite' className='w-5 h-5 sm:w-6 sm:h-6' />
                 </div>
                 <div className='flex flex-col gap-1 min-w-0'>

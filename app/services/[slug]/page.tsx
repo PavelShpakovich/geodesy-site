@@ -89,7 +89,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </header>
 
           {getAssetUrl(service.fields.image) && (
-            <div className='relative w-full aspect-video rounded-lg overflow-hidden mb-8'>
+            <div className='relative w-full aspect-video rounded-xl overflow-hidden mb-8'>
               <Image
                 src={getAssetUrl(service.fields.image)}
                 alt={
@@ -115,7 +115,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             )}
           </div>
 
-          <div className='bg-muted/30 rounded-lg p-6 sm:p-8 mb-8'>
+          <div className='bg-muted/30 rounded-xl p-6 sm:p-8 mb-8'>
             <h2 className='text-xl font-semibold mb-4'>{PAGES.SERVICES.WHATS_INCLUDED}</h2>
             <ul className='space-y-3'>
               {PAGES.SERVICES.INCLUDED_ITEMS.map((item, index) => (
@@ -127,7 +127,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             </ul>
           </div>
 
-          <div className='bg-primary text-primary-foreground rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
+          <div className='bg-primary text-primary-foreground rounded-xl p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
             <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.SERVICES.CTA_ORDER}</h2>
             <p className='text-sm sm:text-base opacity-90'>{PAGES.SERVICES.CTA_CONSULTATION}</p>
             <div>

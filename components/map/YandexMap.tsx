@@ -83,7 +83,7 @@ export function YandexMap({ address, center = [52.097621, 23.73405], zoom = 16, 
   return (
     <div
       ref={mapRef}
-      className={className || 'w-full h-64 sm:h-80 md:h-96 rounded-lg overflow-hidden'}
+      className={className || 'w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden'}
       style={{ width: '100%' }}
     />
   );

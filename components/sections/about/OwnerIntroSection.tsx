@@ -21,7 +21,7 @@ export function OwnerIntroSection({ owner, showPhoto = false, className }: Owner
       <div className='flex flex-col lg:flex-row items-center gap-8 lg:gap-12'>
         {showPhoto && owner.photo && (
           <div className='shrink-0'>
-            <div className='relative w-48 h-56 sm:w-56 sm:h-64 lg:w-64 lg:h-72 rounded-2xl overflow-hidden shadow-xl'>
+            <div className='relative w-48 h-56 sm:w-56 sm:h-64 lg:w-64 lg:h-72 rounded-xl overflow-hidden shadow-xl'>
               <Image
                 src={owner.photo}
                 alt={ALT_TEXTS.OWNER_PHOTO(owner.name)}

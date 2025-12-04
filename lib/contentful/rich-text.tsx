@@ -25,7 +25,7 @@ export const richTextOptions: Options = {
 
       return (
         <figure className='my-6'>
-          <div className='relative w-full aspect-video rounded-lg overflow-hidden'>
+          <div className='relative w-full aspect-video rounded-xl overflow-hidden'>
             <Image
               src={imageUrl}
               alt={description || title || ALT_TEXTS.ARTICLE_IMAGE}

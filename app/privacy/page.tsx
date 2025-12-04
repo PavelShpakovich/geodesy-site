@@ -197,7 +197,7 @@ export default async function PrivacyPage() {
         <section>
           <h2 className='text-2xl font-semibold mb-4 mt-8'>10. {PRIVACY.SECTION_10.TITLE}</h2>
           <p>{PRIVACY.SECTION_10.INTRO}</p>
-          <div className='bg-muted p-4 rounded-lg mt-4'>
+          <div className='bg-muted p-4 rounded-xl mt-4'>
             <p>
               <strong>{PRIVACY.SECTION_10.COMPANY}:</strong> {companyName}
             </p>

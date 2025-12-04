@@ -20,7 +20,7 @@ export function CredentialCard({ title, icon: Icon, items }: CredentialCardProps
     <Card className='hover:shadow-lg transition-shadow flex-1'>
       <CardHeader>
         <div className='flex items-center gap-3'>
-          <div className='w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center'>
+          <div className='w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center'>
             <Icon className='w-5 h-5 text-primary' />
           </div>
           <CardTitle className='text-lg'>{title}</CardTitle>

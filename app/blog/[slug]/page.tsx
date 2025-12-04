@@ -96,7 +96,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </header>
 
           {getAssetUrl(post.fields.coverImage) && (
-            <div className='relative w-full aspect-video rounded-lg overflow-hidden mb-8'>
+            <div className='relative w-full aspect-video rounded-xl overflow-hidden mb-8'>
               <Image
                 src={getAssetUrl(post.fields.coverImage)}
                 alt={post.fields.coverImage?.fields?.title || ALT_TEXTS.BLOG_IMAGE_FALLBACK(post.fields.title)}
@@ -128,7 +128,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </section>
         )}
 
-        <div className='bg-primary text-primary-foreground rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6 max-w-3xl mx-auto w-full'>
+        <div className='bg-primary text-primary-foreground rounded-xl p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6 max-w-3xl mx-auto w-full'>
           <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.BLOG.CTA_TITLE}</h2>
           <p className='text-sm sm:text-base opacity-90'>{PAGES.BLOG.CTA_SUBTITLE}</p>
           <div>

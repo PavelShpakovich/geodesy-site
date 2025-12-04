@@ -242,7 +242,7 @@ export function ReviewsSection({
 
       {/* Leave Review CTA */}
       {showLeaveReviewCTA && (
-        <div className='bg-muted/50 rounded-lg p-4 sm:p-6 md:p-8 text-center flex flex-col gap-3 sm:gap-4'>
+        <div className='bg-muted/50 rounded-xl p-4 sm:p-6 md:p-8 text-center flex flex-col gap-3 sm:gap-4'>
           <h3 className='text-base sm:text-lg md:text-xl font-semibold'>{REVIEW_FORM.CTA.TITLE}</h3>
           <p className='text-xs sm:text-sm md:text-base text-muted-foreground'>{REVIEW_FORM.CTA.SUBTITLE}</p>
           <div>

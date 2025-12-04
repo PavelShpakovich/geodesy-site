@@ -68,7 +68,7 @@ export default async function ContactsPage() {
               zoom={16}
             />
           ) : (
-            <div className='bg-muted rounded-lg h-64 sm:h-80 md:h-96 flex items-center justify-center'>
+            <div className='bg-muted rounded-xl h-64 sm:h-80 md:h-96 flex items-center justify-center'>
               <div className='text-center text-muted-foreground px-4 flex flex-col gap-3 sm:gap-4'>
                 <MapPin className='h-10 w-10 sm:h-12 sm:w-12 mx-auto' />
                 <p className='text-sm sm:text-base'>{PAGES.CONTACTS.MAP_PLACEHOLDER}</p>

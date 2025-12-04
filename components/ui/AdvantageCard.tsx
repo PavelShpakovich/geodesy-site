@@ -13,7 +13,7 @@ export function AdvantageCard({ title, description, icon }: AdvantageCardProps) 
       <CardHeader>
         <div className='flex items-center gap-3'>
           {icon && (
-            <div className='shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary'>
+            <div className='shrink-0 flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary'>
               <DynamicIcon name={icon} />
             </div>
           )}

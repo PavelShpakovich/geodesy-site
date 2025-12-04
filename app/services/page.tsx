@@ -69,7 +69,7 @@ export default async function ServicesPage() {
           </section>
         )}
 
-        <div className='bg-muted/50 rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
+        <div className='bg-muted/50 rounded-xl p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
           <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.SERVICES.CTA_TITLE}</h2>
           <p className='text-sm sm:text-base text-muted-foreground'>{PAGES.SERVICES.CTA_SUBTITLE}</p>
           <div>

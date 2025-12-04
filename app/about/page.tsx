@@ -46,7 +46,7 @@ export default async function AboutPage() {
         {transformedInfo && <OwnerIntroSection owner={transformedInfo.owner} showPhoto={transformedInfo.hasPhoto} />}
 
         {transformedInfo?.hasStats && (
-          <div className='bg-muted/50 rounded-2xl p-6 sm:p-8'>
+          <div className='bg-muted/50 rounded-xl p-6 sm:p-8'>
             <StatsSection stats={transformedInfo.stats} />
           </div>
         )}
@@ -54,19 +54,19 @@ export default async function AboutPage() {
         {transformedInfo?.hasCredentials && <CredentialsSection credentials={transformedInfo.credentials} />}
 
         {transformedInfo?.hasEquipment && (
-          <div className='bg-muted/50 rounded-2xl p-6 sm:p-8'>
+          <div className='bg-muted/50 rounded-xl p-6 sm:p-8'>
             <EquipmentSection equipment={transformedInfo.equipment} />
           </div>
         )}
 
         {transformedReviews.length > 0 && <ReviewsSection reviews={transformedReviews} />}
 
-        <div className='bg-muted/50 rounded-lg p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6'>
+        <div className='bg-muted/50 rounded-xl p-6 sm:p-8 flex flex-col items-center gap-4 sm:gap-6'>
           <p className='text-lg sm:text-xl font-bold text-center'>{PAGES.ABOUT.MESSENGERS_TITLE}</p>
           <SocialLinks companyInfo={companyInfo} variant='buttons' className='justify-center' />
         </div>
 
-        <div className='bg-primary text-primary-foreground rounded-lg p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
+        <div className='bg-primary text-primary-foreground rounded-xl p-6 sm:p-8 text-center flex flex-col gap-5 sm:gap-6'>
           <h2 className='text-xl sm:text-2xl font-bold'>{PAGES.ABOUT.CTA_TITLE}</h2>
           <p className='text-sm sm:text-base opacity-90'>{PAGES.ABOUT.CTA_SUBTITLE}</p>
           <div>
