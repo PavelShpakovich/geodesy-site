@@ -5,7 +5,6 @@ import { ServiceCard } from '@/components/services/ServiceCard';
 import { Phone } from 'lucide-react';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { ProcessSection } from '@/components/sections/ProcessSection';
 import { FAQSection } from '@/components/sections/FAQSection';
 import { CTA, PAGES, SECTIONS } from '@/lib/constants/text';
 import { StructuredData } from '@/components/seo/StructuredData';
