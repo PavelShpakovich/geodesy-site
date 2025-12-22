@@ -1,14 +1,13 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Label } from '@/components/ui/Label';
 import { Button } from '@/components/ui/Button';
+import { SubmitButton } from '@/components/forms/SubmitButton';
 import { Check, AlertCircle, Star, Info, X } from 'lucide-react';
-import { submitReviewForm } from '@/lib/actions/review';
-import { SubmitButton } from './SubmitButton';
 import { FORM, REVIEW_FORM, ARIA } from '@/lib/constants/text';
 import { cn } from '@/lib/utils';
 
@@ -56,19 +55,57 @@ interface ReviewFormProps {
   showCloseButton?: boolean;
 }
 
+interface FormState {
+  success: boolean;
+  message: string;
+  errors?: string[];
+}
+
 export function ReviewForm({ onClose, showCloseButton = false }: ReviewFormProps) {
-  const [state, formAction] = useActionState(submitReviewForm, initialState);
+  const [state, setState] = useState<FormState>(initialState);
+  const [isPending, setIsPending] = useState(false);
   const [rating, setRating] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    if (state.success) {
-      formRef.current?.reset();
-      setRating(0);
-      setCharCount(0);
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsPending(true);
+    setState(initialState);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name')?.toString() || '',
+      location: formData.get('location')?.toString() || '',
+      rating: rating,
+      text: formData.get('text')?.toString() || '',
+    };
+
+    try {
+      const response = await fetch('/api/contact.php?type=review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result: FormState = await response.json();
+      setState(result);
+
+      if (result.success) {
+        formRef.current?.reset();
+        setRating(0);
+        setCharCount(0);
+      }
+    } catch {
+      setState({
+        success: false,
+        message: 'Ошибка сети. Пожалуйста, попробуйте позже.',
+        errors: undefined,
+      });
+    } finally {
+      setIsPending(false);
     }
-  }, [state.success]);
+  }
 
   if (state.success) {
     return (
@@ -107,7 +144,7 @@ export function ReviewForm({ onClose, showCloseButton = false }: ReviewFormProps
         <CardDescription>{REVIEW_FORM.SUBTITLE}</CardDescription>
       </CardHeader>
       <CardContent>
-        <form ref={formRef} action={formAction} className='flex flex-col gap-5'>
+        <form ref={formRef} onSubmit={handleSubmit} className='flex flex-col gap-5'>
           <div className='p-3 sm:p-4 rounded-xl bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 flex items-start gap-2 sm:gap-3'>
             <Info className='h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5' />
             <p className='text-xs sm:text-sm text-blue-800 dark:text-blue-200'>{REVIEW_FORM.MODERATION_NOTICE}</p>
@@ -184,7 +221,7 @@ export function ReviewForm({ onClose, showCloseButton = false }: ReviewFormProps
             </p>
           </div>
 
-          <SubmitButton text={REVIEW_FORM.SUBMIT} />
+          <SubmitButton isPending={isPending} text={REVIEW_FORM.SUBMIT} loadingText={REVIEW_FORM.SUBMITTING} />
         </form>
       </CardContent>
     </Card>

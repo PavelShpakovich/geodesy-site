@@ -1,6 +1,5 @@
 'use client';
 
-import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/Button';
 import { Loader2, Send } from 'lucide-react';
 import { FORM } from '@/lib/constants/text';
@@ -8,11 +7,10 @@ import { FORM } from '@/lib/constants/text';
 interface SubmitButtonProps {
   text?: string;
   loadingText?: string;
+  isPending?: boolean;
 }
 
-export function SubmitButton({ text, loadingText }: SubmitButtonProps) {
-  const { pending } = useFormStatus();
-
+export function SubmitButton({ text, loadingText, isPending = false }: SubmitButtonProps) {
   const buttonText = text || FORM.SUBMIT;
   const buttonLoadingText = loadingText || FORM.SUBMITTING;
 
@@ -21,9 +19,9 @@ export function SubmitButton({ text, loadingText }: SubmitButtonProps) {
       type='submit'
       size='lg'
       className='w-full text-sm sm:text-base h-11 sm:h-12 cursor-pointer'
-      disabled={pending}
+      disabled={isPending}
     >
-      {pending ? (
+      {isPending ? (
         <>
           <Loader2 className='mr-2 h-4 w-4 animate-spin' />
           <span>{buttonLoadingText}</span>

@@ -1,35 +1,72 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Label } from '@/components/ui/Label';
+import { SubmitButton } from '@/components/forms/SubmitButton';
 import { Check, AlertCircle } from 'lucide-react';
-import { submitContactForm } from '@/lib/actions/contact';
-import { SubmitButton } from './SubmitButton';
 import { FORM } from '@/lib/constants/text';
 
-const initialState = {
+interface FormState {
+  success: boolean;
+  message: string;
+  errors?: string[];
+}
+
+const initialState: FormState = {
   success: false,
   message: '',
   errors: undefined,
 };
 
 export function ContactForm() {
-  const [state, formAction] = useActionState(submitContactForm, initialState);
+  const [state, setState] = useState<FormState>(initialState);
+  const [isPending, setIsPending] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    if (state.success) {
-      formRef.current?.reset();
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsPending(true);
+    setState(initialState);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name')?.toString() || '',
+      phone: formData.get('phone')?.toString() || '',
+      email: formData.get('email')?.toString() || '',
+      message: formData.get('message')?.toString() || '',
+    };
+
+    try {
+      const response = await fetch('/api/contact.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result: FormState = await response.json();
+      setState(result);
+
+      if (result.success) {
+        formRef.current?.reset();
+      }
+    } catch {
+      setState({
+        success: false,
+        message: 'Ошибка сети. Пожалуйста, попробуйте позже.',
+        errors: undefined,
+      });
+    } finally {
+      setIsPending(false);
     }
-  }, [state.success]);
+  }
 
   return (
     <Card>
       <CardContent>
-        <form ref={formRef} action={formAction} className='flex flex-col gap-4 sm:gap-5'>
+        <form ref={formRef} onSubmit={handleSubmit} className='flex flex-col gap-4 sm:gap-5'>
           {state.success && (
             <div className='p-3 sm:p-4 rounded-xl bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 flex items-start gap-2 sm:gap-3'>
               <Check className='h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400 shrink-0 mt-0.5' />
@@ -115,7 +152,7 @@ export function ContactForm() {
             <p className='text-xs text-muted-foreground text-right'>{FORM.MESSAGE_MAX}</p>
           </div>
 
-          <SubmitButton />
+          <SubmitButton isPending={isPending} />
         </form>
       </CardContent>
     </Card>
