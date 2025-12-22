@@ -49,12 +49,15 @@ https://api.github.com/repos/PavelShpakovich/geodesy-site/dispatches
 - ✅ Entry → Unpublish
 - ✅ Asset → Publish (если используешь картинки из Contentful)
 
-**Headers:** Добавь два заголовка:
+**Headers:** Добавь три заголовка:
 
 | Key | Value |
 |-----|-------|
 | `Authorization` | `Bearer ghp_xxxxxxxxxxxx` (твой токен) |
 | `Accept` | `application/vnd.github.v3+json` |
+| `User-Agent` | `Contentful-Webhook` |
+
+> ⚠️ **Важно:** `User-Agent` обязателен! Без него GitHub вернёт ошибку 403.
 
 **Payload:** Custom payload
 
@@ -96,6 +99,7 @@ https://api.github.com/repos/PavelShpakovich/geodesy-site/dispatches
 │  ┌────────────────────┬─────────────────────────────────────┐  │
 │  │ Authorization      │ Bearer ghp_xxxxxxxxxxxxx            │  │
 │  │ Accept             │ application/vnd.github.v3+json      │  │
+│  │ User-Agent         │ Contentful-Webhook                  │  │
 │  └────────────────────┴─────────────────────────────────────┘  │
 │                                                                │
 │  Payload: Custom                                               │
@@ -118,6 +122,7 @@ https://api.github.com/repos/PavelShpakovich/geodesy-site/dispatches
    
 2. Частые ошибки:
    - **401 Unauthorized** — неправильный токен или истёк срок
+   - **403 Forbidden** — отсутствует заголовок `User-Agent` (добавь его!)
    - **404 Not Found** — неправильный URL репозитория
    - **422 Unprocessable Entity** — неправильный payload
 
