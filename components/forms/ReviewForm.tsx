@@ -99,7 +99,7 @@ export function ReviewForm({ onClose, showCloseButton = false }: ReviewFormProps
     } catch {
       setState({
         success: false,
-        message: 'Ошибка сети. Пожалуйста, попробуйте позже.',
+        message: FORM.ERRORS.NETWORK_ERROR,
         errors: undefined,
       });
     } finally {

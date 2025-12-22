@@ -55,7 +55,7 @@ export function ContactForm() {
     } catch {
       setState({
         success: false,
-        message: 'Ошибка сети. Пожалуйста, попробуйте позже.',
+        message: FORM.ERRORS.NETWORK_ERROR,
         errors: undefined,
       });
     } finally {
