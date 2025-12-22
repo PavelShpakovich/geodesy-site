@@ -103,9 +103,13 @@ function getClientIp() {
 }
 
 /**
- * Sanitize input string
+ * Sanitize input value
  */
 function sanitizeInput($input) {
+    // Keep integers and floats as-is (for rating)
+    if (is_int($input) || is_float($input)) {
+        return $input;
+    }
     if (!is_string($input)) {
         return '';
     }
