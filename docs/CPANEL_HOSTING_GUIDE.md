@@ -261,31 +261,267 @@
 
 ## Архитектура твоего хостинга
 
+### Как работает связка nginx + Apache
+
+На shared хостингах обычно используется схема **nginx как reverse proxy перед Apache**:
+
 ```
-                    Интернет
-                       │
-                       ▼
-              ┌────────────────┐
-              │     nginx      │  ← Принимает запросы, SSL
-              │  (фронтенд)    │
-              └───────┬────────┘
-                      │
-              ┌───────▼────────┐
-              │    Apache      │  ← Обрабатывает PHP, .htaccess
-              │   (бэкенд)     │
-              └───────┬────────┘
-                      │
-         ┌────────────┼────────────┐
-         │            │            │
-         ▼            ▼            ▼
-   ┌──────────┐ ┌──────────┐ ┌──────────┐
-   │  HTML    │ │   CSS    │ │   PHP    │
-   │ (статика)│ │   JS     │ │ (формы)  │
-   └──────────┘ └──────────┘ └──────────┘
+        Пользователь
+             │
+             │ https://mygeodesy.by/api/contact.php
+             ▼
+    ┌─────────────────┐
+    │      nginx      │  Порт 443 (HTTPS) / 80 (HTTP)
+    │  (reverse proxy)│
+    │                 │
+    │ • SSL терминация│  ← Расшифровывает HTTPS
+    │ • Кэширование   │  ← Кэширует статику
+    │ • Балансировка  │  ← Распределяет нагрузку
+    └────────┬────────┘
+             │
+             │ Проксирует на localhost:8080
+             ▼
+    ┌─────────────────┐
+    │     Apache      │  Порт 8080 (локальный)
+    │   (backend)     │
+    │                 │
+    │ • .htaccess     │  ← Читает твои правила
+    │ • mod_rewrite   │  ← Переписывает URL
+    │ • mod_php       │  ← Выполняет PHP
+    └────────┬────────┘
+             │
+             ▼
+    ┌─────────────────┐
+    │  PHP Interpreter│
+    │                 │
+    │ contact.php     │  ← Твой скрипт
+    │     │           │
+    │     ▼           │
+    │  mail()         │  ← Отправка письма
+    └─────────────────┘
 ```
 
-**nginx** — быстро отдаёт статику (HTML, CSS, JS, картинки)
-**Apache** — обрабатывает PHP и читает .htaccess
+### Что делает nginx?
+
+```nginx
+# Упрощённая конфигурация nginx (ты её НЕ видишь и НЕ редактируешь)
+# Находится в /etc/nginx/conf.d/ (доступ только у администратора сервера)
+
+server {
+    listen 443 ssl;
+    server_name mygeodesy.by;
+
+    # SSL сертификаты (управляются через AutoSSL)
+    ssl_certificate /home2/mygeodes/ssl/mygeodesy.by.crt;
+    ssl_certificate_key /home2/mygeodes/ssl/mygeodesy.by.key;
+
+    # Статика отдаётся напрямую (быстро!)
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|woff2)$ {
+        root /home2/mygeodes/public_html;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Всё остальное → Apache
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+**Ключевой момент:** nginx настроен хостингом, ты его не трогаешь!
+
+### Что делает Apache?
+
+```apache
+# Apache читает .htaccess из /home2/mygeodes/public_html/.htaccess
+# Это ТВОЙ файл, который ты загрузил
+
+# Твой .htaccess:
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # HTTPS редирект
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+```
+
+### Как запускается PHP скрипт?
+
+Пошаговый процесс когда пользователь отправляет форму:
+
+```
+1. Браузер отправляет POST запрос
+   ─────────────────────────────────────────────────────────
+   POST /api/contact.php HTTP/1.1
+   Host: mygeodesy.by
+   Content-Type: application/json
+
+   {"type":"contact","name":"Иван","phone":"+375291234567",...}
+
+2. nginx получает запрос на порт 443
+   ─────────────────────────────────────────────────────────
+   • Расшифровывает SSL
+   • Видит что это .php файл
+   • Проксирует на Apache (localhost:8080)
+
+3. Apache получает запрос
+   ─────────────────────────────────────────────────────────
+   • Читает .htaccess (если есть правила)
+   • Видит расширение .php
+   • Передаёт в PHP интерпретатор
+
+4. PHP выполняет contact.php
+   ─────────────────────────────────────────────────────────
+   • Читает $_POST / file_get_contents('php://input')
+   • Выполняет логику (валидация, mail())
+   • Возвращает JSON ответ
+
+5. Ответ идёт обратно
+   ─────────────────────────────────────────────────────────
+   PHP → Apache → nginx → Браузер
+```
+
+### Где какие настройки?
+
+| Что             | Где находится                  | Кто управляет           |
+| --------------- | ------------------------------ | ----------------------- |
+| nginx config    | `/etc/nginx/`                  | Хостинг (domain.by)     |
+| Apache config   | `/etc/apache2/`                | Хостинг                 |
+| .htaccess       | `/home2/mygeodes/public_html/` | **Ты!**                 |
+| PHP конфиг      | `/etc/php.ini`                 | Хостинг + частично ты   |
+| SSL сертификаты | `/home2/mygeodes/ssl/`         | AutoSSL (автоматически) |
+| Твои файлы      | `/home2/mygeodes/public_html/` | **Ты!**                 |
+
+### Что ты можешь настроить?
+
+#### 1. Через .htaccess (Apache)
+
+```apache
+# Редиректы
+RewriteRule ^old-page$ /new-page [R=301,L]
+
+# Защита папок
+<Directory /admin>
+    Require ip 192.168.1.0/24
+</Directory>
+
+# Кастомные ошибки
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# Заголовки безопасности
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+
+# Кэширование
+<IfModule mod_expires.c>
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+</IfModule>
+
+# Gzip сжатие
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript
+</IfModule>
+```
+
+#### 2. Через cPanel
+
+- **Выбор версии PHP** — переключить PHP 7.4 → 8.2
+- **PHP Extensions** — включить/выключить модули
+- **php.ini директивы** — memory_limit, upload_max_filesize
+
+#### 3. Через файл .user.ini (PHP)
+
+Создай файл `/home2/mygeodes/public_html/.user.ini`:
+
+```ini
+; Лимит памяти для PHP
+memory_limit = 256M
+
+; Максимальный размер загружаемого файла
+upload_max_filesize = 10M
+post_max_size = 10M
+
+; Таймаут выполнения
+max_execution_time = 60
+
+; Отображение ошибок (только для отладки!)
+display_errors = Off
+log_errors = On
+```
+
+### Почему именно такая архитектура?
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Без nginx                                │
+│                                                              │
+│   Клиент ──► Apache (обрабатывает ВСЁ)                      │
+│                                                              │
+│   Проблема: Apache тяжёлый, создаёт процесс на каждый       │
+│   запрос, даже для отдачи картинки                          │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│                    С nginx (твой случай)                     │
+│                                                              │
+│   Клиент ──► nginx ──► Apache                               │
+│               │                                              │
+│               └──► Статика (быстро, без Apache)             │
+│                                                              │
+│   Преимущества:                                              │
+│   • nginx отдаёт 10,000+ статических файлов в секунду       │
+│   • Apache работает только когда нужен PHP                  │
+│   • Меньше нагрузка на сервер                               │
+│   • Лучше кэширование                                        │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Практический пример: путь запроса
+
+**Запрос статики (HTML страница):**
+
+```
+GET https://mygeodesy.by/about/
+
+1. nginx видит запрос
+2. Проверяет: есть /about/index.html? Да!
+3. Отдаёт файл НАПРЯМУЮ (Apache не участвует)
+4. Время ответа: ~50ms
+```
+
+**Запрос PHP (отправка формы):**
+
+```
+POST https://mygeodesy.by/api/contact.php
+
+1. nginx видит .php расширение
+2. Проксирует на Apache
+3. Apache вызывает PHP
+4. PHP выполняет скрипт, отправляет mail()
+5. PHP возвращает JSON
+6. Apache → nginx → браузер
+7. Время ответа: ~200-500ms
+```
+
+### Как проверить что PHP работает?
+
+Создай тестовый файл `public_html/info.php`:
+
+```php
+<?php
+phpinfo();
+```
+
+Открой https://mygeodesy.by/info.php — увидишь всю информацию о PHP.
+
+**⚠️ Удали после проверки!** Это раскрывает информацию о сервере.
 
 ---
 
