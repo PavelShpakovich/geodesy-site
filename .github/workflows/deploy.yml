@@ -30,6 +30,7 @@ jobs:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
           NEXT_PUBLIC_SITE_URL: https://mygeodesy.by
+          NEXT_PUBLIC_YANDEX_METRIKA_ID: '105972827'
 
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

@@ -6,8 +6,10 @@ import { Footer } from '@/components/layout/Footer';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { SITE } from '@/lib/constants/text';
 import { SEO_CONFIG } from '@/lib/seo/metadata';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/react';
+import { YandexMetrika } from '@/components/analytics/YandexMetrika';
+
+// Yandex Metrika counter ID - получи на https://metrika.yandex.ru
+const YANDEX_METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || '';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -98,8 +100,7 @@ export default function RootLayout({
             <main className='flex-1'>{children}</main>
             <Footer />
           </div>
-          <SpeedInsights />
-          <Analytics />
+          {YANDEX_METRIKA_ID && <YandexMetrika counterId={YANDEX_METRIKA_ID} />}
         </ThemeProvider>
       </body>
     </html>
